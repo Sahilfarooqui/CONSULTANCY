@@ -1,0 +1,344 @@
+[
+  {
+    "id": "avs-001",
+    "title": "Cabin Crew — Freshers Welcome",
+    "company": "Regional Gulf Airline",
+    "location": "Doha, Qatar",
+    "type": "Full-time",
+    "category": "Cabin Crew",
+    "level": "Fresher",
+    "salary": "Competitive + benefits",
+    "source": "LinkedIn",
+    "postedAt": "2026-07-15",
+    "applyUrl": "https://www.linkedin.com/jobs/",
+    "description": "Open recruitment for cabin crew. Freshers with strong communication skills and customer service mindset are encouraged to apply. Training provided.",
+    "tags": [
+      "Customer Service",
+      "English Fluent",
+      "Height Requirements"
+    ]
+  },
+  {
+    "id": "avs-002",
+    "title": "Aircraft Maintenance Technician (AMT)",
+    "company": "SkyTech MRO",
+    "location": "Dubai, UAE",
+    "type": "Full-time",
+    "category": "Engineering & MRO",
+    "level": "Junior",
+    "salary": "AED 8,000 – 12,000",
+    "source": "Indeed",
+    "postedAt": "2026-07-14",
+    "applyUrl": "https://www.indeed.com/",
+    "description": "Join our MRO hangar supporting narrow-body fleets. A&P or equivalent cert preferred; strong mechanical aptitude for juniors considered.",
+    "tags": [
+      "A&P",
+      "B1/B2",
+      "Hangar"
+    ]
+  },
+  {
+    "id": "avs-003",
+    "title": "Airport Customer Service Agent",
+    "company": "Hamad International Airport Partner",
+    "location": "Doha, Qatar",
+    "type": "Full-time",
+    "category": "Ground Operations",
+    "level": "Fresher",
+    "salary": "QAR 4,500 – 6,000",
+    "source": "GulfTalent",
+    "postedAt": "2026-07-16",
+    "applyUrl": "https://www.gulftalent.com/",
+    "description": "Front-line passenger assistance, check-in support, and gate operations. Ideal first role for aviation freshers. Shift work required.",
+    "tags": [
+      "Airport",
+      "Passenger Handling",
+      "Shift Work"
+    ]
+  },
+  {
+    "id": "avs-004",
+    "title": "Flight Operations Officer",
+    "company": "SkyWays Airlines",
+    "location": "Abu Dhabi, UAE",
+    "type": "Full-time",
+    "category": "Flight Operations",
+    "level": "Mid",
+    "salary": "AED 12,000 – 16,000",
+    "source": "Company",
+    "postedAt": "2026-07-12",
+    "applyUrl": "https://www.linkedin.com/jobs/",
+    "description": "Coordinate daily flight plans, weather briefings, and crew duty times. Minimum 2 years ops experience preferred.",
+    "tags": [
+      "Dispatch",
+      "Ops Control",
+      "ICAO"
+    ]
+  },
+  {
+    "id": "avs-005",
+    "title": "Aviation Security Screener",
+    "company": "Airport Security Services",
+    "location": "Doha, Qatar",
+    "type": "Full-time",
+    "category": "Security",
+    "level": "Fresher",
+    "salary": "QAR 4,000 – 5,500",
+    "source": "Bayt",
+    "postedAt": "2026-07-17",
+    "applyUrl": "https://www.bayt.com/",
+    "description": "Passenger and baggage screening at major airport. Full training provided. Clean background check required.",
+    "tags": [
+      "AVSEC",
+      "Screening",
+      "Training Provided"
+    ]
+  },
+  {
+    "id": "avs-006",
+    "title": "Ramp Agent / Baggage Handler",
+    "company": "GroundForce Aviation",
+    "location": "Riyadh, Saudi Arabia",
+    "type": "Full-time",
+    "category": "Ground Operations",
+    "level": "Fresher",
+    "salary": "SAR 3,500 – 5,000",
+    "source": "LinkedIn",
+    "postedAt": "2026-07-13",
+    "applyUrl": "https://www.linkedin.com/jobs/",
+    "description": "Aircraft loading/unloading, ramp safety, and GSE operations. Physically active role; no prior aviation experience required.",
+    "tags": [
+      "Ramp",
+      "GSE",
+      "Physical"
+    ]
+  },
+  {
+    "id": "avs-007",
+    "title": "Licensed Aircraft Engineer — B1",
+    "company": "Premier MRO Gulf",
+    "location": "Doha, Qatar",
+    "type": "Full-time",
+    "category": "Engineering & MRO",
+    "level": "Senior",
+    "salary": "QAR 15,000 – 22,000",
+    "source": "LinkedIn",
+    "postedAt": "2026-07-10",
+    "applyUrl": "https://www.linkedin.com/jobs/",
+    "description": "EASA/GCAA B1 licensed engineer for base maintenance. Type ratings on A320 or B737 highly desirable.",
+    "tags": [
+      "EASA",
+      "B1",
+      "A320",
+      "B737"
+    ]
+  },
+  {
+    "id": "avs-008",
+    "title": "Aviation Graduate Trainee Programme",
+    "company": "Runway2Sky Partners",
+    "location": "Doha, Qatar (Multiple GCC)",
+    "type": "Full-time",
+    "category": "Graduate / Trainee",
+    "level": "Fresher",
+    "salary": "Stipend + placement support",
+    "source": "Direct",
+    "postedAt": "2026-07-18",
+    "applyUrl": "/contact",
+    "description": "Structured pathway for aviation graduates into cabin crew, ground ops, and airport roles. Partnered with Qatar Advanced Training Institute for upskilling.",
+    "tags": [
+      "Graduate",
+      "Placement",
+      "Training"
+    ]
+  },
+  {
+    "id": "avs-009",
+    "title": "Cargo Operations Coordinator",
+    "company": "AirCargo Express",
+    "location": "Dubai, UAE",
+    "type": "Full-time",
+    "category": "Cargo",
+    "level": "Junior",
+    "salary": "AED 7,000 – 10,000",
+    "source": "Indeed",
+    "postedAt": "2026-07-11",
+    "applyUrl": "https://www.indeed.com/",
+    "description": "Coordinate air freight documentation, ULD planning, and airline handovers. Logistics or aviation diploma preferred.",
+    "tags": [
+      "Cargo",
+      "ULD",
+      "Documentation"
+    ]
+  },
+  {
+    "id": "avs-010",
+    "title": "Pilot — First Officer (A320)",
+    "company": "Middle East Carrier",
+    "location": "GCC (Base TBA)",
+    "type": "Full-time",
+    "category": "Flight Deck",
+    "level": "Mid",
+    "salary": "Competitive + housing",
+    "source": "Company",
+    "postedAt": "2026-07-09",
+    "applyUrl": "https://www.linkedin.com/jobs/",
+    "description": "A320 type-rated First Officers. Minimum 1,500 total hours with multi-engine IFR experience. Valid ATPL required.",
+    "tags": [
+      "ATPL",
+      "A320",
+      "FO"
+    ]
+  },
+  {
+    "id": "avs-011",
+    "title": "Airline Ticketing & Reservations Agent",
+    "company": "TravelAir Global",
+    "location": "Doha, Qatar",
+    "type": "Full-time",
+    "category": "Commercial",
+    "level": "Fresher",
+    "salary": "QAR 4,200 – 5,800",
+    "source": "GulfTalent",
+    "postedAt": "2026-07-16",
+    "applyUrl": "https://www.gulftalent.com/",
+    "description": "GDS (Amadeus/Galileo) ticketing support for walk-in and phone customers. Freshers with GDS course certificate welcome.",
+    "tags": [
+      "GDS",
+      "Amadeus",
+      "Customer Care"
+    ]
+  },
+  {
+    "id": "avs-012",
+    "title": "Aviation HR / Recruitment Coordinator",
+    "company": "Runway2Sky",
+    "location": "Doha, Qatar",
+    "type": "Full-time",
+    "category": "Corporate",
+    "level": "Junior",
+    "salary": "QAR 6,000 – 8,500",
+    "source": "Direct",
+    "postedAt": "2026-07-17",
+    "applyUrl": "/contact",
+    "description": "Support candidate screening, interview scheduling, and employer client coordination for aviation placements.",
+    "tags": [
+      "HR",
+      "Recruitment",
+      "Aviation"
+    ]
+  },
+  {
+    "id": "avs-013",
+    "title": "Load Controller",
+    "company": "Wings Ops Services",
+    "location": "Muscat, Oman",
+    "type": "Full-time",
+    "category": "Flight Operations",
+    "level": "Mid",
+    "salary": "OMR 700 – 950",
+    "source": "LinkedIn",
+    "postedAt": "2026-07-08",
+    "applyUrl": "https://www.linkedin.com/jobs/",
+    "description": "Prepare load sheets and balance calculations for commercial flights. Prior load control experience required.",
+    "tags": [
+      "Load Sheet",
+      "Weight & Balance"
+    ]
+  },
+  {
+    "id": "avs-014",
+    "title": "In-Flight Catering Assistant",
+    "company": "SkyBite Catering",
+    "location": "Doha, Qatar",
+    "type": "Full-time",
+    "category": "Catering",
+    "level": "Fresher",
+    "salary": "QAR 3,800 – 4,800",
+    "source": "Bayt",
+    "postedAt": "2026-07-15",
+    "applyUrl": "https://www.bayt.com/",
+    "description": "Prepare and load aircraft meal carts. Food hygiene certificate preferred; training available for freshers.",
+    "tags": [
+      "Catering",
+      "Hygiene",
+      "Airport"
+    ]
+  },
+  {
+    "id": "avs-015",
+    "title": "Aviation Safety Officer",
+    "company": "SafeFlight Consulting",
+    "location": "Remote / Doha hybrid",
+    "type": "Contract",
+    "category": "Safety & Compliance",
+    "level": "Senior",
+    "salary": "Negotiable",
+    "source": "LinkedIn",
+    "postedAt": "2026-07-07",
+    "applyUrl": "https://www.linkedin.com/jobs/",
+    "description": "SMS implementation and audit support for airline clients. SMS/ICAO Annex 19 experience essential.",
+    "tags": [
+      "SMS",
+      "Audit",
+      "Compliance"
+    ]
+  },
+  {
+    "id": "avs-016",
+    "title": "Customer Service — Airline Call Centre",
+    "company": "FlyConnect Contact Centre",
+    "location": "Manama, Bahrain",
+    "type": "Full-time",
+    "category": "Commercial",
+    "level": "Fresher",
+    "salary": "BHD 280 – 380",
+    "source": "Indeed",
+    "postedAt": "2026-07-14",
+    "applyUrl": "https://www.indeed.com/",
+    "description": "Handle booking changes, refunds, and flight status queries. Excellent English + Arabic preferred.",
+    "tags": [
+      "Call Centre",
+      "English",
+      "Arabic"
+    ]
+  },
+  {
+    "id": "avs-017",
+    "title": "Avionics Technician",
+    "company": "ElectroAir Systems",
+    "location": "Jeddah, Saudi Arabia",
+    "type": "Full-time",
+    "category": "Engineering & MRO",
+    "level": "Mid",
+    "salary": "SAR 10,000 – 14,000",
+    "source": "Company",
+    "postedAt": "2026-07-06",
+    "applyUrl": "https://www.linkedin.com/jobs/",
+    "description": "Troubleshoot and maintain aircraft avionics systems. Diploma in avionics + 3 years experience preferred.",
+    "tags": [
+      "Avionics",
+      "Electrical",
+      "Line Maintenance"
+    ]
+  },
+  {
+    "id": "avs-018",
+    "title": "Airport Lounge Host / Hostess",
+    "company": "Premium Lounge Operator",
+    "location": "Doha, Qatar",
+    "type": "Part-time",
+    "category": "Hospitality",
+    "level": "Fresher",
+    "salary": "QAR 25 – 35 / hour",
+    "source": "Direct",
+    "postedAt": "2026-07-18",
+    "applyUrl": "/contact",
+    "description": "Welcome premium passengers, manage F&B service in airport lounge. Hospitality or cabin crew aspirants welcome.",
+    "tags": [
+      "Lounge",
+      "Hospitality",
+      "Part-time"
+    ]
+  }
+]

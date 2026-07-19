@@ -1,0 +1,22 @@
+# Deploy on Render → https://runway2sky.onrender.com / runway2sky.online
+# 1. Connect this repo on Render (Docker or Node)
+# 2. In Environment, set ADZUNA_APP_ID + ADZUNA_APP_KEY (free: https://developer.adzuna.com/)
+# 3. Manual Deploy → clear build cache if needed
+# 4. Point runway2sky.online DNS to Render
+
+services:
+  - type: web
+    name: runway2sky
+    runtime: docker
+    plan: starter
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JOBS_CACHE_MS
+        value: "3600000"
+      - key: ADZUNA_APP_ID
+        sync: false
+      - key: ADZUNA_APP_KEY
+        sync: false
+      - key: RAPIDAPI_KEY
+        sync: false

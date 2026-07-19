@@ -1,0 +1,56 @@
+{
+  "name": "runway2sky",
+  "version": "1.1.0",
+  "private": true,
+  "homepage": "https://runway2sky.online",
+  "description": "Runway2Sky — Aviation careers, auto-updated jobs board & QATI training partner",
+  "dependencies": {
+    "@heroicons/react": "^2.1.1",
+    "cors": "^2.8.6",
+    "dotenv": "^16.6.1",
+    "express": "^4.22.2",
+    "http-proxy-middleware": "^2.0.10",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.22.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "autoprefixer": "^10.4.17",
+    "concurrently": "^8.2.2",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "server": "node -r dotenv/config server/index.js",
+    "fetch-jobs": "node -r dotenv/config scripts/fetch-jobs.js",
+    "dev": "concurrently -n web,api -c cyan,magenta \"npm run start\" \"npm run server\"",
+    "build": "react-scripts build",
+    "start:prod": "node -r dotenv/config server/index.js",
+    "prebuild": "node -r dotenv/config scripts/fetch-jobs.js || echo Skipping job fetch",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:4000"
+}

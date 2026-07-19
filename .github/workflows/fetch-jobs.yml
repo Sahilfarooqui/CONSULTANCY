@@ -1,0 +1,39 @@
+name: Fetch aviation jobs
+
+on:
+  schedule:
+    # Every 6 hours — keeps runway2sky.online job board fresh
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install deps
+        run: npm ci --legacy-peer-deps
+
+      - name: Fetch latest aviation jobs
+        env:
+          ADZUNA_APP_ID: ${{ secrets.ADZUNA_APP_ID }}
+          ADZUNA_APP_KEY: ${{ secrets.ADZUNA_APP_KEY }}
+          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+        run: node scripts/fetch-jobs.js
+
+      - name: Commit updated jobs (if changed)
+        run: |
+          git config user.name "runway2sky-bot"
+          git config user.email "bot@runway2sky.online"
+          git add public/data/live-jobs.json
+          git diff --staged --quiet || git commit -m "chore: auto-update aviation jobs $(date -u +%Y-%m-%dT%H%MZ)"
+          git push || true
