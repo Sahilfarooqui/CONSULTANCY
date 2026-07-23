@@ -1,9 +1,10 @@
 {
-  "updatedAt": "2026-07-23T08:14:32.765Z",
+  "updatedAt": "2026-07-23T13:27:17.036Z",
   "domain": "runway2sky.online",
-  "count": 18,
-  "liveCount": 0,
+  "count": 19,
+  "liveCount": 1,
   "sources": [
+    "RemoteOK",
     "Direct",
     "Bayt",
     "GulfTalent",
@@ -11,8 +12,32 @@
     "Indeed",
     "Company"
   ],
-  "durationMs": 1786,
+  "durationMs": 2341,
   "jobs": [
+    {
+      "id": "live-cmVtb3Rlb2stMTEzNTIxNg",
+      "title": "Cargo Operations",
+      "company": "Belcher Bingo",
+      "location": "Cargo, ",
+      "type": "Full-time",
+      "category": "Cargo",
+      "level": "Any",
+      "salary": "See listing",
+      "source": "RemoteOK",
+      "postedAt": "2026-07-22",
+      "applyUrl": "https://remoteOK.com/remote-jobs/remote-cargo-operations-belcher-bingo-1135216",
+      "description": "Description Mauris laoreet arcu tortor. Fusce neque felis, bibendum vel lacinia et, eleifend ut tortor. Sed imperdiet, purus porttitor vestibulum lobortis, lorem nunc adipiscing ipsum, at ullamcorper sem odio a tellus. Mauris a luctus nunc. Maecenas at nisl leo. Sed sed nisl a ligula eleifend posuere ut nec sapien. Proin tempor neque mi. Duis pretium dignissim elit nec feugiat. Morbi non orci felis. Nam vitae metus a orci iaculis facilisis. Technical Skills Aliquam feugiat eleifend metus vehicula; Fusce sit amet orci quis arcu; Quisque eget arcu ipsum. Nam sapien sem; Aliquam ultricies tincidu",
+      "tags": [
+        "customer support",
+        "non tech",
+        "testing",
+        "cloud",
+        "ops",
+        "medical",
+        "technical"
+      ],
+      "live": true
+    },
     {
       "id": "avs-008",
       "title": "Aviation Graduate Trainee Programme",
