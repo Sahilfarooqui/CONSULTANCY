@@ -1,9 +1,10 @@
 {
-  "updatedAt": "2026-07-26T13:01:22.994Z",
+  "updatedAt": "2026-07-26T18:59:05.061Z",
   "domain": "runway2sky.online",
-  "count": 18,
-  "liveCount": 0,
+  "count": 19,
+  "liveCount": 1,
   "sources": [
+    "RemoteOK",
     "Direct",
     "Bayt",
     "GulfTalent",
@@ -11,8 +12,33 @@
     "Indeed",
     "Company"
   ],
-  "durationMs": 2241,
+  "durationMs": 1777,
   "jobs": [
+    {
+      "id": "live-cmVtb3Rlb2stMTEzNTQ0NQ",
+      "title": "Safety Data Analyst",
+      "company": "SkyWest Airlines",
+      "location": "Salt Lake City Metropolitan Area, ",
+      "type": "Full-time",
+      "category": "Safety & Compliance",
+      "level": "Any",
+      "salary": "See listing",
+      "source": "RemoteOK",
+      "postedAt": "2026-07-24",
+      "applyUrl": "https://remoteOK.com/remote-jobs/remote-safety-data-analyst-skywest-airlines-1135445",
+      "description": "About SkyWest With over 16,000 aviation professionals operating thousands of daily flights, SkyWest Airlines connects millions of passengers each month to hundreds of destinations across North America. SkyWest operates in partnership with Delta Air Lines, United Airlines, American Airlines, and Alaska Airlines and has a fleet of nearly 450 aircraft. Headquartered in St. George, Utah, SkyWest's industry-leading workforce and excellent leadership team have consistently generated solid operational and economic performance, setting the standard for excellence in the regional industry. SkyWest empl",
+      "tags": [
+        "customer support",
+        "web dev",
+        "exec",
+        "photoshop",
+        "ecommerce",
+        "education",
+        "data annotation",
+        "virtual assistant"
+      ],
+      "live": true
+    },
     {
       "id": "avs-008",
       "title": "Aviation Graduate Trainee Programme",
