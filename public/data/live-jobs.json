@@ -1,9 +1,10 @@
 {
-  "updatedAt": "2026-07-27T02:05:33.588Z",
+  "updatedAt": "2026-07-27T09:34:31.260Z",
   "domain": "runway2sky.online",
-  "count": 19,
-  "liveCount": 1,
+  "count": 21,
+  "liveCount": 3,
   "sources": [
+    "Arbeitnow",
     "RemoteOK",
     "Direct",
     "Bayt",
@@ -12,8 +13,46 @@
     "Indeed",
     "Company"
   ],
-  "durationMs": 1803,
+  "durationMs": 2322,
   "jobs": [
+    {
+      "id": "live-YXJiZWl0bm93LXNlbmlvci1w",
+      "title": "Senior Prototyping Engineer (f/m/d) – Hybrid Power & Fuel System Integration",
+      "company": "Quantum-Systems GmbH",
+      "location": "Gilching",
+      "type": "Full-time",
+      "category": "Aviation",
+      "level": "Senior",
+      "salary": "See listing",
+      "source": "Arbeitnow",
+      "postedAt": "2026-07-27",
+      "applyUrl": "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/senior-prototyping-engineer-hybrid-power-fuel-system-integration-gilching-290679",
+      "description": "As a Senior Prototyping Engineer – Hybrid Power & Fuel System Integration, you will become an integral part of our Prototyping team, supporting the development of our Reliant platform – a next-generation long-range eVTOL unmanned aerial system designed for demanding ISR and logistics missions. Reliant combines exceptional endurance, modularity, and operational flexibility to deliver mission-critical capabilities in the most challenging environments. In this role, you will take ownership of the integration, development, and validation of the aircraft's hybrid power generation system, including ",
+      "tags": [
+        "Engineering",
+        "bachelor's degree"
+      ],
+      "live": true
+    },
+    {
+      "id": "live-YXJiZWl0bm93LXNlbmlvci1w",
+      "title": "Senior Prototyping Engineer (f/m/d) – Thermal Systems & Cooling Integration",
+      "company": "Quantum-Systems GmbH",
+      "location": "Gilching",
+      "type": "Full-time",
+      "category": "Aviation",
+      "level": "Senior",
+      "salary": "See listing",
+      "source": "Arbeitnow",
+      "postedAt": "2026-07-27",
+      "applyUrl": "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/senior-prototyping-engineer-thermal-systems-cooling-integration-gilching-439086",
+      "description": "As a Senior Prototyping Engineer – Thermal Systems & Cooling Integration , you will become an integral part of our Prototyping team, supporting the development of our Reliant platform – a next-generation long-range eVTOL unmanned aerial system designed for demanding ISR and logistics missions. Reliant combines exceptional endurance, modularity, and operational flexibility to deliver mission-critical capabilities in the most challenging environments. In this role, you will be responsible for the integration, development, and validation of thermal management and cooling systems for the aircraft.",
+      "tags": [
+        "Engineering",
+        "bachelor's degree"
+      ],
+      "live": true
+    },
     {
       "id": "live-cmVtb3Rlb2stMTEzNTQ0NQ",
       "title": "Safety Data Analyst",
