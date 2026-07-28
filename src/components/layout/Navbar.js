@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,14 +16,28 @@ const Navbar = () => {
 
   const isActive = (path) => location.pathname === path;
 
+  // Close menu on route change
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
+  // Lock body scroll when menu open
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMenuOpen]);
+
   return (
-    <nav className="relative">
-      <div className="hidden md:flex items-center space-x-1">
+    <nav className="relative flex items-center">
+      {/* Desktop */}
+      <div className="hidden md:flex items-center gap-1">
         {navItems.map((item) => (
           <Link
             key={item.path}
             to={item.path}
-            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 whitespace-nowrap ${
               isActive(item.path)
                 ? 'bg-sky-100 text-sky-800'
                 : 'text-slate-700 hover:bg-slate-100 hover:text-sky-700'
@@ -35,66 +49,71 @@ const Navbar = () => {
         ))}
         <Link
           to="/jobs"
-          className="ml-3 px-4 py-2 rounded-lg text-sm font-semibold bg-sky-600 text-white hover:bg-sky-700 transition-colors shadow-sm"
+          className="ml-2 px-4 py-2 rounded-lg text-sm font-semibold bg-sky-600 text-white hover:bg-sky-700 transition-colors shadow-sm whitespace-nowrap"
         >
           Find Jobs
         </Link>
       </div>
 
-      <div className="md:hidden">
-        <button
-          type="button"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="inline-flex items-center justify-center p-2 rounded-lg text-slate-700 hover:text-sky-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500"
-          aria-expanded={isMenuOpen}
-        >
-          <span className="sr-only">Open main menu</span>
-          <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            {isMenuOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            )}
-          </svg>
-        </button>
-      </div>
+      {/* Mobile hamburger — high contrast so it's always visible */}
+      <button
+        type="button"
+        onClick={() => setIsMenuOpen((o) => !o)}
+        className="md:hidden inline-flex items-center justify-center h-11 w-11 rounded-xl border-2 border-sky-600 bg-sky-50 text-sky-800 shadow-sm hover:bg-sky-100 active:scale-95 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:ring-offset-2 transition"
+        aria-expanded={isMenuOpen}
+        aria-controls="mobile-nav-panel"
+        aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+      >
+        <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+          {isMenuOpen ? (
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+          ) : (
+            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          )}
+        </svg>
+      </button>
 
+      {/* Overlay */}
       <div
-        className={`fixed inset-0 z-40 bg-slate-900/50 transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-[60] bg-slate-900/60 backdrop-blur-[2px] transition-opacity duration-300 md:hidden ${
           isMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setIsMenuOpen(false)}
         aria-hidden="true"
       />
+
+      {/* Slide-in panel */}
       <div
-        className={`fixed inset-y-0 right-0 w-72 bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 md:hidden ${
+        id="mobile-nav-panel"
+        className={`fixed top-0 right-0 z-[70] h-full w-[min(100vw-3rem,20rem)] max-w-full bg-white shadow-2xl transform transition-transform duration-300 ease-out md:hidden flex flex-col ${
           isMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex justify-between items-center p-4 border-b border-slate-100">
-          <span className="font-bold text-slate-900">
+        <div className="flex items-center justify-between gap-3 px-4 py-4 border-b border-slate-200">
+          <span className="font-bold text-lg text-slate-900">
             Runway<span className="text-sky-600">2</span>Sky
           </span>
           <button
             type="button"
             onClick={() => setIsMenuOpen(false)}
-            className="p-2 text-slate-600 hover:text-sky-700 rounded-lg"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border-2 border-slate-300 bg-slate-50 text-slate-800 hover:bg-slate-100"
+            aria-label="Close menu"
           >
-            <span className="sr-only">Close menu</span>
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
-        <div className="px-3 pt-3 pb-4 space-y-1">
+
+        <div className="flex-1 overflow-y-auto px-3 py-4 space-y-1">
           {navItems.map((item) => (
             <Link
               key={item.path}
               to={item.path}
-              className={`block px-3 py-2.5 rounded-lg text-base font-medium ${
+              className={`block px-4 py-3 rounded-xl text-base font-medium text-left ${
                 isActive(item.path)
-                  ? 'bg-sky-100 text-sky-800'
-                  : 'text-slate-700 hover:bg-slate-100 hover:text-sky-700'
+                  ? 'bg-sky-100 text-sky-900'
+                  : 'text-slate-800 hover:bg-slate-100'
               }`}
               onClick={() => setIsMenuOpen(false)}
               aria-current={isActive(item.path) ? 'page' : undefined}
@@ -102,9 +121,12 @@ const Navbar = () => {
               {item.name}
             </Link>
           ))}
+        </div>
+
+        <div className="p-4 border-t border-slate-200">
           <Link
             to="/jobs"
-            className="block w-full mt-3 px-3 py-2.5 rounded-lg text-base font-semibold bg-sky-600 text-white hover:bg-sky-700 text-center"
+            className="flex w-full items-center justify-center px-4 py-3.5 rounded-xl text-base font-semibold bg-sky-600 text-white hover:bg-sky-700"
             onClick={() => setIsMenuOpen(false)}
           >
             Find Jobs

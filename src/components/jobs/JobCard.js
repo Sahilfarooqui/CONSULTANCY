@@ -12,9 +12,6 @@ const levelColors = {
   Any: 'bg-slate-100 text-slate-700',
 };
 
-/**
- * LinkedIn-style job card: logo, company, posted-by, certs, apply.
- */
 const JobCard = ({ job, applyViaUs, officialHref }) => {
   const brand = getCompanyBrand(job.company);
   const poster = getPosterLabel(job);
@@ -31,31 +28,33 @@ const JobCard = ({ job, applyViaUs, officialHref }) => {
 
   return (
     <article className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-sky-300 hover:shadow-lg transition-all duration-300">
-      {/* Top brand strip */}
       <div className="h-1.5 w-full" style={{ backgroundColor: brand.color }} />
 
-      <div className="p-5 sm:p-6">
-        {/* Header: logo + title + meta */}
-        <div className="flex gap-4 text-left">
-          <CompanyLogo company={job.company} size={64} />
+      <div className="p-4 sm:p-6">
+        {/* Header row: logo | content | salary */}
+        <div className="flex gap-3 sm:gap-4 items-start text-left">
+          <CompanyLogo company={job.company} size={56} className="sm:hidden" />
+          <div className="hidden sm:block">
+            <CompanyLogo company={job.company} size={64} />
+          </div>
 
           <div className="flex-1 min-w-0">
-            <div className="flex flex-wrap items-start justify-between gap-2">
+            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
               <div className="min-w-0">
-                <h2 className="text-lg sm:text-xl font-bold text-slate-900 leading-snug">
+                <h2 className="text-base sm:text-xl font-bold text-slate-900 leading-snug break-words">
                   {job.title}
                 </h2>
-                <p className="mt-1 text-base font-semibold text-slate-800 flex flex-wrap items-center gap-x-2 gap-y-0.5">
-                  <span style={{ color: brand.color }}>{brand.name}</span>
+                <p className="mt-1 text-sm sm:text-base font-semibold break-words" style={{ color: brand.color }}>
+                  {brand.name}
                   {brand.isKnownAirline && (
-                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
-                      Verified airline brand
+                    <span className="ml-2 align-middle text-[10px] sm:text-xs font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 whitespace-nowrap">
+                      Verified
                     </span>
                   )}
                 </p>
-                <p className="mt-0.5 text-sm text-slate-500 flex flex-wrap items-center gap-x-2">
-                  <span className="inline-flex items-center gap-1">
-                    <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <p className="mt-1 text-xs sm:text-sm text-slate-500 break-words">
+                  <span className="inline-flex items-start gap-1">
+                    <svg className="h-3.5 w-3.5 mt-0.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -69,35 +68,28 @@ const JobCard = ({ job, applyViaUs, officialHref }) => {
                         d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                       />
                     </svg>
-                    {job.location}
+                    <span>
+                      {job.location}
+                      {job.category ? ` · ${job.category}` : ''}
+                    </span>
                   </span>
-                  {job.category && (
-                    <>
-                      <span className="text-slate-300">·</span>
-                      <span>{job.category}</span>
-                    </>
-                  )}
                 </p>
               </div>
 
-              <div className="text-right shrink-0">
+              <div className="sm:text-right shrink-0 sm:pl-3">
                 <p className="text-sm font-semibold text-slate-900">{job.salary || 'As per norms'}</p>
                 {postedLabel && <p className="text-xs text-slate-400 mt-0.5">{postedLabel}</p>}
               </div>
             </div>
 
-            {/* Posted by row — LinkedIn style */}
-            <div className="mt-3 flex flex-wrap items-center gap-2 text-xs sm:text-sm">
-              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-slate-700">
-                <span
-                  className="h-2 w-2 rounded-full shrink-0"
-                  style={{ backgroundColor: brand.color }}
-                />
-                {poster.line}
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 max-w-full px-2.5 py-1 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700">
+                <span className="h-2 w-2 rounded-full shrink-0" style={{ backgroundColor: brand.color }} />
+                <span className="truncate">{poster.line}</span>
               </span>
               {job.level && (
                 <span
-                  className={`px-2.5 py-1 rounded-full text-xs font-semibold ${
+                  className={`px-2.5 py-1 rounded-full text-xs font-semibold whitespace-nowrap ${
                     levelColors[job.level] || 'bg-slate-100 text-slate-700'
                   }`}
                 >
@@ -105,23 +97,15 @@ const JobCard = ({ job, applyViaUs, officialHref }) => {
                 </span>
               )}
               {job.type && (
-                <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
+                <span className="px-2.5 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 whitespace-nowrap">
                   {job.type}
-                </span>
-              )}
-              {job.live && (
-                <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
-                  Live feed
                 </span>
               )}
             </div>
           </div>
         </div>
 
-        {/* Description */}
-        <p className="mt-4 text-slate-600 text-sm sm:text-base leading-relaxed text-left line-clamp-3">
-          {job.description}
-        </p>
+        <p className="mt-4 text-slate-600 text-sm leading-relaxed text-left line-clamp-3">{job.description}</p>
 
         {job.tags?.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-1.5">
@@ -136,20 +120,19 @@ const JobCard = ({ job, applyViaUs, officialHref }) => {
           </div>
         )}
 
-        {/* Certificates */}
-        <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50/90 p-3.5 text-left">
-          <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-3.5 text-left">
+          <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
             <p className="text-xs font-bold uppercase tracking-wide text-amber-950">
-              QATI certificates required (max 2)
+              QATI certificates (max 2)
             </p>
             <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white text-amber-900 border border-amber-200">
               {certs.length}/2
             </span>
           </div>
-          <ul className="mt-2 space-y-1.5">
+          <ul className="space-y-2">
             {certs.slice(0, 2).map((c, idx) => (
-              <li key={c.id} className="flex items-center justify-between gap-2 text-sm">
-                <span className="text-slate-800 truncate">
+              <li key={c.id} className="flex flex-col xs:flex-row sm:flex-row sm:items-center sm:justify-between gap-1 text-sm">
+                <span className="text-slate-800 break-words">
                   {idx === 0 && <span className="font-semibold text-sky-900">Primary · </span>}
                   {c.title}
                 </span>
@@ -157,7 +140,7 @@ const JobCard = ({ job, applyViaUs, officialHref }) => {
                   href={c.url || COURSES_PLATFORM}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sky-700 font-semibold hover:underline shrink-0 text-xs"
+                  className="text-sky-700 font-semibold hover:underline shrink-0 text-xs sm:text-sm"
                 >
                   Enrol →
                 </a>
@@ -166,16 +149,15 @@ const JobCard = ({ job, applyViaUs, officialHref }) => {
           </ul>
         </div>
 
-        {/* Actions */}
-        <div className="mt-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-4 border-t border-slate-100">
+        <div className="mt-5 flex flex-col gap-3 pt-4 border-t border-slate-100">
           <p className="text-xs text-slate-500 text-left">
             Hiring: <strong className="text-slate-700">{brand.name}</strong>
             {brand.tagline ? ` · ${brand.tagline}` : ''}
           </p>
-          <div className="flex flex-col sm:flex-row gap-2">
+          <div className="flex flex-col sm:flex-row gap-2 w-full">
             <Link
               to={viaUs}
-              className="inline-flex justify-center items-center px-5 py-2.5 rounded-full text-sm font-semibold text-white shadow-sm transition-colors"
+              className="inline-flex flex-1 justify-center items-center px-5 py-3 rounded-xl text-sm font-semibold text-white shadow-sm text-center"
               style={{ backgroundColor: brand.color }}
             >
               Easy Apply via Runway2Sky
@@ -185,7 +167,7 @@ const JobCard = ({ job, applyViaUs, officialHref }) => {
                 href={official}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex justify-center items-center px-5 py-2.5 rounded-full text-sm font-semibold border border-slate-300 text-slate-700 hover:bg-slate-50"
+                className="inline-flex flex-1 justify-center items-center px-5 py-3 rounded-xl text-sm font-semibold border-2 border-slate-300 text-slate-700 hover:bg-slate-50 text-center"
               >
                 {brand.name} careers
               </a>
