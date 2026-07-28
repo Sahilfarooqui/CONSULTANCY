@@ -43,7 +43,7 @@ const Apply = () => {
   const activeCert = courses.find((c) => c.id === activeCertId) || primary;
 
   const formspreeUrl = `https://formspree.io/f/${appConfig.formspreeId}`;
-  const waNumber = (appConfig.contact.whatsapp || '').replace(/\D/g, '');
+  const waNumber = String(appConfig.contact.whatsapp || '').replace(/\D/g, '');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -141,10 +141,10 @@ const Apply = () => {
         {/* Required certificates */}
         <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-left">
           <h2 className="text-lg font-bold text-amber-950">
-            Required: partner certificates (max 2 · Qatar / QATI)
+            Partner certificates (Qatar Advanced Training Institute)
           </h2>
           <p className="mt-1 text-sm text-amber-900/90">
-            Choose <strong>one</strong> certificate from the list below (max 2 shown per job), then enrol on{' '}
+            Select a certificate for this role, then enrol on{' '}
             <a
               href={COURSES_PLATFORM}
               target="_blank"
@@ -153,7 +153,7 @@ const Apply = () => {
             >
               qataradvancedtraininginstitute.store
             </a>
-            . Applications without certification commitment are not accepted.
+            .
           </p>
           <div className="mt-4 space-y-3">
             {certs.map((c) => {

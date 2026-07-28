@@ -195,8 +195,23 @@ const Contact = () => {
                       />
                     </svg>
                     <div>
-                      <p className="text-slate-900 font-medium">Phone</p>
-                      <p className="text-slate-600">{appConfig.contact.phone}</p>
+                      <p className="text-slate-900 font-medium">Phone / WhatsApp</p>
+                      <a
+                        href={`tel:${appConfig.contact.phoneTel || appConfig.contact.phone}`}
+                        className="text-sky-700 font-medium hover:underline"
+                      >
+                        {appConfig.contact.phone}
+                      </a>
+                      <p className="mt-1">
+                        <a
+                          href={`https://wa.me/${appConfig.contact.whatsapp}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-emerald-700 font-medium hover:underline text-sm"
+                        >
+                          Chat on WhatsApp
+                        </a>
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start">
@@ -210,7 +225,12 @@ const Contact = () => {
                     </svg>
                     <div>
                       <p className="text-slate-900 font-medium">Email</p>
-                      <p className="text-slate-600">{appConfig.contact.email}</p>
+                      <a
+                        href={`mailto:${appConfig.contact.email}`}
+                        className="text-sky-700 font-medium hover:underline break-all"
+                      >
+                        {appConfig.contact.email}
+                      </a>
                     </div>
                   </div>
                 </div>

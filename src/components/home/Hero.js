@@ -28,7 +28,7 @@ const Hero = () => {
 
           <p className="mt-4 text-base sm:text-lg text-slate-200 leading-relaxed max-w-2xl">
             Cabin crew, ground staff and airport jobs. Apply via Runway2Sky — get required certificates from our Qatar
-            partner QATI (max 2 per job).
+            partner QATI.
           </p>
 
           <div className="mt-7 flex flex-col sm:flex-row gap-3">

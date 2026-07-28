@@ -13,9 +13,13 @@ const appConfig = {
       'Al Saad Main Street After Ramada Signal,',
       'Doha, Qatar',
     ],
-    phone: '+974 7049 4949',
-    email: 'careers@runway2sky.online',
-    whatsapp: '+97470494949',
+    /** Display phone */
+    phone: '9289199839',
+    /** tel: link */
+    phoneTel: '+919289199839',
+    email: 'runway2skyy@gmail.com',
+    /** WhatsApp digits with country code (India) */
+    whatsapp: '919289199839',
   },
   /**
    * Formspree form ID — applications & contact go here as email.

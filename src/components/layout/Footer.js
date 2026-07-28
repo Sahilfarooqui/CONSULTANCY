@@ -76,8 +76,18 @@ const Footer = () => {
                 <li key={line}>{line}</li>
               ))}
               <li className="pt-2">
-                <a href={`tel:${contact.phone.replace(/\s/g, '')}`} className="hover:text-white">
-                  {contact.phone}
+                <a href={`tel:${contact.phoneTel || contact.phone}`} className="hover:text-white">
+                  Phone: {contact.phone}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`https://wa.me/${contact.whatsapp}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white"
+                >
+                  WhatsApp: {contact.phone}
                 </a>
               </li>
               <li>
