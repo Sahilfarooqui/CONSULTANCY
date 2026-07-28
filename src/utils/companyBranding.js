@@ -1,140 +1,240 @@
 /**
- * Company branding for LinkedIn-style job cards (logo, color, display name).
+ * Company branding for LinkedIn-style job cards.
+ * Logos are rendered locally (no Clearbit) so they always show.
  */
 
 const BRANDS = [
   {
     match: [/indigo/i, /goindigo/i, /interglobe/i],
     name: 'IndiGo',
-    domain: 'goindigo.in',
+    short: '6E',
     color: '#EF5B25',
+    color2: '#0B1F3A',
     tagline: 'India’s largest airline',
   },
   {
     match: [/spice\s*jet/i, /spicejet/i],
     name: 'SpiceJet',
-    domain: 'spicejet.com',
+    short: 'SG',
     color: '#E31837',
+    color2: '#B01028',
     tagline: 'Domestic airline',
   },
   {
-    match: [/air\s*india\s*express/i, /aix/i],
+    match: [/air\s*india\s*express/i],
     name: 'Air India Express',
-    domain: 'airindiaexpress.com',
+    short: 'IX',
     color: '#C8102E',
+    color2: '#8B0A1E',
     tagline: 'Low-cost carrier',
   },
   {
     match: [/air\s*india/i, /airindia/i],
     name: 'Air India',
-    domain: 'airindia.com',
+    short: 'AI',
     color: '#DA0E29',
+    color2: '#8B0000',
     tagline: 'National carrier',
   },
   {
     match: [/akasa/i],
     name: 'Akasa Air',
-    domain: 'akasaair.com',
+    short: 'QP',
     color: '#FF6B00',
+    color2: '#C45400',
     tagline: 'Indian airline',
   },
   {
     match: [/vistara/i],
     name: 'Vistara',
-    domain: 'airvistara.com',
-    color: '#4B0082',
+    short: 'UK',
+    color: '#5B2C6F',
+    color2: '#4B0082',
     tagline: 'Full-service airline',
   },
   {
     match: [/alliance\s*air/i],
     name: 'Alliance Air',
-    domain: 'allianceair.in',
+    short: '9I',
     color: '#003366',
+    color2: '#001a33',
     tagline: 'Regional airline',
   },
   {
     match: [/emirates/i],
     name: 'Emirates',
-    domain: 'emirates.com',
+    short: 'EK',
     color: '#D71921',
+    color2: '#8B0000',
     tagline: 'Global airline',
   },
   {
     match: [/qatar\s*airways/i],
     name: 'Qatar Airways',
-    domain: 'qatarairways.com',
+    short: 'QR',
     color: '#5C0632',
+    color2: '#3D0421',
     tagline: 'Global airline',
   },
   {
     match: [/etihad/i],
     name: 'Etihad',
-    domain: 'etihad.com',
+    short: 'EY',
     color: '#BD8B13',
+    color2: '#8B6914',
     tagline: 'Global airline',
   },
   {
     match: [/ai\s*sats/i, /aisats/i],
     name: 'AI SATS',
-    domain: 'aisats.in',
+    short: 'AS',
     color: '#1B4F72',
+    color2: '#0E2F45',
     tagline: 'Ground handling',
   },
   {
     match: [/celebi/i],
     name: 'Celebi',
-    domain: 'celebiaviation.com',
+    short: 'CB',
     color: '#0066A1',
+    color2: '#004466',
     tagline: 'Ground handling',
   },
   {
-    match: [/bird\s*group/i, /bird airport/i],
+    match: [/bird\s*group/i, /bird airport/i, /bird\s*\//i],
     name: 'Bird Group',
-    domain: 'bird.in',
+    short: 'BD',
     color: '#E67E22',
+    color2: '#B35F12',
     tagline: 'Airport services',
   },
   {
     match: [/blue\s*dart/i],
     name: 'Blue Dart Aviation',
-    domain: 'bluedart.com',
+    short: 'BZ',
     color: '#0033A0',
+    color2: '#001F66',
     tagline: 'Air cargo',
   },
   {
     match: [/runway2sky/i],
     name: 'Runway2Sky',
-    domain: 'runway2sky.online',
+    short: 'R2',
     color: '#0284c7',
+    color2: '#0369a1',
     tagline: 'Aviation careers',
   },
   {
     match: [/gmr/i, /hyderabad airport/i, /rgia/i],
     name: 'GMR Airports',
-    domain: 'gmrgroup.in',
+    short: 'GM',
     color: '#C41230',
+    color2: '#8B0C22',
     tagline: 'Airport operator',
   },
   {
     match: [/adani/i],
     name: 'Adani Airport Holdings',
-    domain: 'adani.com',
+    short: 'AD',
     color: '#1B4F9C',
+    color2: '#0F2F66',
     tagline: 'Airport operator',
   },
   {
-    match: [/delhi\s*airport/i, /dial/i, /igia/i],
-    name: 'Delhi Airport (DIAL)',
-    domain: 'newdelhiairport.in',
+    match: [/delhi\s*airport/i, /dial/i, /igia/i, /new delhi airport/i],
+    name: 'Delhi Airport',
+    short: 'DL',
     color: '#003366',
+    color2: '#001a33',
     tagline: 'Airport',
   },
   {
     match: [/mumbai\s*airport/i, /csmia/i, /miav/i],
     name: 'Mumbai Airport',
-    domain: 'csia.in',
+    short: 'MB',
     color: '#8B0000',
+    color2: '#5C0000',
     tagline: 'Airport',
+  },
+  {
+    match: [/travel\s*agency/i, /gsa/i],
+    name: 'Travel / GSA Partner',
+    short: 'TA',
+    color: '#0f766e',
+    color2: '#115e59',
+    tagline: 'Ticketing partner',
+  },
+  {
+    match: [/ground\s*handler/i, /ground\s*handling/i, /groundforce/i],
+    name: 'Ground Handler',
+    short: 'GH',
+    color: '#475569',
+    color2: '#334155',
+    tagline: 'Airport ground services',
+  },
+  {
+    match: [/bpo/i, /call\s*centre/i, /call\s*center/i],
+    name: 'Airline BPO Partner',
+    short: 'BP',
+    color: '#7c3aed',
+    color2: '#5b21b6',
+    tagline: 'Customer care',
+  },
+  {
+    match: [/cisf/i, /security/i, /avsec/i],
+    name: 'Airport Security',
+    short: 'SC',
+    color: '#1e3a5f',
+    color2: '#0f2744',
+    tagline: 'Security services',
+  },
+  {
+    match: [/lounge/i, /hospitality/i],
+    name: 'Airport Lounge',
+    short: 'LV',
+    color: '#92400e',
+    color2: '#78350f',
+    tagline: 'Premium lounge',
+  },
+  {
+    match: [/mro/i, /maintenance/i, /ame/i],
+    name: 'MRO / Engineering',
+    short: 'MR',
+    color: '#0e7490',
+    color2: '#155e75',
+    tagline: 'Aircraft maintenance',
+  },
+  {
+    match: [/cargo/i],
+    name: 'Air Cargo',
+    short: 'CG',
+    color: '#1d4ed8',
+    color2: '#1e3a8a',
+    tagline: 'Cargo operations',
+  },
+  {
+    match: [/naukri/i],
+    name: 'Naukri listing',
+    short: 'NK',
+    color: '#4f46e5',
+    color2: '#3730a3',
+    tagline: 'Job portal',
+  },
+  {
+    match: [/indeed/i],
+    name: 'Indeed listing',
+    short: 'IN',
+    color: '#2557a7',
+    color2: '#1a3d75',
+    tagline: 'Job portal',
+  },
+  {
+    match: [/linkedin/i],
+    name: 'LinkedIn listing',
+    short: 'LI',
+    color: '#0A66C2',
+    color2: '#004182',
+    tagline: 'Job portal',
   },
 ];
 
@@ -150,36 +250,26 @@ function initials(name) {
 }
 
 /**
- * Resolve brand + logo URLs for a job company string.
+ * Resolve brand for a job company string — always has color + short code for logo tile.
  */
 export function getCompanyBrand(companyName = '') {
   const raw = String(companyName || 'Company').trim();
   const found = BRANDS.find((b) => b.match.some((re) => re.test(raw)));
 
-  const name = found?.name || raw.split(/[|/–—-]/)[0].trim() || 'Company';
-  const domain = found?.domain || null;
-  const color = found?.color || '#0f172a';
+  const name = found?.name || raw.split(/[|/–—]/)[0].trim() || 'Company';
+  const color = found?.color || '#0ea5e9';
+  const color2 = found?.color2 || '#0369a1';
+  const short = found?.short || initials(name);
   const tagline = found?.tagline || 'Hiring on Runway2Sky';
-
-  // Primary: Clearbit; fallbacks: Google s2 favicon; final: UI Avatars
-  const logoCandidates = [];
-  if (domain) {
-    logoCandidates.push(`https://logo.clearbit.com/${domain}`);
-    logoCandidates.push(`https://www.google.com/s2/favicons?domain=${domain}&sz=128`);
-  }
-  logoCandidates.push(
-    `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=${color.replace('#', '')}&color=fff&size=128&bold=true&format=png`
-  );
 
   return {
     name,
     originalName: raw,
-    domain,
+    short,
     color,
+    color2,
     tagline,
-    initials: initials(name),
-    logoUrl: logoCandidates[0],
-    logoCandidates,
+    initials: short,
     isKnownAirline: Boolean(found),
   };
 }
