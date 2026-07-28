@@ -15,7 +15,14 @@ const appConfig = {
     ],
     phone: '+974 7049 4949',
     email: 'careers@runway2sky.online',
+    whatsapp: '+97470494949',
   },
+  /**
+   * Formspree form ID — applications & contact go here as email.
+   * Create free form at https://formspree.io → paste ID below
+   * Or set REACT_APP_FORMSPREE_ID in Render env.
+   */
+  formspreeId: process.env.REACT_APP_FORMSPREE_ID || 'xvgrqjny',
   partners: {
     courses: {
       name: 'Qatar Advanced Training Institute',

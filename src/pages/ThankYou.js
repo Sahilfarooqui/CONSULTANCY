@@ -1,7 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+import appConfig from '../config/appConfig';
 
 const ThankYou = () => {
+  const [params] = useSearchParams();
+  const isApply = params.get('type') === 'apply';
+
   return (
     <div className="flex items-center justify-center min-h-[60vh] bg-slate-50 py-16 px-4">
       <div className="bg-white p-10 rounded-2xl shadow-soft border border-slate-100 text-center max-w-md">
@@ -10,9 +14,16 @@ const ThankYou = () => {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h1 className="text-3xl font-bold text-slate-900 mb-3">Thank you!</h1>
-        <p className="text-slate-600 mb-8">
-          Your message has been sent to the Runway2Sky team. We will get back to you shortly.
+        <h1 className="text-3xl font-bold text-slate-900 mb-3">
+          {isApply ? 'Application received!' : 'Thank you!'}
+        </h1>
+        <p className="text-slate-600 mb-4">
+          {isApply
+            ? 'Your application was sent to the Runway2Sky team. We will contact you on phone/email if shortlisted or for next steps.'
+            : 'Your message has been sent. We will get back to you shortly.'}
+        </p>
+        <p className="text-sm text-slate-500 mb-8">
+          Also save our number: {appConfig.contact.phone} · {appConfig.contact.email}
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
@@ -25,7 +36,7 @@ const ThankYou = () => {
             to="/jobs"
             className="inline-block bg-slate-100 text-slate-800 px-6 py-3 rounded-lg font-semibold hover:bg-slate-200"
           >
-            Browse Jobs
+            More jobs
           </Link>
         </div>
       </div>

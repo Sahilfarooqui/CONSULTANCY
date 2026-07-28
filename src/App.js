@@ -10,6 +10,7 @@ import Courses from './pages/Courses';
 import Services from './pages/Services';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Apply from './pages/Apply';
 import ThankYou from './pages/ThankYou';
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/apply" element={<Apply />} />
             <Route path="/thank-you" element={<ThankYou />} />
           </Routes>
         </main>

@@ -99,8 +99,24 @@ const Jobs = () => {
     setSearchTerm('');
   };
 
-  const applyHref = (job) => job.applyUrl || '/contact';
-  const isInternal = (url) => url && url.startsWith('/');
+  const applyViaUs = (job) => {
+    const q = new URLSearchParams({
+      jobId: job.id || '',
+      title: job.title || '',
+      company: job.company || '',
+      location: job.location || '',
+      level: job.level || '',
+    });
+    if (job.applyUrl && !job.applyUrl.startsWith('/')) {
+      q.set('external', job.applyUrl);
+    }
+    return `/apply?${q.toString()}`;
+  };
+
+  const officialHref = (job) => {
+    if (job.applyUrl && !job.applyUrl.startsWith('/')) return job.applyUrl;
+    return null;
+  };
 
   return (
     <div className="py-12 bg-slate-50 min-h-screen">
@@ -245,8 +261,8 @@ const Jobs = () => {
         ) : filteredJobs.length > 0 ? (
           <div className="grid gap-5">
             {filteredJobs.map((job) => {
-              const href = applyHref(job);
-              const internal = isInternal(href);
+              const viaUs = applyViaUs(job);
+              const official = officialHref(job);
               return (
                 <article
                   key={job.id}
@@ -316,34 +332,36 @@ const Jobs = () => {
                     )}
 
                     <div className="mt-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                      <p className="text-xs text-slate-400 text-left">
-                        Apply on the original platform. Runway2Sky aggregates listings for discovery.
+                      <p className="text-xs text-slate-500 text-left max-w-md">
+                        <strong className="text-slate-700">Apply via Runway2Sky</strong> sends your form to our team.
+                        Optional: open the airline&apos;s official careers page too.
                       </p>
-                      {internal ? (
+                      <div className="flex flex-col sm:flex-row gap-2 shrink-0">
                         <Link
-                          to={href}
+                          to={viaUs}
                           className="inline-flex justify-center items-center px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-sky-600 hover:bg-sky-700 shadow-sm transition-colors"
                         >
                           Apply via Runway2Sky
                         </Link>
-                      ) : (
-                        <a
-                          href={href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex justify-center items-center px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-sky-600 hover:bg-sky-700 shadow-sm transition-colors"
-                        >
-                          Apply on {job.source}
-                          <svg className="ml-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                            />
-                          </svg>
-                        </a>
-                      )}
+                        {official && (
+                          <a
+                            href={official}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex justify-center items-center px-5 py-2.5 rounded-lg text-sm font-semibold text-sky-800 bg-sky-50 border border-sky-200 hover:bg-sky-100 transition-colors"
+                          >
+                            Official careers
+                            <svg className="ml-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                              />
+                            </svg>
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </article>

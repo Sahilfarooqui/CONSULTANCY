@@ -1,14 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import appConfig from '../config/appConfig';
 
 const Contact = () => {
+  const navigate = useNavigate();
+  const [status, setStatus] = useState('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+  const formspreeUrl = `https://formspree.io/f/${appConfig.formspreeId}`;
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+    setErrorMsg('');
+    try {
+      const res = await fetch(formspreeUrl, {
+        method: 'POST',
+        body: new FormData(e.target),
+        headers: { Accept: 'application/json' },
+      });
+      if (res.ok) {
+        navigate('/thank-you?type=contact');
+        return;
+      }
+      const body = await res.json().catch(() => ({}));
+      throw new Error(body.error || `Send failed (${res.status})`);
+    } catch (err) {
+      setStatus('error');
+      setErrorMsg(err.message || 'Could not send message. Try email or WhatsApp.');
+    }
+  };
+
   return (
     <div className="py-12 bg-slate-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h1 className="text-3xl font-extrabold text-slate-900 sm:text-4xl">Contact Runway2Sky</h1>
           <p className="mt-4 text-lg text-slate-600 max-w-2xl mx-auto">
-            Candidates, employers, and partners — we would love to hear from you.
+            Job seekers, employers, and partners — message us and we will reply by email / WhatsApp.
           </p>
         </div>
 
@@ -16,18 +44,14 @@ const Contact = () => {
           <div className="bg-white shadow-soft rounded-2xl border border-slate-100 overflow-hidden">
             <div className="p-8 text-left">
               <h2 className="text-2xl font-bold text-slate-900 mb-6">Send a message</h2>
-              <form
-                action="https://formspree.io/f/xvgrqjny"
-                method="POST"
-                onSubmit={() => {
-                  window.location.href = '/thank-you';
-                }}
-              >
+              <form onSubmit={handleSubmit}>
                 <input type="hidden" name="_subject" value="Runway2Sky contact form" />
+                <input type="hidden" name="formType" value="contact" />
+                <input type="text" name="_gotcha" className="hidden" tabIndex={-1} autoComplete="off" />
                 <div className="grid grid-cols-1 gap-y-5 sm:grid-cols-2 sm:gap-x-6">
                   <div>
                     <label htmlFor="firstName" className="block text-sm font-medium text-slate-700">
-                      First name
+                      First name *
                     </label>
                     <input
                       type="text"
@@ -39,7 +63,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <label htmlFor="lastName" className="block text-sm font-medium text-slate-700">
-                      Last name
+                      Last name *
                     </label>
                     <input
                       type="text"
@@ -51,7 +75,7 @@ const Contact = () => {
                   </div>
                   <div className="sm:col-span-2">
                     <label htmlFor="email" className="block text-sm font-medium text-slate-700">
-                      Email
+                      Email *
                     </label>
                     <input
                       type="email"
@@ -63,7 +87,7 @@ const Contact = () => {
                   </div>
                   <div className="sm:col-span-2">
                     <label htmlFor="phone" className="block text-sm font-medium text-slate-700">
-                      Phone
+                      Phone / WhatsApp
                     </label>
                     <input
                       type="text"
@@ -81,7 +105,7 @@ const Contact = () => {
                       id="inquiryType"
                       className="mt-1 block w-full border border-slate-300 rounded-lg py-2.5 px-3 focus:ring-sky-500 focus:border-sky-500"
                     >
-                      <option>Job seeker (fresher)</option>
+                      <option>Job seeker (fresher) — want to apply</option>
                       <option>Job seeker (experienced)</option>
                       <option>Employer / recruiter posting a job</option>
                       <option>Training / courses enquiry</option>
@@ -90,7 +114,7 @@ const Contact = () => {
                   </div>
                   <div className="sm:col-span-2">
                     <label htmlFor="subject" className="block text-sm font-medium text-slate-700">
-                      Subject
+                      Subject *
                     </label>
                     <input
                       type="text"
@@ -102,23 +126,29 @@ const Contact = () => {
                   </div>
                   <div className="sm:col-span-2">
                     <label htmlFor="message" className="block text-sm font-medium text-slate-700">
-                      Message
+                      Message *
                     </label>
                     <textarea
                       id="message"
                       name="message"
                       rows="4"
                       required
-                      placeholder="Share your role of interest, CV note, or job to publish..."
+                      placeholder="Role of interest (e.g. IndiGo cabin crew), city, education..."
                       className="mt-1 block w-full border border-slate-300 rounded-lg py-2.5 px-3 focus:ring-sky-500 focus:border-sky-500"
                     />
                   </div>
+                  {status === 'error' && (
+                    <div className="sm:col-span-2 rounded-lg bg-rose-50 border border-rose-100 text-rose-800 text-sm p-3">
+                      {errorMsg}
+                    </div>
+                  )}
                   <div className="sm:col-span-2">
                     <button
                       type="submit"
-                      className="w-full inline-flex items-center justify-center px-6 py-3 rounded-lg text-base font-semibold text-white bg-sky-600 hover:bg-sky-700"
+                      disabled={status === 'sending'}
+                      className="w-full inline-flex items-center justify-center px-6 py-3 rounded-lg text-base font-semibold text-white bg-sky-600 hover:bg-sky-700 disabled:opacity-60"
                     >
-                      Send Message
+                      {status === 'sending' ? 'Sending…' : 'Send Message'}
                     </button>
                   </div>
                 </div>
@@ -188,18 +218,16 @@ const Contact = () => {
             </div>
 
             <div className="bg-gradient-to-br from-sky-900 to-slate-900 rounded-2xl p-8 text-white text-left">
-              <h3 className="text-lg font-bold">Employers & recruiters</h3>
+              <h3 className="text-lg font-bold">Applying for a job?</h3>
               <p className="mt-2 text-sky-100 text-sm leading-relaxed">
-                Send us LinkedIn links or job descriptions and we will list them on the Runway2Sky board so aviation
-                candidates can find them fast.
+                Use <strong>Apply via Runway2Sky</strong> on any job card — we get your full application (name, phone,
+                city, CV link) by email.
               </p>
               <a
-                href={appConfig.partners.courses.url}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/jobs"
                 className="mt-4 inline-block text-sm font-semibold text-sky-300 hover:text-white"
               >
-                Training partner: {appConfig.partners.courses.shortName} →
+                Browse jobs →
               </a>
             </div>
           </div>
