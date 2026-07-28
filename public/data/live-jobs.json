@@ -1,9 +1,10 @@
 {
-  "updatedAt": "2026-07-28T08:18:01.388Z",
+  "updatedAt": "2026-07-28T13:43:33.540Z",
   "domain": "runway2sky.online",
-  "count": 18,
-  "liveCount": 0,
+  "count": 19,
+  "liveCount": 1,
   "sources": [
+    "Arbeitnow",
     "Direct",
     "Bayt",
     "GulfTalent",
@@ -11,8 +12,26 @@
     "Indeed",
     "Company"
   ],
-  "durationMs": 2394,
+  "durationMs": 1765,
   "jobs": [
+    {
+      "id": "live-YXJiZWl0bm93LXNlbmlvci1m",
+      "title": "Senior Flight Control System Engineer",
+      "company": "Maple Aviation",
+      "location": "Ottobrunn",
+      "type": "Full-time",
+      "category": "Aerospace Engineering",
+      "level": "Senior",
+      "salary": "See listing",
+      "source": "Arbeitnow",
+      "postedAt": "2026-07-28",
+      "applyUrl": "https://www.arbeitnow.com/jobs/companies/maple-aviation/senior-flight-control-system-engineer-ottobrunn-76756",
+      "description": "We are an innovative aerospace startup seeking a Senior Flight Control System Engineer to join our team and who is curious about new technologies such as Autonomous operation and INDI control to develop our cutting-edge drone technology. At Maple Aviation we develop a unique Tail-Sitter Drone, that flies with one propeller only and is controlled in position via a flap-thrust-vectoring system. In this role, you will work closely with our research and development team to develop our Drone Flight Control System and test drone prototypes from concept to final production. You will utilize your skil",
+      "tags": [
+        "Engineering"
+      ],
+      "live": true
+    },
     {
       "id": "avs-008",
       "title": "Aviation Graduate Trainee Programme",
