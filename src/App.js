@@ -30,6 +30,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/apply" element={<Apply />} />
             <Route path="/install" element={<Install />} />
+            <Route path="/app" element={<Install />} />
             <Route path="/thank-you" element={<ThankYou />} />
           </Routes>
         </main>

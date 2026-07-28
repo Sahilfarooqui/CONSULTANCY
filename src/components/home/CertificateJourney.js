@@ -1,108 +1,73 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { COURSES_PLATFORM } from '../../data/courses';
-import appConfig from '../../config/appConfig';
 
 const STEPS = [
   {
-    n: '1',
-    title: 'Find a job',
-    desc: 'Browse IndiGo, SpiceJet, Air India and more. Pick a role that fits you.',
-    icon: '🔍',
-    to: '/jobs',
-    cta: 'See jobs',
+    n: '01',
+    title: 'Discover roles',
+    desc: 'Browse openings with IndiGo, Air India, SpiceJet, Akasa and airport partners.',
+    link: '/jobs',
+    label: 'View jobs',
   },
   {
-    n: '2',
-    title: 'Get certified',
-    desc: 'Take the matching course on QATI (our Qatar partner), finish the test, get your certificate.',
-    icon: '🎓',
+    n: '02',
+    title: 'Complete training',
+    desc: 'Enrol in the recommended QATI programme, complete assessments, earn your certificate.',
     href: COURSES_PLATFORM,
-    cta: 'Open courses',
+    label: 'Open QATI',
   },
   {
-    n: '3',
-    title: 'Apply with us',
-    desc: 'Submit your form on Runway2Sky. We guide you and keep you updated on WhatsApp.',
-    icon: '✅',
-    to: '/contact',
-    cta: 'Contact us',
+    n: '03',
+    title: 'Apply with confidence',
+    desc: 'Submit your application through Runway2Sky. Our team supports you through the process.',
+    link: '/contact',
+    label: 'Contact team',
   },
 ];
 
-/**
- * Simple 3-step path — easy for students to understand.
- */
 const CertificateJourney = () => {
-  const wa = `https://wa.me/${appConfig.contact.whatsapp}?text=${encodeURIComponent(
-    'Hi Runway2Sky, explain how to apply and get a certificate.'
-  )}`;
-
   return (
-    <section className="py-12 sm:py-16 bg-white">
+    <section className="py-16 sm:py-20 bg-white border-b border-slate-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8 sm:mb-10">
-          <p className="text-sky-600 text-sm font-semibold uppercase tracking-wide">Easy 3 steps</p>
-          <h2 className="mt-2 text-2xl sm:text-3xl font-extrabold text-slate-900">
-            How Runway2Sky works
+        <div className="max-w-2xl mx-auto text-center mb-12">
+          <p className="text-xs font-semibold tracking-[0.2em] uppercase text-sky-600">Process</p>
+          <h2 className="mt-3 text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight">
+            A clear path from interest to application
           </h2>
-          <p className="mt-2 text-slate-600 max-w-xl mx-auto text-sm sm:text-base">
-            Job → Certificate → Apply. Simple for freshers.
+          <p className="mt-3 text-slate-600 text-sm sm:text-base leading-relaxed">
+            Three simple stages designed for freshers entering aviation.
           </p>
         </div>
 
-        <div className="grid gap-4 sm:gap-6 md:grid-cols-3">
-          {STEPS.map((s) => (
+        <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+          {STEPS.map((s, i) => (
             <div
               key={s.n}
-              className="relative rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6 text-left flex flex-col"
+              className="relative rounded-2xl border border-slate-200 bg-slate-50/80 p-6 sm:p-8 text-left"
             >
-              <div className="flex items-center gap-3 mb-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-600 text-white font-bold text-sm">
-                  {s.n}
-                </span>
-                <span className="text-2xl" aria-hidden>
-                  {s.icon}
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900">{s.title}</h3>
-              <p className="mt-2 text-sm text-slate-600 leading-relaxed flex-1">{s.desc}</p>
-              {s.to ? (
-                <Link
-                  to={s.to}
-                  className="mt-4 inline-flex text-sm font-semibold text-sky-700 hover:text-sky-900"
-                >
-                  {s.cta} →
+              {i < STEPS.length - 1 && (
+                <div className="hidden md:block absolute top-12 -right-4 w-8 h-px bg-slate-200 z-10" aria-hidden />
+              )}
+              <p className="text-xs font-semibold tracking-widest text-sky-600">{s.n}</p>
+              <h3 className="mt-3 text-lg font-semibold text-slate-900">{s.title}</h3>
+              <p className="mt-2 text-sm text-slate-600 leading-relaxed min-h-[4rem]">{s.desc}</p>
+              {s.link ? (
+                <Link to={s.link} className="mt-5 inline-flex text-sm font-semibold text-sky-700 hover:text-sky-900">
+                  {s.label} →
                 </Link>
               ) : (
                 <a
                   href={s.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-4 inline-flex text-sm font-semibold text-sky-700 hover:text-sky-900"
+                  className="mt-5 inline-flex text-sm font-semibold text-sky-700 hover:text-sky-900"
                 >
-                  {s.cta} →
+                  {s.label} →
                 </a>
               )}
             </div>
           ))}
-        </div>
-
-        <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-          <Link
-            to="/jobs"
-            className="inline-flex justify-center items-center px-6 py-3 rounded-xl font-semibold bg-sky-600 text-white hover:bg-sky-700"
-          >
-            Start with jobs
-          </Link>
-          <a
-            href={wa}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex justify-center items-center px-6 py-3 rounded-xl font-semibold bg-emerald-600 text-white hover:bg-emerald-500"
-          >
-            Ask on WhatsApp
-          </a>
         </div>
       </div>
     </section>

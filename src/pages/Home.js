@@ -8,13 +8,13 @@ import AppPromo from '../components/home/AppPromo';
 
 const Home = () => {
   return (
-    <div>
+    <div className="bg-white">
       <Hero />
       <CertificateJourney />
       <FeaturedJobs />
       <Services />
-      <CoursesCTA />
       <AppPromo />
+      <CoursesCTA />
     </div>
   );
 };

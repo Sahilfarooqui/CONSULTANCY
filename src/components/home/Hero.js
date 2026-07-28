@@ -1,67 +1,65 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import appConfig from '../../config/appConfig';
 
 const Hero = () => {
-  const wa = `https://wa.me/${appConfig.contact.whatsapp}?text=${encodeURIComponent(
-    'Hi Runway2Sky, I am looking for aviation jobs.'
-  )}`;
-
   return (
-    <section className="relative bg-slate-950 overflow-hidden">
+    <section className="relative bg-[#0a1628] overflow-hidden">
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-35"
+        className="absolute inset-0 bg-cover bg-center scale-105"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1600&q=80')",
+            "url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1800&q=80')",
         }}
       />
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-950/95 via-slate-950/90 to-slate-950" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0a1628] via-[#0a1628]/95 to-[#0a1628]/70" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-transparent to-[#0a1628]/40" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-28">
         <div className="max-w-2xl text-left">
-          <p className="inline-flex items-center gap-2 text-xs font-semibold text-sky-200 bg-sky-500/20 border border-sky-400/30 rounded-full px-3 py-1">
-            ✈️ India airline jobs for freshers
+          <p className="text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase text-sky-300/90">
+            Aviation careers · India
           </p>
 
-          <h1 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
-            Find cabin crew &amp; airport jobs.
-            <span className="block text-sky-300 mt-1">Apply in minutes.</span>
+          <h1 className="mt-4 text-3xl sm:text-4xl lg:text-5xl font-semibold text-white tracking-tight leading-[1.15]">
+            Launch your career with
+            <span className="block mt-1 text-sky-300 font-semibold">
+              India&apos;s leading airlines
+            </span>
           </h1>
 
-          <p className="mt-4 text-base sm:text-lg text-slate-200 leading-relaxed">
-            IndiGo, SpiceJet, Air India, Akasa and more — listed first. We help with applications and QATI training
-            certificates.
+          <p className="mt-5 text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl font-normal">
+            Cabin crew, ground operations and airport roles with IndiGo, Air India, SpiceJet, Akasa and more.
+            Apply through Runway2Sky and complete professional training with Qatar Advanced Training Institute.
           </p>
 
-          <div className="mt-6 flex flex-col sm:flex-row gap-3">
+          <div className="mt-8 flex flex-col sm:flex-row gap-3">
             <Link
               to="/jobs"
-              className="inline-flex justify-center items-center h-12 px-6 rounded-xl text-base font-bold text-slate-900 bg-white hover:bg-sky-50 shadow-lg"
+              className="inline-flex justify-center items-center h-12 px-8 rounded-lg text-sm font-semibold tracking-wide text-[#0a1628] bg-white hover:bg-sky-50 transition shadow-lg shadow-black/20"
             >
-              Browse jobs
+              Explore open positions
             </Link>
-            <a
-              href={wa}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex justify-center items-center h-12 px-6 rounded-xl text-base font-bold text-white bg-emerald-600 hover:bg-emerald-500 shadow-lg"
+            <Link
+              to="/app"
+              className="inline-flex justify-center items-center h-12 px-8 rounded-lg text-sm font-semibold tracking-wide text-white border border-white/30 hover:bg-white/10 transition"
             >
-              WhatsApp help
-            </a>
+              Get the mobile app
+            </Link>
           </div>
 
-          <div className="mt-8 flex flex-wrap gap-2">
-            {['IndiGo', 'Air India', 'SpiceJet', 'Akasa', 'Cabin crew', 'Ground staff'].map((t) => (
-              <Link
-                key={t}
-                to={`/jobs`}
-                state={{ q: t }}
-                className="text-xs font-medium px-3 py-1.5 rounded-full bg-white/10 text-sky-100 border border-white/15 hover:bg-white/20"
-              >
-                {t}
-              </Link>
-            ))}
+          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-slate-400">
+            <span className="inline-flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
+              Freshers welcome
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
+              Top airlines first
+            </span>
+            <span className="inline-flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
+              QATI certified training
+            </span>
           </div>
         </div>
       </div>

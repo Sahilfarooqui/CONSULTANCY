@@ -105,15 +105,13 @@ const Navbar = () => {
             >
               Find Jobs
             </Link>
-            <a
-              href={`https://wa.me/919289199839`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <Link
+              to="/app"
               onClick={() => setIsMenuOpen(false)}
-              className="flex w-full items-center justify-center rounded-xl border-2 border-emerald-600 bg-emerald-50 px-4 py-3 text-base font-bold text-emerald-800"
+              className="flex w-full items-center justify-center rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-base font-semibold text-slate-900"
             >
-              WhatsApp us
-            </a>
+              Get the app
+            </Link>
           </div>
         </div>
       </>,
