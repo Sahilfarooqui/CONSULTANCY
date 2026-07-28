@@ -140,9 +140,11 @@ const Apply = () => {
 
         {/* Required certificates */}
         <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-left">
-          <h2 className="text-lg font-bold text-amber-950">Required: partner certificates (Qatar / QATI)</h2>
+          <h2 className="text-lg font-bold text-amber-950">
+            Required: partner certificates (max 2 · Qatar / QATI)
+          </h2>
           <p className="mt-1 text-sm text-amber-900/90">
-            Select the certificate that matches this job, then enrol on{' '}
+            Choose <strong>one</strong> certificate from the list below (max 2 shown per job), then enrol on{' '}
             <a
               href={COURSES_PLATFORM}
               target="_blank"

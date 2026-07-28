@@ -199,18 +199,22 @@ const courses = [
   },
 ];
 
+/** Hard cap: every job requires at most 2 QATI certificates */
+export const MAX_CERTS_PER_JOB = 2;
+
 /**
  * Return QATI certificates relevant to a job (by category + keywords).
- * Always includes at least Aviation English or Career Readiness as baseline.
+ * Max 2 certificates per job: 1 role-primary + 1 supporting (e.g. Aviation English).
  */
 export function getCertificatesForJob(job = {}) {
   const category = (job.category || '').trim();
   const blob = `${job.title || ''} ${job.description || ''} ${(job.tags || []).join(' ')}`.toLowerCase();
 
-  const matched = courses.filter((c) => {
+  const roleMatched = courses.filter((c) => {
+    // Skip soft-skill / general certs in first pass — add at most one support cert later
+    if (c.id === 'crs-004' || c.id === 'crs-010') return false;
     if (c.requiredFor && c.requiredFor.includes(category)) return true;
     if (c.category && c.category === category) return true;
-    // keyword fallbacks
     if (/cabin|flight attendant|purser|in-flight|inflight/.test(blob) && c.id === 'crs-001') return true;
     if (/ground|ramp|baggage|check-in|passenger service|psa/.test(blob) && c.id === 'crs-002') return true;
     if (/ticket|reservation|gds|call centre|call center|customer care|retail/.test(blob) && c.id === 'crs-003')
@@ -223,26 +227,36 @@ export function getCertificatesForJob(job = {}) {
     return false;
   });
 
-  // Always require Aviation English as soft-skill cert for India fresher pipeline
+  // Prefer category-exact match as primary
+  roleMatched.sort((a, b) => {
+    const aHit = a.requiredFor?.includes(category) || a.category === category ? 0 : 1;
+    const bHit = b.requiredFor?.includes(category) || b.category === category ? 0 : 1;
+    return aHit - bHit;
+  });
+
+  const list = [];
+  if (roleMatched[0]) list.push(roleMatched[0]);
+
+  // Second slot: Aviation English (fresher soft skill) OR second role cert if English already primary path
   const english = courses.find((c) => c.id === 'crs-004');
   const readiness = courses.find((c) => c.id === 'crs-010');
 
-  const byId = new Map();
-  for (const c of matched) byId.set(c.id, c);
-  if (english) byId.set(english.id, english);
-  if (!byId.size && readiness) byId.set(readiness.id, readiness);
+  if (list.length < MAX_CERTS_PER_JOB) {
+    if (english && !list.find((c) => c.id === english.id)) {
+      list.push(english);
+    } else if (roleMatched[1]) {
+      list.push(roleMatched[1]);
+    } else if (readiness && !list.find((c) => c.id === readiness.id)) {
+      list.push(readiness);
+    }
+  }
 
-  // Primary cert first (role-specific), then English
-  const list = Array.from(byId.values());
-  list.sort((a, b) => {
-    if (a.id === 'crs-004') return 1;
-    if (b.id === 'crs-004') return -1;
-    if (a.requiredFor?.includes(category)) return -1;
-    if (b.requiredFor?.includes(category)) return 1;
-    return 0;
-  });
+  // Fallback if nothing matched
+  if (!list.length && readiness) list.push(readiness);
+  if (!list.length && english) list.push(english);
+  if (!list.length && courses[0]) list.push(courses[0]);
 
-  return list;
+  return list.slice(0, MAX_CERTS_PER_JOB);
 }
 
 /** Primary (must-select) certificate for a job */

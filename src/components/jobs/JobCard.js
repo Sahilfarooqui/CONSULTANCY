@@ -140,14 +140,14 @@ const JobCard = ({ job, applyViaUs, officialHref }) => {
         <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50/90 p-3.5 text-left">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <p className="text-xs font-bold uppercase tracking-wide text-amber-950">
-              QATI certificates required
+              QATI certificates required (max 2)
             </p>
             <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-white text-amber-900 border border-amber-200">
-              Mandatory
+              {certs.length}/2
             </span>
           </div>
           <ul className="mt-2 space-y-1.5">
-            {certs.slice(0, 3).map((c, idx) => (
+            {certs.slice(0, 2).map((c, idx) => (
               <li key={c.id} className="flex items-center justify-between gap-2 text-sm">
                 <span className="text-slate-800 truncate">
                   {idx === 0 && <span className="font-semibold text-sky-900">Primary · </span>}
