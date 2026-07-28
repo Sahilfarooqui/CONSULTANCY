@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { loadJobs, extractFilterOptions } from '../services/jobsApi';
+import { COURSES_PLATFORM, getCertificatesForJob } from '../data/courses';
 
 const sourceColors = {
   LinkedIn: 'bg-blue-100 text-blue-800',
@@ -106,6 +107,7 @@ const Jobs = () => {
       company: job.company || '',
       location: job.location || '',
       level: job.level || '',
+      category: job.category || '',
     });
     if (job.applyUrl && !job.applyUrl.startsWith('/')) {
       q.set('external', job.applyUrl);
@@ -263,6 +265,7 @@ const Jobs = () => {
             {filteredJobs.map((job) => {
               const viaUs = applyViaUs(job);
               const official = officialHref(job);
+              const certs = getCertificatesForJob(job);
               return (
                 <article
                   key={job.id}
@@ -331,17 +334,59 @@ const Jobs = () => {
                       </div>
                     )}
 
+                    {/* QATI certificates required for this job */}
+                    <div className="mt-5 rounded-xl border border-amber-200 bg-amber-50/80 p-4 text-left">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <p className="text-sm font-bold text-amber-950">
+                          Required certificates (Qatar Advanced Training Institute)
+                        </p>
+                        <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-white text-amber-900 border border-amber-200">
+                          Mandatory to apply
+                        </span>
+                      </div>
+                      <ul className="mt-3 space-y-2">
+                        {certs.map((c, idx) => (
+                          <li key={c.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-sm">
+                            <span className="text-slate-800">
+                              <span className="font-semibold text-sky-900">{idx === 0 ? 'Primary: ' : ''}</span>
+                              {c.title}
+                              <span className="text-slate-500"> · {c.duration}</span>
+                            </span>
+                            <a
+                              href={c.url || COURSES_PLATFORM}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-sky-700 font-semibold hover:underline shrink-0"
+                            >
+                              Enrol on QATI →
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                      <p className="mt-2 text-xs text-amber-900/80">
+                        Courses available on the Qatar partner platform:{' '}
+                        <a
+                          href={COURSES_PLATFORM}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-medium underline"
+                        >
+                          qataradvancedtraininginstitute.store
+                        </a>
+                      </p>
+                    </div>
+
                     <div className="mt-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
                       <p className="text-xs text-slate-500 text-left max-w-md">
-                        <strong className="text-slate-700">Apply via Runway2Sky</strong> sends your form to our team.
-                        Optional: open the airline&apos;s official careers page too.
+                        <strong className="text-slate-700">Apply via Runway2Sky</strong> requires selecting a QATI
+                        certificate. Complete enrolment on the Qatar platform, then submit.
                       </p>
                       <div className="flex flex-col sm:flex-row gap-2 shrink-0">
                         <Link
                           to={viaUs}
                           className="inline-flex justify-center items-center px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-sky-600 hover:bg-sky-700 shadow-sm transition-colors"
                         >
-                          Apply via Runway2Sky
+                          Apply + get certificate
                         </Link>
                         {official && (
                           <a

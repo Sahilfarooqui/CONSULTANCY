@@ -18,11 +18,17 @@ const Courses = () => {
         <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-sky-900 via-slate-900 to-slate-800 text-white mb-10">
           <div className="px-6 py-12 sm:px-10 sm:py-14 grid lg:grid-cols-2 gap-8 items-center">
             <div className="text-left">
-              <p className="text-sky-300 text-sm font-semibold tracking-wide uppercase">Training Partner</p>
+              <p className="text-sky-300 text-sm font-semibold tracking-wide uppercase">
+                Mandatory partner · Qatar
+              </p>
               <h1 className="mt-2 text-3xl sm:text-4xl font-extrabold leading-tight">
-                Upskill with {partner.name}
+                Certificates for every job — {partner.shortName}
               </h1>
-              <p className="mt-4 text-sky-100 text-lg leading-relaxed">{partner.description}</p>
+              <p className="mt-4 text-sky-100 text-lg leading-relaxed">
+                Every Runway2Sky job application requires a relevant certificate from {partner.name}. Courses are
+                delivered on their Qatar platform (online access). Finish the certificate path that matches your
+                role — cabin crew, ground ops, GDS, AVSEC, and more.
+              </p>
               <div className="mt-6 flex flex-wrap gap-3">
                 <a
                   href={COURSES_PLATFORM}
