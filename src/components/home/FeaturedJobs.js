@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loadJobs } from '../../services/jobsApi';
 import fallbackJobs from '../../data/jobs';
+import CompanyLogo from '../jobs/CompanyLogo';
+import { getCompanyBrand, getPosterLabel } from '../../utils/companyBranding';
 
 const FeaturedJobs = () => {
   const [featured, setFeatured] = useState(
@@ -26,7 +28,7 @@ const FeaturedJobs = () => {
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
           <div className="text-left">
             <h2 className="text-sm font-semibold tracking-wide uppercase text-sky-600">Latest openings</h2>
-            <p className="mt-2 text-3xl font-extrabold text-slate-900">Auto-updated aviation jobs</p>
+            <p className="mt-2 text-3xl font-extrabold text-slate-900">Jobs from top airlines</p>
           </div>
           <Link to="/jobs" className="text-sky-700 font-semibold hover:text-sky-900">
             View all jobs →
@@ -34,31 +36,40 @@ const FeaturedJobs = () => {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
-          {featured.map((job) => (
-            <div
-              key={job.id}
-              className="rounded-2xl border border-slate-100 bg-slate-50/80 p-5 text-left hover:border-sky-200 hover:bg-sky-50/40 transition-colors"
-            >
-              <div className="flex flex-wrap gap-2 mb-2">
-                {job.live && (
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-                    Live
-                  </span>
-                )}
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-sky-100 text-sky-800">
-                  {job.level}
-                </span>
-                <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-white text-slate-600 border border-slate-200">
-                  via {job.source}
-                </span>
-              </div>
-              <h3 className="font-bold text-slate-900">{job.title}</h3>
-              <p className="text-sm text-slate-600 mt-1">
-                {job.company} · {job.location}
-              </p>
-              <p className="text-sm text-slate-500 mt-2 line-clamp-2">{job.description}</p>
-            </div>
-          ))}
+          {featured.map((job) => {
+            const brand = getCompanyBrand(job.company);
+            const poster = getPosterLabel(job);
+            return (
+              <Link
+                key={job.id}
+                to="/jobs"
+                className="rounded-2xl border border-slate-200 bg-white p-5 text-left hover:border-sky-300 hover:shadow-md transition-all block"
+              >
+                <div className="flex gap-3">
+                  <CompanyLogo company={job.company} size={52} />
+                  <div className="min-w-0 flex-1">
+                    <h3 className="font-bold text-slate-900 leading-snug">{job.title}</h3>
+                    <p className="text-sm font-semibold mt-0.5" style={{ color: brand.color }}>
+                      {brand.name}
+                    </p>
+                    <p className="text-xs text-slate-500 mt-0.5 truncate">{job.location}</p>
+                    <p className="text-xs text-slate-500 mt-2 flex items-center gap-1">
+                      <span
+                        className="h-1.5 w-1.5 rounded-full shrink-0"
+                        style={{ backgroundColor: brand.color }}
+                      />
+                      {poster.line}
+                    </p>
+                  </div>
+                  {job.level && (
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 h-fit shrink-0">
+                      {job.level}
+                    </span>
+                  )}
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -7,6 +7,8 @@ import courses, {
   getCertificatesForJob,
   getPrimaryCertificate,
 } from '../data/courses';
+import CompanyLogo from '../components/jobs/CompanyLogo';
+import { getCompanyBrand, getPosterLabel } from '../utils/companyBranding';
 
 /**
  * Apply via Runway2Sky — requires QATI certificate enrollment commitment.
@@ -117,14 +119,22 @@ const Apply = () => {
         </div>
 
         {(jobMeta.title || jobMeta.company) && (
-          <div className="mb-6 rounded-2xl border border-sky-100 bg-sky-50 p-5 text-left">
-            <p className="text-xs font-semibold uppercase tracking-wide text-sky-700">Applying for</p>
-            <p className="mt-1 text-lg font-bold text-slate-900">{jobMeta.title || 'Aviation role'}</p>
-            <p className="text-slate-600">
-              {jobMeta.company}
-              {jobMeta.location ? ` · ${jobMeta.location}` : ''}
-              {jobMeta.level ? ` · ${jobMeta.level}` : ''}
-            </p>
+          <div className="mb-6 rounded-2xl border border-sky-100 bg-white p-5 text-left shadow-sm">
+            <div className="flex gap-4 items-start">
+              <CompanyLogo company={jobMeta.company} size={56} />
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-sky-700">Applying for</p>
+                <p className="mt-1 text-lg font-bold text-slate-900">{jobMeta.title || 'Aviation role'}</p>
+                <p className="font-semibold" style={{ color: getCompanyBrand(jobMeta.company).color }}>
+                  {getCompanyBrand(jobMeta.company).name}
+                </p>
+                <p className="text-sm text-slate-600 mt-0.5">
+                  {jobMeta.location}
+                  {jobMeta.level ? ` · ${jobMeta.level}` : ''}
+                </p>
+                <p className="text-xs text-slate-500 mt-2">{getPosterLabel(jobMeta).line}</p>
+              </div>
+            </div>
           </div>
         )}
 

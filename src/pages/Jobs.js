@@ -1,32 +1,7 @@
 import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { loadJobs, extractFilterOptions } from '../services/jobsApi';
-import { COURSES_PLATFORM, getCertificatesForJob } from '../data/courses';
-
-const sourceColors = {
-  LinkedIn: 'bg-blue-100 text-blue-800',
-  Indeed: 'bg-indigo-100 text-indigo-800',
-  Company: 'bg-slate-100 text-slate-800',
-  GulfTalent: 'bg-amber-100 text-amber-900',
-  Bayt: 'bg-orange-100 text-orange-900',
-  Direct: 'bg-emerald-100 text-emerald-800',
-  Adzuna: 'bg-rose-100 text-rose-800',
-  Remotive: 'bg-violet-100 text-violet-800',
-  RemoteOK: 'bg-fuchsia-100 text-fuchsia-800',
-  Arbeitnow: 'bg-cyan-100 text-cyan-800',
-  Jobicy: 'bg-teal-100 text-teal-800',
-  'The Muse': 'bg-pink-100 text-pink-800',
-  'Google Jobs': 'bg-blue-100 text-blue-900',
-  'Live Feed': 'bg-sky-100 text-sky-800',
-};
-
-const levelColors = {
-  Fresher: 'bg-sky-100 text-sky-800',
-  Junior: 'bg-cyan-100 text-cyan-800',
-  Mid: 'bg-violet-100 text-violet-800',
-  Senior: 'bg-rose-100 text-rose-800',
-  Any: 'bg-slate-100 text-slate-700',
-};
+import JobCard from '../components/jobs/JobCard';
 
 const Jobs = () => {
   const [allJobs, setAllJobs] = useState([]);
@@ -262,156 +237,14 @@ const Jobs = () => {
           </div>
         ) : filteredJobs.length > 0 ? (
           <div className="grid gap-5">
-            {filteredJobs.map((job) => {
-              const viaUs = applyViaUs(job);
-              const official = officialHref(job);
-              const certs = getCertificatesForJob(job);
-              return (
-                <article
-                  key={job.id}
-                  className="bg-white shadow-soft rounded-2xl border border-slate-100 overflow-hidden hover:shadow-card transition-shadow duration-300"
-                >
-                  <div className="p-6">
-                    <div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-4">
-                      <div className="text-left">
-                        <div className="flex flex-wrap items-center gap-2 mb-2">
-                          {job.live && (
-                            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-800">
-                              Live
-                            </span>
-                          )}
-                          {job.featured && !job.live && (
-                            <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-900">
-                              Featured
-                            </span>
-                          )}
-                          <span
-                            className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                              levelColors[job.level] || 'bg-slate-100 text-slate-700'
-                            }`}
-                          >
-                            {job.level}
-                          </span>
-                          <span
-                            className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                              sourceColors[job.source] || 'bg-slate-100 text-slate-700'
-                            }`}
-                          >
-                            via {job.source}
-                          </span>
-                          <span className="px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
-                            {job.type}
-                          </span>
-                        </div>
-                        <h2 className="text-xl font-bold text-slate-900">{job.title}</h2>
-                        <p className="text-slate-600 mt-1">
-                          {job.company} · {job.location}
-                        </p>
-                        <p className="text-slate-500 text-sm mt-1">{job.category}</p>
-                      </div>
-                      <div className="text-left lg:text-right shrink-0">
-                        <p className="text-slate-900 font-semibold">{job.salary}</p>
-                        {job.postedAt && (
-                          <p className="text-xs text-slate-400 mt-1">
-                            Posted {new Date(job.postedAt).toLocaleDateString()}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-
-                    <p className="text-slate-700 mt-4 text-left leading-relaxed">{job.description}</p>
-
-                    {job.tags?.length > 0 && (
-                      <div className="mt-4 flex flex-wrap gap-2">
-                        {job.tags.slice(0, 8).map((tag) => (
-                          <span
-                            key={tag}
-                            className="text-xs px-2.5 py-1 rounded-md bg-slate-50 text-slate-600 border border-slate-200"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* QATI certificates required for this job */}
-                    <div className="mt-5 rounded-xl border border-amber-200 bg-amber-50/80 p-4 text-left">
-                      <div className="flex flex-wrap items-center justify-between gap-2">
-                        <p className="text-sm font-bold text-amber-950">
-                          Required certificates (Qatar Advanced Training Institute)
-                        </p>
-                        <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-white text-amber-900 border border-amber-200">
-                          Mandatory to apply
-                        </span>
-                      </div>
-                      <ul className="mt-3 space-y-2">
-                        {certs.map((c, idx) => (
-                          <li key={c.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-sm">
-                            <span className="text-slate-800">
-                              <span className="font-semibold text-sky-900">{idx === 0 ? 'Primary: ' : ''}</span>
-                              {c.title}
-                              <span className="text-slate-500"> · {c.duration}</span>
-                            </span>
-                            <a
-                              href={c.url || COURSES_PLATFORM}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-sky-700 font-semibold hover:underline shrink-0"
-                            >
-                              Enrol on QATI →
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                      <p className="mt-2 text-xs text-amber-900/80">
-                        Courses available on the Qatar partner platform:{' '}
-                        <a
-                          href={COURSES_PLATFORM}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="font-medium underline"
-                        >
-                          qataradvancedtraininginstitute.store
-                        </a>
-                      </p>
-                    </div>
-
-                    <div className="mt-6 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3">
-                      <p className="text-xs text-slate-500 text-left max-w-md">
-                        <strong className="text-slate-700">Apply via Runway2Sky</strong> requires selecting a QATI
-                        certificate. Complete enrolment on the Qatar platform, then submit.
-                      </p>
-                      <div className="flex flex-col sm:flex-row gap-2 shrink-0">
-                        <Link
-                          to={viaUs}
-                          className="inline-flex justify-center items-center px-5 py-2.5 rounded-lg text-sm font-semibold text-white bg-sky-600 hover:bg-sky-700 shadow-sm transition-colors"
-                        >
-                          Apply + get certificate
-                        </Link>
-                        {official && (
-                          <a
-                            href={official}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex justify-center items-center px-5 py-2.5 rounded-lg text-sm font-semibold text-sky-800 bg-sky-50 border border-sky-200 hover:bg-sky-100 transition-colors"
-                          >
-                            Official careers
-                            <svg className="ml-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                strokeWidth={2}
-                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                              />
-                            </svg>
-                          </a>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </article>
-              );
-            })}
+            {filteredJobs.map((job) => (
+              <JobCard
+                key={job.id}
+                job={job}
+                applyViaUs={applyViaUs}
+                officialHref={officialHref}
+              />
+            ))}
           </div>
         ) : (
           <div className="text-center py-16 bg-white shadow-soft rounded-2xl border border-slate-100">
