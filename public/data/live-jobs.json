@@ -1,11 +1,9 @@
 {
-  "updatedAt": "2026-07-28T01:47:07.046Z",
+  "updatedAt": "2026-07-28T08:18:01.388Z",
   "domain": "runway2sky.online",
-  "count": 21,
-  "liveCount": 3,
+  "count": 18,
+  "liveCount": 0,
   "sources": [
-    "Arbeitnow",
-    "RemoteOK",
     "Direct",
     "Bayt",
     "GulfTalent",
@@ -13,69 +11,8 @@
     "Indeed",
     "Company"
   ],
-  "durationMs": 2016,
+  "durationMs": 2394,
   "jobs": [
-    {
-      "id": "live-YXJiZWl0bm93LXNlbmlvci1w",
-      "title": "Senior Prototyping Engineer (f/m/d) – Thermal Systems & Cooling Integration",
-      "company": "Quantum-Systems GmbH",
-      "location": "Gilching, Bayern, Germany",
-      "type": "Full-time",
-      "category": "Aviation",
-      "level": "Senior",
-      "salary": "See listing",
-      "source": "Arbeitnow",
-      "postedAt": "2026-07-27",
-      "applyUrl": "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/senior-prototyping-engineer-thermal-systems-cooling-integration-gilching-264787",
-      "description": "As a Senior Prototyping Engineer – Thermal Systems & Cooling Integration , you will become an integral part of our Prototyping team, supporting the development of our Reliant platform – a next-generation long-range eVTOL unmanned aerial system designed for demanding ISR and logistics missions. Reliant combines exceptional endurance, modularity, and operational flexibility to deliver mission-critical capabilities in the most challenging environments. In this role, you will be responsible for the integration, development, and validation of thermal management and cooling systems for the aircraft.",
-      "tags": [
-        "Hardware"
-      ],
-      "live": true
-    },
-    {
-      "id": "live-YXJiZWl0bm93LXNlbmlvci1w",
-      "title": "Senior Prototyping Engineer (f/m/d) – Hybrid Power & Fuel System Integration",
-      "company": "Quantum-Systems GmbH",
-      "location": "Gilching, Bayern, Germany",
-      "type": "Full-time",
-      "category": "Aviation",
-      "level": "Senior",
-      "salary": "See listing",
-      "source": "Arbeitnow",
-      "postedAt": "2026-07-27",
-      "applyUrl": "https://www.arbeitnow.com/jobs/companies/quantum-systems-gmbh/senior-prototyping-engineer-hybrid-power-fuel-system-integration-gilching-405054",
-      "description": "As a Senior Prototyping Engineer – Hybrid Power & Fuel System Integration, you will become an integral part of our Prototyping team, supporting the development of our Reliant platform – a next-generation long-range eVTOL unmanned aerial system designed for demanding ISR and logistics missions. Reliant combines exceptional endurance, modularity, and operational flexibility to deliver mission-critical capabilities in the most challenging environments. In this role, you will take ownership of the integration, development, and validation of the aircraft's hybrid power generation system, including ",
-      "tags": [
-        "Hardware"
-      ],
-      "live": true
-    },
-    {
-      "id": "live-cmVtb3Rlb2stMTEzNTQ0NQ",
-      "title": "Safety Data Analyst",
-      "company": "SkyWest Airlines",
-      "location": "Salt Lake City Metropolitan Area, ",
-      "type": "Full-time",
-      "category": "Safety & Compliance",
-      "level": "Any",
-      "salary": "See listing",
-      "source": "RemoteOK",
-      "postedAt": "2026-07-24",
-      "applyUrl": "https://remoteOK.com/remote-jobs/remote-safety-data-analyst-skywest-airlines-1135445",
-      "description": "About SkyWest With over 16,000 aviation professionals operating thousands of daily flights, SkyWest Airlines connects millions of passengers each month to hundreds of destinations across North America. SkyWest operates in partnership with Delta Air Lines, United Airlines, American Airlines, and Alaska Airlines and has a fleet of nearly 450 aircraft. Headquartered in St. George, Utah, SkyWest's industry-leading workforce and excellent leadership team have consistently generated solid operational and economic performance, setting the standard for excellence in the regional industry. SkyWest empl",
-      "tags": [
-        "customer support",
-        "web dev",
-        "exec",
-        "photoshop",
-        "ecommerce",
-        "education",
-        "data annotation",
-        "virtual assistant"
-      ],
-      "live": true
-    },
     {
       "id": "avs-008",
       "title": "Aviation Graduate Trainee Programme",
