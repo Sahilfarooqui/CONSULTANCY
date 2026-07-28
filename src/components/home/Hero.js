@@ -19,17 +19,17 @@ const Hero = () => {
         <div className="max-w-3xl text-left">
           <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-500/20 text-sky-200 border border-sky-400/30">
             <span className="h-1.5 w-1.5 rounded-full bg-sky-400 animate-pulse" />
-            Aviation jobs · Freshers & experienced
+            India · Domestic airlines · Mostly freshers
           </span>
           <h1 className="mt-6 text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight animate-fade-in">
-            Your runway to an{' '}
+            Your runway to{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 to-cyan-200">
-              aviation career
+              IndiGo, SpiceJet &amp; more
             </span>
           </h1>
           <p className="mt-6 text-lg sm:text-xl text-slate-300 leading-relaxed max-w-2xl animate-fade-in-up">
-            Runway2Sky is the aviation careers hub for cabin crew, ground ops, engineers, and airline professionals.
-            Browse open roles from LinkedIn and other platforms, then upskill with Qatar Advanced Training Institute.
+            Cabin crew, airport ground staff, ticketing and entry-level airline jobs across India. Built for freshers
+            targeting domestic carriers like IndiGo, SpiceJet, Air India and Akasa — plus training support via QATI.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row gap-3 animate-fade-in-up">
             <Link
@@ -47,9 +47,9 @@ const Hero = () => {
           </div>
           <dl className="mt-12 grid grid-cols-3 gap-4 max-w-lg">
             {[
-              { label: 'Job sources', value: '6+' },
-              { label: 'Focus', value: 'Aviation' },
-              { label: 'Base', value: 'Doha' },
+              { label: 'Focus', value: 'India' },
+              { label: 'Level', value: 'Freshers' },
+              { label: 'Airlines', value: 'Domestic' },
             ].map((stat) => (
               <div key={stat.label} className="rounded-xl bg-white/5 border border-white/10 px-3 py-3 text-center">
                 <dt className="text-xs text-slate-400">{stat.label}</dt>

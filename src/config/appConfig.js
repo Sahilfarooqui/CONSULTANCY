@@ -5,7 +5,7 @@ const appConfig = {
     domain: 'runway2sky.online',
     url: 'https://runway2sky.online',
     shortDescription:
-      'Aviation jobs board and career consultancy — connecting freshers and experienced professionals with airlines, airports, and aviation companies worldwide. Latest openings auto-updated daily.',
+      'India aviation jobs board for freshers — IndiGo, SpiceJet, Air India, Akasa and airport ground staff roles. Auto-updated openings plus career guidance and QATI training.',
   },
   contact: {
     address: [

@@ -71,6 +71,42 @@ const AVIATION_INCLUDE = [
   'b737',
   'boeing',
   'airbus',
+  // India domestic airlines & ecosystem
+  'indigo',
+  'goindigo',
+  'spicejet',
+  'spice jet',
+  'air india',
+  'airindia',
+  'akasa',
+  'akasa air',
+  'vistara',
+  'alliance air',
+  'air india express',
+  'ai express',
+  'go first',
+  'gofirst',
+  'dgca',
+  'ame trainee',
+  'ground staff',
+  'passenger service agent',
+  'check-in agent',
+  'delhi airport',
+  'mumbai airport',
+  'bengaluru airport',
+  'hyderabad airport',
+  'chennai airport',
+  'bangalore airport',
+  'igia',
+  'csmia',
+  'kempegowda',
+  'blue dart aviation',
+  'celebi',
+  'bird airport',
+  'ai sats',
+  'aisats',
+  'travel retail',
+  'duty free airport',
 ];
 
 const AVIATION_EXCLUDE = [
@@ -94,20 +130,104 @@ const AVIATION_EXCLUDE = [
   'planned parenthood',
 ];
 
+// India-first searches — domestic airlines & fresher-friendly airport roles
 const SEARCH_QUERIES = [
-  'aviation',
-  'airline',
-  'aircraft maintenance',
-  'cabin crew',
-  'airport operations',
-  'aerospace engineer',
-  'flight attendant',
-  'avionics',
-  'pilot first officer',
-  'ground handling airport',
+  'cabin crew fresher',
+  'cabin crew IndiGo',
+  'cabin crew SpiceJet',
+  'cabin crew Air India',
+  'Akasa Air cabin crew',
+  'airport customer service',
+  'passenger service agent airport',
+  'ground staff airline',
+  'airport ground handling',
+  'ramp agent airport',
+  'airline ticketing fresher',
+  'flight attendant India',
+  'aircraft maintenance fresher',
+  'aviation jobs fresher',
+  'airline call centre',
+  'airport security screener',
 ];
 
-const ADZUNA_COUNTRIES = ['ae', 'gb', 'us', 'in', 'sa', 'ca', 'au', 'de', 'fr', 'nl', 'qa', 'sg', 'ie', 'nz'];
+// Default: India only (override with ADZUNA_COUNTRIES env if needed)
+const ADZUNA_COUNTRIES = ['in'];
+
+const INDIA_LOCATION_HINTS = [
+  'india',
+  'indian',
+  'delhi',
+  'new delhi',
+  'noida',
+  'gurgaon',
+  'gurugram',
+  'mumbai',
+  'bombay',
+  'bengaluru',
+  'bangalore',
+  'hyderabad',
+  'chennai',
+  'kolkata',
+  'calcutta',
+  'pune',
+  'kochi',
+  'cochin',
+  'ahmedabad',
+  'jaipur',
+  'lucknow',
+  'goa',
+  'trivandrum',
+  'thiruvananthapuram',
+  'coimbatore',
+  'nagpur',
+  'indore',
+  'bhopal',
+  'patna',
+  'guwahati',
+  'chandigarh',
+  'srinagar',
+  'varanasi',
+  'ranchi',
+  'bhubaneswar',
+  'vizag',
+  'visakhapatnam',
+  'in ',
+  ', in',
+  'delhi ncr',
+  'ncr',
+];
+
+function looksIndiaBased(job) {
+  const text = `${job.title || ''} ${job.company || ''} ${job.location || ''} ${job.description || ''} ${(job.tags || []).join(' ')}`.toLowerCase();
+  if (INDIA_LOCATION_HINTS.some((h) => text.includes(h))) return true;
+  // Company careers often omit city but name Indian carriers
+  const indianCarriers = [
+    'indigo',
+    'goindigo',
+    'spicejet',
+    'air india',
+    'akasa',
+    'vistara',
+    'alliance air',
+    'air india express',
+    'go first',
+    'blue dart',
+    'aisats',
+    'ai sats',
+  ];
+  return indianCarriers.some((c) => text.includes(c));
+}
+
+function preferFresher(job) {
+  const t = `${job.title || ''} ${job.description || ''} ${job.level || ''}`.toLowerCase();
+  if (/\b(fresher|freshers|entry[- ]level|graduate|trainee|intern|junior|no experience|0-1|0 – 1|walk-?in)\b/.test(t)) {
+    return 2;
+  }
+  if (/\b(senior|lead|manager|head of|director|principal|10\+ years|8\+ years)\b/.test(t)) {
+    return 0;
+  }
+  return 1; // neutral / open
+}
 
 function fetchJson(url, options = {}) {
   return new Promise((resolve, reject) => {
@@ -549,18 +669,20 @@ async function fetchJSearch() {
 
   const jobs = [];
   const queries = [
-    'aviation jobs',
-    'cabin crew',
-    'aircraft maintenance engineer',
-    'airport jobs Qatar',
-    'airline ground staff',
-    'aerospace engineer',
+    'cabin crew IndiGo India fresher',
+    'cabin crew SpiceJet India',
+    'Air India cabin crew jobs',
+    'Akasa Air cabin crew',
+    'airport ground staff India fresher',
+    'passenger service agent airport India',
+    'airline jobs India fresher',
+    'aviation jobs India entry level',
   ];
 
   for (const q of queries) {
     const url =
       `https://jsearch.p.rapidapi.com/search?query=${encodeURIComponent(q)}` +
-      `&page=1&num_pages=1&date_posted=month`;
+      `&page=1&num_pages=1&date_posted=month&country=in`;
     try {
       const data = await fetchJson(url, {
         headers: {
@@ -611,29 +733,73 @@ function loadFeaturedJobs() {
 
 async function aggregateJobs() {
   const started = Date.now();
-  const results = await Promise.allSettled([
-    fetchAdzuna(),
-    fetchJSearch(),
-    fetchRemotive(),
-    fetchRemoteOK(),
-    fetchArbeitnow(),
-    fetchJobicy(),
-    fetchTheMuse(),
-  ]);
+  const indiaOnly = String(process.env.JOBS_INDIA_ONLY || 'true').toLowerCase() !== 'false';
+  const fresherBoost = String(process.env.JOBS_FRESHER_FOCUS || 'true').toLowerCase() !== 'false';
+
+  // India domestic focus: Adzuna (in) + JSearch India queries are primary.
+  // Global remote boards are optional (often low relevance for SpiceJet/IndiGo freshers).
+  const includeGlobalRemote = String(process.env.JOBS_INCLUDE_GLOBAL_REMOTE || 'false').toLowerCase() === 'true';
+
+  const fetchers = [fetchAdzuna(), fetchJSearch()];
+  if (includeGlobalRemote) {
+    fetchers.push(
+      fetchRemotive(),
+      fetchRemoteOK(),
+      fetchArbeitnow(),
+      fetchJobicy(),
+      fetchTheMuse()
+    );
+  }
+
+  const results = await Promise.allSettled(fetchers);
 
   let live = [];
   for (const r of results) {
     if (r.status === 'fulfilled' && Array.isArray(r.value)) live = live.concat(r.value);
   }
 
-  const featured = loadFeaturedJobs();
-  const merged = dedupeJobs([...featured, ...live]).sort(
-    (a, b) => new Date(b.postedAt || 0) - new Date(a.postedAt || 0)
-  );
+  // Prefer India locations / Indian carriers when india-only mode is on
+  if (indiaOnly) {
+    const indiaLive = live.filter((j) => looksIndiaBased(j));
+    // Keep non-India only if nothing India-specific came back from a source batch
+    live = indiaLive.length ? indiaLive : live.filter((j) => looksIndiaBased(j) || j.source === 'Adzuna');
+  }
+
+  const featured = loadFeaturedJobs().map((j) => ({
+    ...j,
+    live: false,
+    featured: true,
+    // Ensure featured India roles sort well for freshers
+    level: j.level || 'Fresher',
+  }));
+
+  let merged = dedupeJobs([...featured, ...live]);
+
+  merged.sort((a, b) => {
+    if (fresherBoost) {
+      const fa = preferFresher(a);
+      const fb = preferFresher(b);
+      if (fb !== fa) return fb - fa;
+    }
+    // India domestic carriers first
+    const scoreCarrier = (j) => {
+      const t = `${j.company} ${j.title}`.toLowerCase();
+      if (/indigo|spicejet|air india|akasa|vistara/.test(t)) return 3;
+      if (/airport|ground|cabin|airline/.test(t)) return 2;
+      return 1;
+    };
+    const ca = scoreCarrier(a);
+    const cb = scoreCarrier(b);
+    if (cb !== ca) return cb - ca;
+    return new Date(b.postedAt || 0) - new Date(a.postedAt || 0);
+  });
 
   const payload = {
     updatedAt: new Date().toISOString(),
     domain: 'runway2sky.online',
+    market: 'India domestic airlines & airports',
+    fresherFocus: fresherBoost,
+    indiaOnly,
     count: merged.length,
     liveCount: merged.filter((j) => j.live).length,
     sources: [...new Set(merged.map((j) => j.source))],

@@ -36,7 +36,7 @@ const Jobs = () => {
   const [filter, setFilter] = useState({
     category: 'All',
     type: 'All',
-    level: 'All',
+    level: 'Fresher', // India domestic board defaults to fresher roles
     source: 'All',
   });
   const [searchTerm, setSearchTerm] = useState('');
@@ -95,7 +95,7 @@ const Jobs = () => {
   }, [allJobs, filter, searchTerm]);
 
   const resetFilters = () => {
-    setFilter({ category: 'All', type: 'All', level: 'All', source: 'All' });
+    setFilter({ category: 'All', type: 'All', level: 'Fresher', source: 'All' });
     setSearchTerm('');
   };
 
@@ -106,11 +106,11 @@ const Jobs = () => {
     <div className="py-12 bg-slate-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
-          <p className="text-sm font-semibold tracking-wide uppercase text-sky-600">Aviation Careers</p>
-          <h1 className="mt-2 text-3xl font-extrabold text-slate-900 sm:text-4xl">Open Aviation Jobs</h1>
+          <p className="text-sm font-semibold tracking-wide uppercase text-sky-600">India Aviation · Domestic Airlines</p>
+          <h1 className="mt-2 text-3xl font-extrabold text-slate-900 sm:text-4xl">Jobs for Freshers</h1>
           <p className="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">
-            Latest roles auto-updated from global job feeds — plus Runway2Sky featured placements. Freshers and
-            experienced professionals welcome.
+            Cabin crew, ground staff, airport and airline roles with IndiGo, SpiceJet, Air India, Akasa and partners.
+            Mostly entry-level / fresher openings — apply on official careers pages or job portals.
           </p>
           <div className="mt-4 flex flex-wrap justify-center gap-3 text-sm text-slate-500">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200">

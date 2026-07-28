@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 const Services = () => {
   const services = [
     {
-      title: 'Aviation Job Board',
+      title: 'India Airline Jobs',
       description:
-        'Open roles for freshers and experienced talent — cabin crew, ground ops, MRO, cargo, security, and more from multiple platforms.',
+        'Fresher-friendly cabin crew and ground staff roles for IndiGo, SpiceJet, Air India, Akasa and airport partners across India.',
       icon: '✈️',
       to: '/jobs',
       cta: 'View jobs',
