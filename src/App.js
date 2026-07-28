@@ -12,14 +12,15 @@ import Services from './pages/Services';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Apply from './pages/Apply';
+import Install from './pages/Install';
 import ThankYou from './pages/ThankYou';
 
 function App() {
   return (
     <Router>
-      <div className="App min-h-screen flex flex-col">
+      <div className="App min-h-screen flex flex-col bg-slate-50">
         <Header />
-        <main className="main-content flex-grow">
+        <main className="main-content flex-grow pb-24">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/jobs" element={<Jobs />} />
@@ -28,6 +29,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/apply" element={<Apply />} />
+            <Route path="/install" element={<Install />} />
             <Route path="/thank-you" element={<ThankYou />} />
           </Routes>
         </main>
