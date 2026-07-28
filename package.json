@@ -29,9 +29,8 @@
     "fetch-jobs": "node -r dotenv/config scripts/fetch-jobs.js",
     "dev": "concurrently -n web,api -c cyan,magenta \"npm run start\" \"npm run server\"",
     "build": "react-scripts build",
-    "build:ci": "CI=false DISABLE_ESLINT_PLUGIN=true react-scripts build",
+    "build:docker": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "start:prod": "node -r dotenv/config server/index.js",
-    "prebuild": "node -r dotenv/config scripts/fetch-jobs.js || true",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

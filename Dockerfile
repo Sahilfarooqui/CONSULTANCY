@@ -3,23 +3,25 @@ FROM node:20-bookworm-slim
 
 WORKDIR /app
 
-# Install deps (include devDependencies for CRA/Tailwind build)
 COPY package.json package-lock.json* ./
+
+# Include devDependencies so Tailwind/PostCSS/CRA build tools are available
+ENV NODE_ENV=development
 RUN npm install --legacy-peer-deps
 
 COPY . .
 
-# Avoid CI treating ESLint warnings as build failures
+# CRA treats ESLint warnings as errors when CI=true — disable that for Docker/Render
 ENV CI=false
 ENV DISABLE_ESLINT_PLUGIN=true
 ENV GENERATE_SOURCEMAP=false
+ENV NODE_OPTIONS=--max-old-space-size=2048
+
+# Skip optional prebuild; build the React app only
+RUN DISABLE_ESLINT_PLUGIN=true CI=false npm run build
+
 ENV NODE_ENV=production
-
-# Skip live job fetch during image build (network/API optional)
-RUN npm pkg delete scripts.prebuild || true
-RUN npm run build
-
 ENV PORT=10000
 EXPOSE 10000
 
-CMD ["npm", "run", "start:prod"]
+CMD ["node", "-r", "dotenv/config", "server/index.js"]
