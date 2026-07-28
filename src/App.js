@@ -3,7 +3,7 @@ import './App.css';
 
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
-import AppDownloadBanner from './components/layout/AppDownloadBanner';
+import MobileQuickBar from './components/layout/MobileQuickBar';
 
 import Home from './pages/Home';
 import Jobs from './pages/Jobs';
@@ -20,7 +20,7 @@ function App() {
     <Router>
       <div className="App min-h-screen flex flex-col bg-slate-50">
         <Header />
-        <main className="main-content flex-grow pb-24">
+        <main className="main-content flex-grow pb-20 md:pb-0">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/jobs" element={<Jobs />} />
@@ -34,7 +34,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
-        <AppDownloadBanner />
+        <MobileQuickBar />
       </div>
     </Router>
   );
