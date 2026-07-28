@@ -12,7 +12,7 @@ const Jobs = () => {
   const [filter, setFilter] = useState({
     category: 'All',
     type: 'All',
-    level: 'Fresher', // India domestic board defaults to fresher roles
+    level: 'All', // show all airline jobs; user can filter to Fresher
     source: 'All',
   });
   const [searchTerm, setSearchTerm] = useState('');
@@ -71,7 +71,7 @@ const Jobs = () => {
   }, [allJobs, filter, searchTerm]);
 
   const resetFilters = () => {
-    setFilter({ category: 'All', type: 'All', level: 'Fresher', source: 'All' });
+    setFilter({ category: 'All', type: 'All', level: 'All', source: 'All' });
     setSearchTerm('');
   };
 
@@ -99,12 +99,36 @@ const Jobs = () => {
     <div className="py-12 bg-slate-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
-          <p className="text-sm font-semibold tracking-wide uppercase text-sky-600">India Aviation · Domestic Airlines</p>
-          <h1 className="mt-2 text-3xl font-extrabold text-slate-900 sm:text-4xl">Jobs for Freshers</h1>
+          <p className="text-sm font-semibold tracking-wide uppercase text-sky-600">India Aviation · All airline jobs</p>
+          <h1 className="mt-2 text-3xl font-extrabold text-slate-900 sm:text-4xl">
+            IndiGo, Air India, SpiceJet & more
+          </h1>
           <p className="mt-4 text-lg text-slate-600 max-w-3xl mx-auto">
-            Cabin crew, ground staff, airport and airline roles with IndiGo, SpiceJet, Air India, Akasa and partners.
-            Mostly entry-level / fresher openings — apply on official careers pages or job portals.
+            Famous airlines listed first. Cabin crew, ground staff and airport roles — apply via Runway2Sky with
+            QATI certificates (max 2 per job).
           </p>
+          <div className="mt-4 flex flex-wrap justify-center gap-2">
+            {['IndiGo', 'Air India', 'SpiceJet', 'Akasa Air', 'Vistara'].map((name) => (
+              <button
+                key={name}
+                type="button"
+                onClick={() => setSearchTerm(name)}
+                className="px-3 py-1.5 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:border-sky-400 hover:text-sky-800"
+              >
+                {name}
+              </button>
+            ))}
+            <button
+              type="button"
+              onClick={() => {
+                setSearchTerm('');
+                setFilter({ category: 'All', type: 'All', level: 'All', source: 'All' });
+              }}
+              className="px-3 py-1.5 rounded-full text-xs font-semibold bg-sky-600 text-white hover:bg-sky-700"
+            >
+              Show all jobs
+            </button>
+          </div>
           <div className="mt-4 flex flex-wrap justify-center gap-3 text-sm text-slate-500">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200">
               <span className={`h-2 w-2 rounded-full ${meta.offline ? 'bg-amber-500' : 'bg-emerald-500'}`} />

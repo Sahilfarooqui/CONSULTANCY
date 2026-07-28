@@ -3,6 +3,7 @@ import './App.css';
 
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
+import AppDownloadBanner from './components/layout/AppDownloadBanner';
 
 import Home from './pages/Home';
 import Jobs from './pages/Jobs';
@@ -31,6 +32,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <AppDownloadBanner />
       </div>
     </Router>
   );

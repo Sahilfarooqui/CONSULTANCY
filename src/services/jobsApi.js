@@ -1,9 +1,11 @@
 /**
  * Client-side jobs loader for Runway2Sky
  * Prefers live API, falls back to static JSON, then curated featured list.
+ * Famous airlines (IndiGo, Air India, SpiceJet…) sorted to the top.
  */
 
 import featuredJobs from '../data/jobs';
+import { sortJobsFamousFirst } from '../utils/jobSort';
 
 const API_CANDIDATES = [
   process.env.REACT_APP_JOBS_API_URL,
@@ -19,7 +21,7 @@ function mergeJobs(livePayload, featured) {
   const live = (livePayload && livePayload.jobs) || [];
   const map = new Map();
 
-  // Featured / direct roles first (pin partner placements)
+  // Always include all featured airline jobs
   for (const job of featured) {
     map.set(`${job.title}|${job.company}`.toLowerCase(), { ...job, featured: true });
   }
@@ -28,9 +30,8 @@ function mergeJobs(livePayload, featured) {
     if (!map.has(key)) map.set(key, job);
   }
 
-  return Array.from(map.values()).sort(
-    (a, b) => new Date(b.postedAt || 0) - new Date(a.postedAt || 0)
-  );
+  // Famous airlines first, then date
+  return sortJobsFamousFirst(Array.from(map.values()));
 }
 
 export async function loadJobs({ forceRefresh = false } = {}) {
@@ -71,9 +72,9 @@ export async function loadJobs({ forceRefresh = false } = {}) {
     }
   }
 
-  // Offline / first-run fallback — curated featured only
+  // Offline / first-run fallback — all curated airline jobs, famous first
   return {
-    jobs: featuredJobs.map((j) => ({ ...j, featured: true })),
+    jobs: sortJobsFamousFirst(featuredJobs.map((j) => ({ ...j, featured: true }))),
     updatedAt: null,
     sources: [...new Set(featuredJobs.map((j) => j.source))],
     liveCount: 0,

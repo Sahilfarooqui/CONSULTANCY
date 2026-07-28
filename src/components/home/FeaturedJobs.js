@@ -4,17 +4,17 @@ import { loadJobs } from '../../services/jobsApi';
 import fallbackJobs from '../../data/jobs';
 import CompanyLogo from '../jobs/CompanyLogo';
 import { getCompanyBrand, getPosterLabel } from '../../utils/companyBranding';
+import { sortJobsFamousFirst } from '../../utils/jobSort';
 
 const FeaturedJobs = () => {
-  const [featured, setFeatured] = useState(
-    [...fallbackJobs].sort((a, b) => new Date(b.postedAt) - new Date(a.postedAt)).slice(0, 4)
-  );
+  const [featured, setFeatured] = useState(sortJobsFamousFirst([...fallbackJobs]).slice(0, 6));
 
   useEffect(() => {
     let cancelled = false;
     loadJobs().then((result) => {
       if (cancelled) return;
-      const top = result.jobs.slice(0, 4);
+      // Famous airlines first — show more so all major carriers appear
+      const top = sortJobsFamousFirst(result.jobs).slice(0, 6);
       if (top.length) setFeatured(top);
     });
     return () => {
@@ -28,7 +28,9 @@ const FeaturedJobs = () => {
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-10">
           <div className="text-left">
             <h2 className="text-sm font-semibold tracking-wide uppercase text-sky-600">Latest openings</h2>
-            <p className="mt-2 text-3xl font-extrabold text-slate-900">Jobs from top airlines</p>
+            <p className="mt-2 text-3xl font-extrabold text-slate-900">
+              Top airlines first — IndiGo, Air India, SpiceJet…
+            </p>
           </div>
           <Link to="/jobs" className="text-sky-700 font-semibold hover:text-sky-900">
             View all jobs →

@@ -1,6 +1,7 @@
 {
   "short_name": "Runway2Sky",
-  "name": "Runway2Sky — Aviation Jobs & Careers",
+  "name": "Runway2Sky — Aviation Jobs for Students",
+  "description": "India airline jobs (IndiGo, SpiceJet, Air India) + QATI certificates. Apply and train on the go.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -10,16 +11,22 @@
     {
       "src": "logo192.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "logo512.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "theme_color": "#0c4a6e",
-  "background_color": "#ffffff"
+  "orientation": "portrait-primary",
+  "theme_color": "#0284c7",
+  "background_color": "#0c4a6e",
+  "categories": ["education", "business", "productivity"],
+  "lang": "en-IN"
 }
