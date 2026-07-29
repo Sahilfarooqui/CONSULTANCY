@@ -28,8 +28,8 @@ const Hero = () => {
           </h1>
 
           <p className="mt-5 text-base sm:text-lg text-slate-300 leading-relaxed max-w-xl font-normal">
-            Cabin crew, ground operations and airport roles with IndiGo, Air India, SpiceJet, Akasa and more.
-            Apply through Runway2Sky and complete professional training with Qatar Advanced Training Institute.
+            Emirates, Qatar Airways, Etihad, US &amp; UK carriers, Qantas, India airlines and 100+ more — cabin crew,
+            customer experience and ground operations. Apply via Runway2Sky with QATI training support.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row gap-3">

@@ -13,6 +13,7 @@ const Jobs = () => {
     type: 'All',
     level: 'All',
     source: 'All',
+    region: 'All',
   });
   const [searchTerm, setSearchTerm] = useState(location.state?.q || '');
 
@@ -46,6 +47,7 @@ const Jobs = () => {
       if (filter.type !== 'All' && job.type !== filter.type) return false;
       if (filter.level !== 'All' && job.level !== filter.level) return false;
       if (filter.source !== 'All' && job.source !== filter.source) return false;
+      if (filter.region !== 'All' && job.region !== filter.region) return false;
       if (
         q &&
         !(
@@ -53,6 +55,8 @@ const Jobs = () => {
           job.company.toLowerCase().includes(q) ||
           job.location.toLowerCase().includes(q) ||
           (job.category || '').toLowerCase().includes(q) ||
+          (job.region || '').toLowerCase().includes(q) ||
+          (job.country || '').toLowerCase().includes(q) ||
           (job.tags || []).some((t) => t.toLowerCase().includes(q))
         )
       ) {
@@ -63,7 +67,7 @@ const Jobs = () => {
   }, [allJobs, filter, searchTerm]);
 
   const resetFilters = () => {
-    setFilter({ category: 'All', type: 'All', level: 'All', source: 'All' });
+    setFilter({ category: 'All', type: 'All', level: 'All', source: 'All', region: 'All' });
     setSearchTerm('');
   };
 
@@ -87,9 +91,9 @@ const Jobs = () => {
     <div className="py-8 sm:py-10 bg-slate-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-5 text-left sm:text-center">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Aviation vacancies</h1>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Global aviation vacancies</h1>
           <p className="mt-1 text-sm sm:text-base text-slate-600">
-            Airlines · Customer Experience · Ground handling agencies — eligibility listed on every job.
+            Emirates · Qatar · Etihad · US · UK · Australia · India + 100 airlines. Eligibility on every job.
           </p>
           {error && <p className="mt-2 text-sm text-rose-600">{error}</p>}
         </div>
@@ -104,6 +108,18 @@ const Jobs = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
             <div className="mt-2 flex gap-2 overflow-x-auto pb-0.5">
+              <select
+                aria-label="Region"
+                className="shrink-0 border border-slate-300 rounded-lg py-2 px-2 text-sm bg-white"
+                value={filter.region}
+                onChange={(e) => setFilter({ ...filter, region: e.target.value })}
+              >
+                {(options.regions || ['All']).map((r) => (
+                  <option key={r} value={r}>
+                    {r === 'All' ? 'All regions' : r}
+                  </option>
+                ))}
+              </select>
               <select
                 aria-label="Category"
                 className="shrink-0 border border-slate-300 rounded-lg py-2 px-2 text-sm bg-white"
@@ -138,37 +154,48 @@ const Jobs = () => {
             </div>
             <div className="mt-2 flex gap-1.5 overflow-x-auto">
               {[
-                'IndiGo',
-                'Air India',
-                'SpiceJet',
-                'Akasa',
-                'Cabin Crew',
-                'Customer Experience',
-                'Ground Handling',
-                'AI SATS',
-                'Celebi',
-                'Bird',
-              ].map((name) => (
-                <button
-                  key={name}
-                  type="button"
-                  onClick={() => {
-                    if (name === 'Customer Experience' || name === 'Ground Handling' || name === 'Cabin Crew') {
-                      setFilter((f) => ({ ...f, category: name }));
-                      setSearchTerm('');
-                    } else {
-                      setSearchTerm(name);
-                    }
-                  }}
-                  className={`shrink-0 px-2.5 py-1 rounded-full text-xs font-semibold border ${
-                    searchTerm === name || filter.category === name
-                      ? 'bg-sky-600 text-white border-sky-600'
-                      : 'bg-slate-50 text-slate-700 border-slate-200'
-                  }`}
-                >
-                  {name}
-                </button>
-              ))}
+                { label: 'Emirates', type: 'search' },
+                { label: 'Qatar Airways', type: 'search' },
+                { label: 'Etihad', type: 'search' },
+                { label: 'Middle East', type: 'region' },
+                { label: 'USA', type: 'region' },
+                { label: 'UK', type: 'region' },
+                { label: 'Australia', type: 'region' },
+                { label: 'India', type: 'region' },
+                { label: 'Cabin Crew', type: 'category' },
+                { label: 'Customer Experience', type: 'category' },
+                { label: 'Ground Handling', type: 'category' },
+              ].map(({ label, type }) => {
+                const active =
+                  (type === 'search' && searchTerm === label) ||
+                  (type === 'region' && filter.region === label) ||
+                  (type === 'category' && filter.category === label);
+                return (
+                  <button
+                    key={label}
+                    type="button"
+                    onClick={() => {
+                      if (type === 'region') {
+                        setFilter((f) => ({ ...f, region: label, category: 'All' }));
+                        setSearchTerm('');
+                      } else if (type === 'category') {
+                        setFilter((f) => ({ ...f, category: label }));
+                        setSearchTerm('');
+                      } else {
+                        setSearchTerm(label);
+                        setFilter((f) => ({ ...f, region: 'All', category: 'All' }));
+                      }
+                    }}
+                    className={`shrink-0 px-2.5 py-1 rounded-full text-xs font-semibold border ${
+                      active
+                        ? 'bg-sky-600 text-white border-sky-600'
+                        : 'bg-slate-50 text-slate-700 border-slate-200'
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              })}
             </div>
           </div>
           <p className="mt-2 text-xs text-slate-500 px-0.5">

@@ -39,8 +39,8 @@ const JobCard = ({ job, applyViaUs, officialHref }) => {
             </p>
             <p className="mt-1 text-xs sm:text-sm text-slate-500 line-clamp-1">
               {job.location}
+              {job.region ? ` · ${job.region}` : ''}
               {job.level ? ` · ${job.level}` : ''}
-              {job.type ? ` · ${job.type}` : ''}
             </p>
             <p className="mt-1.5 text-[11px] text-slate-400 line-clamp-1">{poster.line}</p>
           </div>

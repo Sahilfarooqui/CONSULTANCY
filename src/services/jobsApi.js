@@ -93,5 +93,8 @@ export function extractFilterOptions(jobs) {
   const sources = ['All', ...new Set(jobs.map((j) => j.source).filter(Boolean))].sort((a, b) =>
     a === 'All' ? -1 : b === 'All' ? 1 : a.localeCompare(b)
   );
-  return { categories, levels, types, sources };
+  const regions = ['All', ...new Set(jobs.map((j) => j.region).filter(Boolean))].sort((a, b) =>
+    a === 'All' ? -1 : b === 'All' ? 1 : a.localeCompare(b)
+  );
+  return { categories, levels, types, sources, regions };
 }
