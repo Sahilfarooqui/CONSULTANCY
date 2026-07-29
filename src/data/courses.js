@@ -35,7 +35,7 @@ const courses = [
     level: 'Beginner',
     category: 'Ground Operations',
     certificate: true,
-    requiredFor: ['Ground Operations'],
+    requiredFor: ['Ground Operations', 'Ground Handling', 'Customer Experience'],
     price: 'See QATI platform',
     location: 'Qatar (online access worldwide)',
     image:
@@ -73,7 +73,16 @@ const courses = [
     level: 'All levels',
     category: 'Soft Skills',
     certificate: true,
-    requiredFor: ['Cabin Crew', 'Ground Operations', 'Commercial', 'Hospitality', 'Graduate / Trainee', 'Corporate'],
+    requiredFor: [
+      'Cabin Crew',
+      'Ground Operations',
+      'Ground Handling',
+      'Customer Experience',
+      'Commercial',
+      'Hospitality',
+      'Graduate / Trainee',
+      'Corporate',
+    ],
     price: 'See QATI platform',
     location: 'Qatar (online access worldwide)',
     image:
@@ -216,7 +225,13 @@ export function getCertificatesForJob(job = {}) {
     if (c.requiredFor && c.requiredFor.includes(category)) return true;
     if (c.category && c.category === category) return true;
     if (/cabin|flight attendant|purser|in-flight|inflight/.test(blob) && c.id === 'crs-001') return true;
-    if (/ground|ramp|baggage|check-in|passenger service|psa/.test(blob) && c.id === 'crs-002') return true;
+    if (
+      /ground|ramp|baggage|check-in|passenger service|psa|gha|ground handling|customer experience|guest experience/.test(
+        blob
+      ) &&
+      c.id === 'crs-002'
+    )
+      return true;
     if (/ticket|reservation|gds|call centre|call center|customer care|retail/.test(blob) && c.id === 'crs-003')
       return true;
     if (/maintenance|ame|mro|avionics|engineer/.test(blob) && c.id === 'crs-005') return true;

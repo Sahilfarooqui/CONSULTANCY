@@ -12,7 +12,8 @@ const FAMOUS_AIRLINE_RANK = [
   { re: /emirates/i, rank: 70 },
   { re: /qatar\s*airways/i, rank: 68 },
   { re: /etihad/i, rank: 66 },
-  { re: /ai\s*sats|aisats|celebi|bird/i, rank: 50 },
+  { re: /ai\s*sats|aisats|celebi|bird|dnata|globe\s*ground|menzies/i, rank: 55 },
+  { re: /customer experience|guest experience/i, rank: 52 },
   { re: /runway2sky/i, rank: 40 },
 ];
 

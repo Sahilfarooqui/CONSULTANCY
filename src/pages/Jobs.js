@@ -87,9 +87,9 @@ const Jobs = () => {
     <div className="py-8 sm:py-10 bg-slate-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-5 text-left sm:text-center">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Airline jobs</h1>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Aviation vacancies</h1>
           <p className="mt-1 text-sm sm:text-base text-slate-600">
-            Search and apply. Top airlines show first.
+            Airlines · Customer Experience · Ground handling agencies — eligibility listed on every job.
           </p>
           {error && <p className="mt-2 text-sm text-rose-600">{error}</p>}
         </div>
@@ -137,13 +137,31 @@ const Jobs = () => {
               </button>
             </div>
             <div className="mt-2 flex gap-1.5 overflow-x-auto">
-              {['IndiGo', 'Air India', 'SpiceJet', 'Akasa', 'Cabin Crew'].map((name) => (
+              {[
+                'IndiGo',
+                'Air India',
+                'SpiceJet',
+                'Akasa',
+                'Cabin Crew',
+                'Customer Experience',
+                'Ground Handling',
+                'AI SATS',
+                'Celebi',
+                'Bird',
+              ].map((name) => (
                 <button
                   key={name}
                   type="button"
-                  onClick={() => setSearchTerm(name)}
+                  onClick={() => {
+                    if (name === 'Customer Experience' || name === 'Ground Handling' || name === 'Cabin Crew') {
+                      setFilter((f) => ({ ...f, category: name }));
+                      setSearchTerm('');
+                    } else {
+                      setSearchTerm(name);
+                    }
+                  }}
                   className={`shrink-0 px-2.5 py-1 rounded-full text-xs font-semibold border ${
-                    searchTerm === name
+                    searchTerm === name || filter.category === name
                       ? 'bg-sky-600 text-white border-sky-600'
                       : 'bg-slate-50 text-slate-700 border-slate-200'
                   }`}
