@@ -1,5 +1,5 @@
 /* Runway2Sky PWA service worker — keep simple & reliable for install */
-const CACHE = 'runway2sky-v2';
+const CACHE = 'runway2sky-v3';
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
