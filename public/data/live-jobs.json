@@ -1,15 +1,19 @@
 {
-  "updatedAt": "2026-07-29T15:16:29.840Z",
+  "updatedAt": "2026-07-29T19:00:04.260Z",
   "domain": "runway2sky.online",
+  "market": "India domestic airlines & airports",
+  "fresherFocus": true,
+  "indiaOnly": true,
   "count": 21,
   "liveCount": 0,
   "sources": [
     "Company",
     "LinkedIn",
-    "Naukri",
     "Indeed",
+    "Naukri",
     "Direct"
   ],
+  "durationMs": 3,
   "jobs": [
     {
       "id": "in-001",
@@ -41,103 +45,8 @@
         "Fresher",
         "India"
       ],
-      "featured": true,
-      "live": false
-    },
-    {
-      "id": "in-002",
-      "title": "Cabin Crew Recruitment — Freshers",
-      "company": "SpiceJet",
-      "location": "Delhi NCR / Hyderabad / Multiple cities, India",
-      "type": "Full-time",
-      "category": "Cabin Crew",
-      "department": "In-Flight Services",
-      "level": "Fresher",
-      "salary": "As per company policy",
-      "source": "Company",
-      "postedAt": "2026-07-27",
-      "applyUrl": "https://corporate.spicejet.com/careers.aspx",
-      "description": "SpiceJet cabin crew openings for Indian nationals. Freshers encouraged for walk-ins and online drives. Training provided after selection.",
-      "eligibility": [
-        "Indian citizen with valid ID proof",
-        "Age 18–27 years (as per drive notification)",
-        "10+2 pass or equivalent",
-        "Good command of English; Hindi preferred",
-        "Height and weight as per SpiceJet medical standards",
-        "No major medical history; fit for flying duties",
-        "Ready for rostered shifts and night stops"
-      ],
-      "tags": [
-        "SpiceJet",
-        "Cabin Crew",
-        "Fresher",
-        "India"
-      ],
-      "featured": true,
-      "live": false
-    },
-    {
-      "id": "in-003",
-      "title": "Cabin Crew / In-Flight Services — Freshers",
-      "company": "Air India",
-      "location": "Mumbai / Delhi / India bases",
-      "type": "Full-time",
-      "category": "Cabin Crew",
-      "department": "In-Flight Services",
-      "level": "Fresher",
-      "salary": "As per Air India norms",
-      "source": "Company",
-      "postedAt": "2026-07-26",
-      "applyUrl": "https://careers.airindia.com/",
-      "description": "Air India cabin crew and in-flight service roles. Fresh graduates and first-time applicants can apply through the official careers portal when positions are listed.",
-      "eligibility": [
-        "Indian national",
-        "Minimum intermediate (10+2) qualification",
-        "Age as per current Air India notification",
-        "English fluency; additional languages preferred",
-        "Meets height, BMI and grooming standards of the airline",
-        "Valid passport preferred (or ready to apply)",
-        "Medically fit for cabin crew duties"
-      ],
-      "tags": [
-        "Air India",
-        "Cabin Crew",
-        "Fresher",
-        "India"
-      ],
-      "featured": true,
-      "live": false
-    },
-    {
-      "id": "in-004",
-      "title": "Cabin Crew — Entry Level",
-      "company": "Akasa Air",
-      "location": "Mumbai / Bengaluru / India",
-      "type": "Full-time",
-      "category": "Cabin Crew",
-      "department": "In-Flight Services",
-      "level": "Fresher",
-      "salary": "Competitive + benefits",
-      "source": "Company",
-      "postedAt": "2026-07-25",
-      "applyUrl": "https://www.akasaair.com/careers",
-      "description": "Akasa Air entry-level cabin crew. Freshers with positive attitude and service orientation welcome. Check official careers page for open drives.",
-      "eligibility": [
-        "Age 18–26 years (indicative — confirm in drive ad)",
-        "10+2 or graduate",
-        "Excellent communication in English",
-        "Customer-focused personality",
-        "Meets airline height & medical criteria",
-        "Willing to be based in Mumbai / Bengaluru or other bases"
-      ],
-      "tags": [
-        "Akasa Air",
-        "Cabin Crew",
-        "Fresher",
-        "India"
-      ],
-      "featured": true,
-      "live": false
+      "live": false,
+      "featured": true
     },
     {
       "id": "in-cx-001",
@@ -169,8 +78,40 @@
         "Airport",
         "Fresher"
       ],
-      "featured": true,
-      "live": false
+      "live": false,
+      "featured": true
+    },
+    {
+      "id": "in-002",
+      "title": "Cabin Crew Recruitment — Freshers",
+      "company": "SpiceJet",
+      "location": "Delhi NCR / Hyderabad / Multiple cities, India",
+      "type": "Full-time",
+      "category": "Cabin Crew",
+      "department": "In-Flight Services",
+      "level": "Fresher",
+      "salary": "As per company policy",
+      "source": "Company",
+      "postedAt": "2026-07-27",
+      "applyUrl": "https://corporate.spicejet.com/careers.aspx",
+      "description": "SpiceJet cabin crew openings for Indian nationals. Freshers encouraged for walk-ins and online drives. Training provided after selection.",
+      "eligibility": [
+        "Indian citizen with valid ID proof",
+        "Age 18–27 years (as per drive notification)",
+        "10+2 pass or equivalent",
+        "Good command of English; Hindi preferred",
+        "Height and weight as per SpiceJet medical standards",
+        "No major medical history; fit for flying duties",
+        "Ready for rostered shifts and night stops"
+      ],
+      "tags": [
+        "SpiceJet",
+        "Cabin Crew",
+        "Fresher",
+        "India"
+      ],
+      "live": false,
+      "featured": true
     },
     {
       "id": "in-cx-002",
@@ -200,8 +141,40 @@
         "Guest Experience",
         "Fresher"
       ],
-      "featured": true,
-      "live": false
+      "live": false,
+      "featured": true
+    },
+    {
+      "id": "in-003",
+      "title": "Cabin Crew / In-Flight Services — Freshers",
+      "company": "Air India",
+      "location": "Mumbai / Delhi / India bases",
+      "type": "Full-time",
+      "category": "Cabin Crew",
+      "department": "In-Flight Services",
+      "level": "Fresher",
+      "salary": "As per Air India norms",
+      "source": "Company",
+      "postedAt": "2026-07-26",
+      "applyUrl": "https://careers.airindia.com/",
+      "description": "Air India cabin crew and in-flight service roles. Fresh graduates and first-time applicants can apply through the official careers portal when positions are listed.",
+      "eligibility": [
+        "Indian national",
+        "Minimum intermediate (10+2) qualification",
+        "Age as per current Air India notification",
+        "English fluency; additional languages preferred",
+        "Meets height, BMI and grooming standards of the airline",
+        "Valid passport preferred (or ready to apply)",
+        "Medically fit for cabin crew duties"
+      ],
+      "tags": [
+        "Air India",
+        "Cabin Crew",
+        "Fresher",
+        "India"
+      ],
+      "live": false,
+      "featured": true
     },
     {
       "id": "in-cx-003",
@@ -230,8 +203,39 @@
         "CX",
         "Junior"
       ],
-      "featured": true,
-      "live": false
+      "live": false,
+      "featured": true
+    },
+    {
+      "id": "in-004",
+      "title": "Cabin Crew — Entry Level",
+      "company": "Akasa Air",
+      "location": "Mumbai / Bengaluru / India",
+      "type": "Full-time",
+      "category": "Cabin Crew",
+      "department": "In-Flight Services",
+      "level": "Fresher",
+      "salary": "Competitive + benefits",
+      "source": "Company",
+      "postedAt": "2026-07-25",
+      "applyUrl": "https://www.akasaair.com/careers",
+      "description": "Akasa Air entry-level cabin crew. Freshers with positive attitude and service orientation welcome. Check official careers page for open drives.",
+      "eligibility": [
+        "Age 18–26 years (indicative — confirm in drive ad)",
+        "10+2 or graduate",
+        "Excellent communication in English",
+        "Customer-focused personality",
+        "Meets airline height & medical criteria",
+        "Willing to be based in Mumbai / Bengaluru or other bases"
+      ],
+      "tags": [
+        "Akasa Air",
+        "Cabin Crew",
+        "Fresher",
+        "India"
+      ],
+      "live": false,
+      "featured": true
     },
     {
       "id": "in-cx-004",
@@ -259,8 +263,69 @@
         "Customer Experience",
         "Fresher"
       ],
-      "featured": true,
-      "live": false
+      "live": false,
+      "featured": true
+    },
+    {
+      "id": "in-gh-007",
+      "title": "Baggage Services Agent",
+      "company": "Air India SATS (AISATS)",
+      "location": "Delhi / Bengaluru / Hyderabad, India",
+      "type": "Full-time",
+      "category": "Ground Handling",
+      "department": "Baggage Services",
+      "level": "Fresher",
+      "salary": "₹13,500 – ₹20,000 / month (approx.)",
+      "source": "Indeed",
+      "postedAt": "2026-07-22",
+      "applyUrl": "https://in.indeed.com/jobs?q=baggage+services+airport&l=India",
+      "description": "Baggage handling, reclaim, PIR (Property Irregularity Report) support and coordination with airlines for mishandled baggage — GHA operations.",
+      "eligibility": [
+        "12th pass / graduate",
+        "Customer service orientation",
+        "Basic computer skills",
+        "Physical fitness for baggage area duties",
+        "Shift work readiness"
+      ],
+      "tags": [
+        "AISATS",
+        "Ground Handling",
+        "Baggage",
+        "Fresher"
+      ],
+      "live": false,
+      "featured": true
+    },
+    {
+      "id": "in-005",
+      "title": "Airport Customer Service Executive",
+      "company": "IndiGo Ground Operations Partner",
+      "location": "Delhi (DEL), Mumbai (BOM), India",
+      "type": "Full-time",
+      "category": "Ground Operations",
+      "department": "Customer Experience",
+      "level": "Fresher",
+      "salary": "₹15,000 – ₹25,000 / month (approx.)",
+      "source": "LinkedIn",
+      "postedAt": "2026-07-21",
+      "applyUrl": "https://www.linkedin.com/jobs/search/?keywords=airport%20customer%20service%20India",
+      "description": "Passenger check-in, boarding gate support and customer handling at major Indian airports. Ideal fresher role — training on airline systems provided.",
+      "eligibility": [
+        "Minimum 12th pass; graduate preferred",
+        "Age 18–28",
+        "Fluent English and Hindi",
+        "Pleasant personality and grooming",
+        "Ready for rotational airport shifts",
+        "No criminal background"
+      ],
+      "tags": [
+        "Airport",
+        "Customer Service",
+        "Fresher",
+        "India"
+      ],
+      "live": false,
+      "featured": true
     },
     {
       "id": "in-cx-005",
@@ -290,8 +355,8 @@
         "BPO",
         "Fresher"
       ],
-      "featured": true,
-      "live": false
+      "live": false,
+      "featured": true
     },
     {
       "id": "in-gh-001",
@@ -322,70 +387,8 @@
         "PSA",
         "Fresher"
       ],
-      "featured": true,
-      "live": false
-    },
-    {
-      "id": "in-gh-002",
-      "title": "Ramp / Loading Officer",
-      "company": "Celebi Aviation",
-      "location": "Delhi / Mumbai / Multiple airports, India",
-      "type": "Full-time",
-      "category": "Ground Handling",
-      "department": "Ramp Services",
-      "level": "Fresher",
-      "salary": "₹13,000 – ₹20,000 / month (approx.)",
-      "source": "Company",
-      "postedAt": "2026-07-27",
-      "applyUrl": "https://www.celebiaviation.com/",
-      "description": "Celebi ground handling ramp operations: aircraft loading/unloading, baggage, ULD build-up and ramp safety for airline partners.",
-      "eligibility": [
-        "10th / 12th pass minimum",
-        "Physically fit; able to lift baggage as per safety norms",
-        "Age preferably under 30",
-        "Ready for outdoor ramp work in all weather",
-        "Shift work including nights",
-        "Safety-conscious attitude"
-      ],
-      "tags": [
-        "Celebi",
-        "Ground Handling",
-        "Ramp",
-        "Fresher"
-      ],
-      "featured": true,
-      "live": false
-    },
-    {
-      "id": "in-gh-003",
-      "title": "Customer Service Agent — GHA",
-      "company": "Bird Group",
-      "location": "Delhi / Mumbai / Kolkata / Multiple stations, India",
-      "type": "Full-time",
-      "category": "Ground Handling",
-      "department": "Passenger Handling",
-      "level": "Fresher",
-      "salary": "₹15,000 – ₹24,000 / month (approx.)",
-      "source": "Company",
-      "postedAt": "2026-07-26",
-      "applyUrl": "https://www.bird.in/careers",
-      "description": "Bird Airport Services: passenger handling for airline customers — check-in counters, gate duties, lost & found support and transfer assistance.",
-      "eligibility": [
-        "Graduate or 12th pass with good communication",
-        "English + Hindi mandatory",
-        "Customer service mindset",
-        "Flexible for 24×7 airport roster",
-        "No colour blindness for some ramp-adjacent roles",
-        "Background verification clearance"
-      ],
-      "tags": [
-        "Bird Group",
-        "Ground Handling",
-        "GHA",
-        "Fresher"
-      ],
-      "featured": true,
-      "live": false
+      "live": false,
+      "featured": true
     },
     {
       "id": "in-gh-004",
@@ -414,8 +417,8 @@
         "Operations",
         "Junior"
       ],
-      "featured": true,
-      "live": false
+      "live": false,
+      "featured": true
     },
     {
       "id": "in-gh-005",
@@ -445,100 +448,8 @@
         "Check-in",
         "Fresher"
       ],
-      "featured": true,
-      "live": false
-    },
-    {
-      "id": "in-gh-006",
-      "title": "Load Control / Weight & Balance Trainee",
-      "company": "Menzies Aviation",
-      "location": "Delhi / Hyderabad, India",
-      "type": "Full-time",
-      "category": "Ground Handling",
-      "department": "Load Control",
-      "level": "Fresher",
-      "salary": "₹18,000 – ₹28,000 / month during training",
-      "source": "Company",
-      "postedAt": "2026-07-23",
-      "applyUrl": "https://www.menziesaviation.com/careers/",
-      "description": "Trainee load controller with Menzies Aviation ground handling: load sheets, weight & balance and departure control support after training.",
-      "eligibility": [
-        "Science graduate / aviation diploma preferred",
-        "Strong numerical ability",
-        "Attention to detail under time pressure",
-        "English communication for airline liaison",
-        "Willing to work early departures / late arrivals",
-        "Computer literate"
-      ],
-      "tags": [
-        "Menzies",
-        "Ground Handling",
-        "Load Control",
-        "Fresher"
-      ],
-      "featured": true,
-      "live": false
-    },
-    {
-      "id": "in-gh-007",
-      "title": "Baggage Services Agent",
-      "company": "Air India SATS (AISATS)",
-      "location": "Delhi / Bengaluru / Hyderabad, India",
-      "type": "Full-time",
-      "category": "Ground Handling",
-      "department": "Baggage Services",
-      "level": "Fresher",
-      "salary": "₹13,500 – ₹20,000 / month (approx.)",
-      "source": "Indeed",
-      "postedAt": "2026-07-22",
-      "applyUrl": "https://in.indeed.com/jobs?q=baggage+services+airport&l=India",
-      "description": "Baggage handling, reclaim, PIR (Property Irregularity Report) support and coordination with airlines for mishandled baggage — GHA operations.",
-      "eligibility": [
-        "12th pass / graduate",
-        "Customer service orientation",
-        "Basic computer skills",
-        "Physical fitness for baggage area duties",
-        "Shift work readiness"
-      ],
-      "tags": [
-        "AISATS",
-        "Ground Handling",
-        "Baggage",
-        "Fresher"
-      ],
-      "featured": true,
-      "live": false
-    },
-    {
-      "id": "in-005",
-      "title": "Airport Customer Service Executive",
-      "company": "IndiGo Ground Operations Partner",
-      "location": "Delhi (DEL), Mumbai (BOM), India",
-      "type": "Full-time",
-      "category": "Ground Operations",
-      "department": "Customer Experience",
-      "level": "Fresher",
-      "salary": "₹15,000 – ₹25,000 / month (approx.)",
-      "source": "LinkedIn",
-      "postedAt": "2026-07-21",
-      "applyUrl": "https://www.linkedin.com/jobs/search/?keywords=airport%20customer%20service%20India",
-      "description": "Passenger check-in, boarding gate support and customer handling at major Indian airports. Ideal fresher role — training on airline systems provided.",
-      "eligibility": [
-        "Minimum 12th pass; graduate preferred",
-        "Age 18–28",
-        "Fluent English and Hindi",
-        "Pleasant personality and grooming",
-        "Ready for rotational airport shifts",
-        "No criminal background"
-      ],
-      "tags": [
-        "Airport",
-        "Customer Service",
-        "Fresher",
-        "India"
-      ],
-      "featured": true,
-      "live": false
+      "live": false,
+      "featured": true
     },
     {
       "id": "in-008",
@@ -567,39 +478,8 @@
         "Fresher",
         "India"
       ],
-      "featured": true,
-      "live": false
-    },
-    {
-      "id": "in-011",
-      "title": "Graduate Trainee — Aviation Operations",
-      "company": "Runway2Sky India Partners",
-      "location": "Pan-India (airport cities)",
-      "type": "Full-time",
-      "category": "Graduate / Trainee",
-      "department": "Operations / Placement",
-      "level": "Fresher",
-      "salary": "Stipend during training + placement support",
-      "source": "Direct",
-      "postedAt": "2026-07-28",
-      "applyUrl": "/contact",
-      "description": "Structured pathway for 12th pass / graduates into cabin crew, ground handling, customer experience and airport roles with airline & GHA partners.",
-      "eligibility": [
-        "12th pass or graduate",
-        "Age 18–28 years",
-        "Serious about aviation career",
-        "Ready to complete QATI partner training if required",
-        "Willing to relocate to airport base cities",
-        "Good communication skills"
-      ],
-      "tags": [
-        "Graduate",
-        "Trainee",
-        "Placement",
-        "India"
-      ],
-      "featured": true,
-      "live": false
+      "live": false,
+      "featured": true
     },
     {
       "id": "in-013",
@@ -628,8 +508,8 @@
         "Fresher",
         "India"
       ],
-      "featured": true,
-      "live": false
+      "live": false,
+      "featured": true
     },
     {
       "id": "in-009",
@@ -659,8 +539,132 @@
         "Fresher",
         "India"
       ],
-      "featured": true,
-      "live": false
+      "live": false,
+      "featured": true
+    },
+    {
+      "id": "in-011",
+      "title": "Graduate Trainee — Aviation Operations",
+      "company": "Runway2Sky India Partners",
+      "location": "Pan-India (airport cities)",
+      "type": "Full-time",
+      "category": "Graduate / Trainee",
+      "department": "Operations / Placement",
+      "level": "Fresher",
+      "salary": "Stipend during training + placement support",
+      "source": "Direct",
+      "postedAt": "2026-07-28",
+      "applyUrl": "/contact",
+      "description": "Structured pathway for 12th pass / graduates into cabin crew, ground handling, customer experience and airport roles with airline & GHA partners.",
+      "eligibility": [
+        "12th pass or graduate",
+        "Age 18–28 years",
+        "Serious about aviation career",
+        "Ready to complete QATI partner training if required",
+        "Willing to relocate to airport base cities",
+        "Good communication skills"
+      ],
+      "tags": [
+        "Graduate",
+        "Trainee",
+        "Placement",
+        "India"
+      ],
+      "live": false,
+      "featured": true
+    },
+    {
+      "id": "in-gh-002",
+      "title": "Ramp / Loading Officer",
+      "company": "Celebi Aviation",
+      "location": "Delhi / Mumbai / Multiple airports, India",
+      "type": "Full-time",
+      "category": "Ground Handling",
+      "department": "Ramp Services",
+      "level": "Fresher",
+      "salary": "₹13,000 – ₹20,000 / month (approx.)",
+      "source": "Company",
+      "postedAt": "2026-07-27",
+      "applyUrl": "https://www.celebiaviation.com/",
+      "description": "Celebi ground handling ramp operations: aircraft loading/unloading, baggage, ULD build-up and ramp safety for airline partners.",
+      "eligibility": [
+        "10th / 12th pass minimum",
+        "Physically fit; able to lift baggage as per safety norms",
+        "Age preferably under 30",
+        "Ready for outdoor ramp work in all weather",
+        "Shift work including nights",
+        "Safety-conscious attitude"
+      ],
+      "tags": [
+        "Celebi",
+        "Ground Handling",
+        "Ramp",
+        "Fresher"
+      ],
+      "live": false,
+      "featured": true
+    },
+    {
+      "id": "in-gh-003",
+      "title": "Customer Service Agent — GHA",
+      "company": "Bird Group",
+      "location": "Delhi / Mumbai / Kolkata / Multiple stations, India",
+      "type": "Full-time",
+      "category": "Ground Handling",
+      "department": "Passenger Handling",
+      "level": "Fresher",
+      "salary": "₹15,000 – ₹24,000 / month (approx.)",
+      "source": "Company",
+      "postedAt": "2026-07-26",
+      "applyUrl": "https://www.bird.in/careers",
+      "description": "Bird Airport Services: passenger handling for airline customers — check-in counters, gate duties, lost & found support and transfer assistance.",
+      "eligibility": [
+        "Graduate or 12th pass with good communication",
+        "English + Hindi mandatory",
+        "Customer service mindset",
+        "Flexible for 24×7 airport roster",
+        "No colour blindness for some ramp-adjacent roles",
+        "Background verification clearance"
+      ],
+      "tags": [
+        "Bird Group",
+        "Ground Handling",
+        "GHA",
+        "Fresher"
+      ],
+      "live": false,
+      "featured": true
+    },
+    {
+      "id": "in-gh-006",
+      "title": "Load Control / Weight & Balance Trainee",
+      "company": "Menzies Aviation",
+      "location": "Delhi / Hyderabad, India",
+      "type": "Full-time",
+      "category": "Ground Handling",
+      "department": "Load Control",
+      "level": "Fresher",
+      "salary": "₹18,000 – ₹28,000 / month during training",
+      "source": "Company",
+      "postedAt": "2026-07-23",
+      "applyUrl": "https://www.menziesaviation.com/careers/",
+      "description": "Trainee load controller with Menzies Aviation ground handling: load sheets, weight & balance and departure control support after training.",
+      "eligibility": [
+        "Science graduate / aviation diploma preferred",
+        "Strong numerical ability",
+        "Attention to detail under time pressure",
+        "English communication for airline liaison",
+        "Willing to work early departures / late arrivals",
+        "Computer literate"
+      ],
+      "tags": [
+        "Menzies",
+        "Ground Handling",
+        "Load Control",
+        "Fresher"
+      ],
+      "live": false,
+      "featured": true
     }
   ]
 }
