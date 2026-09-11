@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { loadJobs } from '../../services/jobsApi';
 import fallbackJobs from '../../data/jobs';
 import CompanyLogo from '../jobs/CompanyLogo';
-import { getCompanyBrand } from '../../utils/companyBranding';
+import { getCompanyBrand, formatPostedLabel } from '../../utils/companyBranding';
 import { sortJobsFamousFirst } from '../../utils/jobSort';
 
 const FeaturedJobs = () => {
@@ -42,21 +42,36 @@ const FeaturedJobs = () => {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((job) => {
             const brand = getCompanyBrand(job.company);
+            const posted = formatPostedLabel(job.postedAt);
+            const logoUrl = job.logo || job.companyLogo || job.company_logo || job.logoUrl;
             return (
               <Link
                 key={job.id}
                 to="/jobs"
-                className="group flex gap-4 rounded-2xl border border-slate-200 bg-white p-5 text-left hover:border-sky-300 hover:shadow-md transition-all"
+                className="group overflow-hidden rounded-2xl border border-slate-200 bg-white text-left hover:border-sky-300 hover:shadow-lg transition-all shadow-sm"
               >
-                <CompanyLogo company={job.company} size={48} />
-                <div className="min-w-0 flex-1">
+                <div
+                  className="h-11 w-full"
+                  style={{
+                    background: `linear-gradient(125deg, ${brand.color} 0%, ${brand.color2 || brand.color} 100%)`,
+                  }}
+                />
+                <div className="px-4 pb-4">
+                  <div className="-mt-7 mb-2 inline-block">
+                    <CompanyLogo
+                      company={job.company}
+                      logoUrl={logoUrl}
+                      size={52}
+                      className="ring-2 ring-white"
+                    />
+                  </div>
                   <p className="font-semibold text-slate-900 text-sm sm:text-base leading-snug line-clamp-2 group-hover:text-sky-800">
                     {job.title}
                   </p>
-                  <p className="mt-1 text-sm font-medium" style={{ color: brand.color }}>
-                    {brand.name}
+                  <p className="mt-1 text-sm font-medium text-slate-700">{brand.name}</p>
+                  <p className="text-xs text-slate-500 mt-1 line-clamp-1">
+                    {[job.location, posted].filter(Boolean).join(' · ')}
                   </p>
-                  <p className="text-xs text-slate-500 mt-1 line-clamp-1">{job.location}</p>
                 </div>
               </Link>
             );
