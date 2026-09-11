@@ -3,7 +3,7 @@
   "version": "1.1.0",
   "private": true,
   "homepage": "https://runway2sky.online",
-  "description": "Runway2Sky \u2014 Aviation careers, auto-updated jobs board & QATI training partner",
+  "description": "Runway2Sky — Aviation careers, auto-updated jobs board & QATI training partner",
   "dependencies": {
     "@heroicons/react": "^2.1.1",
     "cors": "^2.8.6",
@@ -35,7 +35,8 @@
     "start:prod": "node -r dotenv/config server/index.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "posters": "node scripts/generate-job-posters.js"
+    "posters": "node scripts/run-posters.js --force",
+    "posters:missing": "node scripts/run-posters.js --only-missing"
   },
   "eslintConfig": {
     "extends": [

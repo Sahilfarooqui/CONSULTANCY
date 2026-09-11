@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { loadJobs } from '../../services/jobsApi';
 import fallbackJobs from '../../data/jobs';
-import CompanyLogo from '../jobs/CompanyLogo';
 import JobPoster from '../jobs/JobPoster';
 import { getCompanyBrand } from '../../utils/companyBranding';
-import { safeHttpUrl } from '../../utils/safeUrl';
 import { sortJobsFamousFirst } from '../../utils/jobSort';
 
 const FeaturedJobs = () => {
@@ -31,7 +29,9 @@ const FeaturedJobs = () => {
             <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900 tracking-tight">
               Featured jobs
             </h2>
-            <p className="mt-1 text-sm text-slate-600">Fresh aviation openings — open a card to see who can apply.</p>
+            <p className="mt-1 text-sm text-slate-600">
+              Hiring posters — tap a card to view openings and apply.
+            </p>
           </div>
           <Link
             to="/jobs"
@@ -41,12 +41,12 @@ const FeaturedJobs = () => {
           </Link>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((job) => {
             const brand = getCompanyBrand(job.company);
-            const logoUrl = safeHttpUrl(job.logo || job.companyLogo || job.company_logo || job.logoUrl) || undefined;
-            const level =
-              job.level && /fresher|entry/i.test(job.level) ? 'Fresher welcome' : job.level;
+            const caption = [brand.name, job.location?.split(/[,/—–-]/)[0]?.trim()]
+              .filter(Boolean)
+              .join(' · ');
             return (
               <Link
                 key={job.id}
@@ -54,23 +54,11 @@ const FeaturedJobs = () => {
                 className="group overflow-hidden rounded-2xl border border-slate-200 bg-white text-left hover:border-sky-300 hover:shadow-lg transition-all shadow-sm"
               >
                 <JobPoster job={job} compact />
-                <div className="px-4 pb-4">
-                  <div className="-mt-6 mb-2 inline-block relative z-10">
-                    <CompanyLogo
-                      company={job.company}
-                      logoUrl={logoUrl}
-                      size={44}
-                      className="ring-2 ring-white shadow-md"
-                    />
-                  </div>
-                  <p className="font-semibold text-slate-900 text-sm sm:text-base leading-snug line-clamp-2 group-hover:text-sky-800">
-                    {job.title}
+                {caption && (
+                  <p className="px-3 py-2 text-xs text-slate-600 line-clamp-1 group-hover:text-sky-800">
+                    {caption}
                   </p>
-                  <p className="mt-1 text-sm font-medium text-slate-700">{brand.name}</p>
-                  <p className="text-xs text-slate-500 mt-1 line-clamp-1">
-                    {[job.location?.split(/[,/—–-]/)[0]?.trim(), level].filter(Boolean).join(' · ')}
-                  </p>
-                </div>
+                )}
               </Link>
             );
           })}

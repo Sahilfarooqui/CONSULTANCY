@@ -91,16 +91,38 @@ The Node server serves the React build **and** refreshes jobs every hour.
 Edit `src/data/jobs.js` (and optionally `public/data/featured-jobs.json`).
 
 
-## Job posters (LinkedIn-style graphics)
+## Job posters (LinkedIn-style hiring ads)
 
-Job cards show a **landscape hiring poster** with eligibility/criteria on the graphic (airline brand colours).
+Job cards and Featured jobs show a **portrait hiring poster** (1080×1350) —
+airline brand bar, aircraft/crew photo, salary · location · qualifications,
+benefits row, and Runway2Sky footer — matching LinkedIn aviation recruitment ads.
 
 ```bash
+# one-time: python venv + Pillow
+python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+
+# regenerate ALL posters
 npm run posters
+
+# only missing ids (used automatically after fetch / server refresh)
+npm run posters:missing
 ```
 
-Writes SVG files to `public/job-posters/{jobId}.svg` and a lookup map at `public/data/job-posters.json`.
-`npm run fetch-jobs` calls this automatically after updating live jobs. If a poster file is missing, JobCard still renders an inline CSS eligibility poster so cards never look empty.
+Writes JPEG files to `public/job-posters/{jobId}.jpg` and a lookup map at
+`public/data/job-posters.json`.
+
+### Automatic posters for every new job
+
+| Trigger | Behaviour |
+|---------|-----------|
+| `npm run fetch-jobs` | After writing `live-jobs.json`, generates posters for **missing** ids |
+| Server `refreshJobs` | Same, async (does not block `/api/jobs`) |
+| GitHub Action `fetch-jobs.yml` | Installs Pillow, runs fetch (→ posters), commits new JPGs + map |
+| `GET /api/posters/:id` | Lazy: kicks off generation if file missing (202 while generating) |
+
+Python entrypoint: `scripts/generate_hiring_posters.py` (Pillow). Photos from
+`public/job-photos/` (+ Unsplash crew/city downloads into `crew/` and `cities/`).
+We **do not scrape LinkedIn**.
 
 ## Contact
 
