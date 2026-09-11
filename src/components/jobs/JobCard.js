@@ -1,109 +1,129 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import CompanyLogo from './CompanyLogo';
 import JobPoster from './JobPoster';
-import { getCompanyBrand, getPosterLabel, formatPostedLabel } from '../../utils/companyBranding';
+import { getCompanyBrand } from '../../utils/companyBranding';
 import { COURSES_PLATFORM, getCertificatesForJob } from '../../data/courses';
 import { safeHttpUrl } from '../../utils/safeUrl';
 
+/** Friendly level wording for freshers. */
+function friendlyLevel(level) {
+  if (!level) return null;
+  const l = String(level).toLowerCase();
+  if (l.includes('fresher') || l.includes('entry')) return 'Fresher welcome';
+  if (l.includes('junior')) return 'Junior level';
+  if (l.includes('mid') || l.includes('experienced')) return 'Experience preferred';
+  if (l.includes('senior')) return 'Senior role';
+  return level;
+}
+
+/** Short location — first city / place before long lists. */
+function shortLocation(location) {
+  if (!location) return null;
+  const first = String(location).split(/[,/—–-]/)[0].trim();
+  return first || location;
+}
+
+/** Plain job-type words. */
+function friendlyType(type) {
+  if (!type) return null;
+  const t = String(type).toLowerCase();
+  if (t.includes('full')) return 'Full-time';
+  if (t.includes('part')) return 'Part-time';
+  if (t.includes('contract')) return 'Contract';
+  if (t.includes('intern')) return 'Internship';
+  return type;
+}
+
+/** Optional airport hint from category/tags. */
+function roleHint(job) {
+  const cat = (job.category || '').toLowerCase();
+  const tags = (job.tags || []).map((t) => String(t).toLowerCase());
+  if (cat.includes('cabin') || tags.some((t) => t.includes('cabin'))) return null;
+  if (
+    cat.includes('ground') ||
+    cat.includes('customer') ||
+    cat.includes('airport') ||
+    tags.some((t) => t.includes('airport') || t.includes('ground'))
+  ) {
+    return 'Airport role';
+  }
+  return null;
+}
+
+const VISIBLE_ELIGIBILITY = 3;
+
 const JobCard = ({ job, applyViaUs, officialHref }) => {
   const brand = getCompanyBrand(job.company);
-  const poster = getPosterLabel(job);
   const certs = getCertificatesForJob(job);
   const viaUs = applyViaUs(job);
   const official = officialHref(job);
-  const [showEligibility, setShowEligibility] = useState(false);
   const eligibility = Array.isArray(job.eligibility) ? job.eligibility : [];
-  const posted = formatPostedLabel(job.postedAt);
   const logoUrl = safeHttpUrl(job.logo || job.companyLogo || job.company_logo || job.logoUrl) || undefined;
 
-  const metaParts = [job.location, job.region, posted].filter(Boolean);
+  const metaLine = [
+    shortLocation(job.location),
+    friendlyLevel(job.level),
+    friendlyType(job.type),
+    roleHint(job),
+  ]
+    .filter(Boolean)
+    .filter((v, i, arr) => arr.indexOf(v) === i)
+    .join(' · ');
+
+  const visibleEligibility = eligibility.slice(0, VISIBLE_ELIGIBILITY);
+  const moreCount = Math.max(0, eligibility.length - VISIBLE_ELIGIBILITY);
+  const trainingUrl = safeHttpUrl(certs[0]?.url) || (certs.length ? COURSES_PLATFORM : null);
 
   return (
     <article className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-sky-300 hover:shadow-lg transition-all shadow-sm">
-      {/* LinkedIn-style eligibility poster (SVG or CSS fallback) */}
       <div className="rounded-t-2xl overflow-hidden">
         <JobPoster job={job} />
       </div>
 
       <div className="px-4 sm:px-5 pb-4 sm:pb-5 text-left">
-        <div className="-mt-8 mb-3 inline-block relative z-10">
-          <CompanyLogo company={job.company} logoUrl={logoUrl} size={60} className="ring-2 ring-white shadow-md" />
+        <div className="-mt-6 mb-2 inline-block relative z-10">
+          <CompanyLogo
+            company={job.company}
+            logoUrl={logoUrl}
+            size={48}
+            className="ring-2 ring-white shadow-md"
+          />
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
-          {job.department && (
-            <span className="text-[10px] font-semibold uppercase tracking-wide px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">
-              {job.department}
-            </span>
-          )}
-          {job.category && (
-            <span className="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-sky-50 text-sky-800">
-              {job.category}
-            </span>
-          )}
-        </div>
-
-        <h2 className="mt-2 text-base sm:text-lg font-bold text-slate-900 leading-snug tracking-tight">
+        <h2 className="text-base sm:text-lg font-bold text-slate-900 leading-snug tracking-tight">
           {job.title}
         </h2>
-        <p className="mt-0.5 text-sm font-semibold text-slate-700">{brand.name}</p>
-        <p className="mt-1 text-xs sm:text-sm text-slate-500 line-clamp-1">
-          {metaParts.join(' · ')}
-          {job.level ? ` · ${job.level}` : ''}
-        </p>
-        <p className="mt-1.5 text-[11px] text-slate-400 line-clamp-1">{poster.line}</p>
+        <p className="mt-0.5 text-sm font-medium text-slate-700">{brand.name}</p>
+        {metaLine && (
+          <p className="mt-1 text-sm text-slate-500 line-clamp-1">{metaLine}</p>
+        )}
 
-        <div className="mt-3">
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Job description</p>
-          <p className="mt-1 text-sm text-slate-600 leading-relaxed">{job.description}</p>
-        </div>
-
-        {eligibility.length > 0 && (
-          <div className="mt-3 rounded-xl border border-slate-200 bg-slate-50 p-3">
-            <button
-              type="button"
-              onClick={() => setShowEligibility((v) => !v)}
-              className="flex w-full items-center justify-between gap-2 text-left"
-            >
-              <span className="text-xs font-bold uppercase tracking-wide text-slate-800">
-                Eligibility criteria
-              </span>
-              <span className="text-xs font-semibold text-sky-700">
-                {showEligibility ? 'Hide' : 'View'}
-              </span>
-            </button>
-            {showEligibility && (
-              <ul className="mt-2 space-y-1.5 list-disc list-inside text-sm text-slate-700">
-                {eligibility.map((item) => (
-                  <li key={item} className="leading-snug">
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            )}
-            {!showEligibility && (
-              <p className="mt-1.5 text-xs text-slate-500 line-clamp-1">
-                {eligibility.slice(0, 2).join(' · ')}
-                {eligibility.length > 2 ? '…' : ''}
-              </p>
-            )}
+        {job.description && (
+          <div className="mt-3">
+            <p className="text-sm font-semibold text-slate-800">About this role</p>
+            <p className="mt-1 text-sm text-slate-600 leading-relaxed line-clamp-2">
+              {job.description}
+            </p>
           </div>
         )}
 
-        {certs.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {certs.slice(0, 2).map((c) => (
-              <a
-                key={c.id}
-                href={c.url || COURSES_PLATFORM}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[11px] font-medium px-2 py-1 rounded-lg bg-amber-50 text-amber-900 border border-amber-100 hover:bg-amber-100"
-              >
-                {c.title.replace(' Certificate', '')}
-              </a>
-            ))}
+        {eligibility.length > 0 && (
+          <div className="mt-3">
+            <p className="text-sm font-semibold text-slate-800">Who can apply</p>
+            <ul className="mt-1.5 space-y-1 text-sm text-slate-700">
+              {visibleEligibility.map((item) => (
+                <li key={item} className="flex gap-2 leading-snug">
+                  <span className="text-sky-600 shrink-0" aria-hidden>
+                    •
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+            {moreCount > 0 && (
+              <p className="mt-1 text-xs text-slate-500">+{moreCount} more</p>
+            )}
           </div>
         )}
 
@@ -111,24 +131,36 @@ const JobCard = ({ job, applyViaUs, officialHref }) => {
           <p className="mt-3 text-sm font-semibold text-slate-800">{job.salary}</p>
         )}
 
-        <div className="mt-4 flex flex-col sm:flex-row gap-2">
+        <div className="mt-4 flex flex-col gap-2">
           <Link
             to={viaUs}
-            className="flex-1 inline-flex justify-center items-center h-11 px-4 rounded-xl text-sm font-bold text-white shadow-sm"
+            className="inline-flex justify-center items-center h-11 px-4 rounded-xl text-sm font-bold text-white shadow-sm"
             style={{ backgroundColor: brand.color }}
           >
-            Apply now
+            Apply
           </Link>
-          {official && (
-            <a
-              href={official}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 inline-flex justify-center items-center h-11 px-4 rounded-xl text-sm font-semibold border border-slate-300 text-slate-700 hover:bg-slate-50"
-            >
-              Company site
-            </a>
-          )}
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm">
+            {official && (
+              <a
+                href={official}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-slate-600 underline-offset-2 hover:underline hover:text-slate-900"
+              >
+                Company site
+              </a>
+            )}
+            {trainingUrl && (
+              <a
+                href={trainingUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-amber-800 underline-offset-2 hover:underline"
+              >
+                Training tips
+              </a>
+            )}
+          </div>
         </div>
       </div>
     </article>
