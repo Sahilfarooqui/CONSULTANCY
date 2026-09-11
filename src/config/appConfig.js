@@ -27,6 +27,13 @@ const appConfig = {
    * Or set REACT_APP_FORMSPREE_ID in Render env.
    */
   formspreeId: process.env.REACT_APP_FORMSPREE_ID || 'xvgrqjny',
+  /**
+   * QATI Admin Control Center applications ingest.
+   * Override with REACT_APP_APPLICATIONS_API if needed.
+   */
+  applicationsApi:
+    process.env.REACT_APP_APPLICATIONS_API ||
+    'https://qataradvancedtraininginstitute.store/api/applications',
   partners: {
     courses: {
       name: 'Qatar Advanced Training Institute',
