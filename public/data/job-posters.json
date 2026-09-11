@@ -1,23 +1,107 @@
 {
-  "in-001": "/job-posters/in-001.svg",
-  "in-cx-001": "/job-posters/in-cx-001.svg",
-  "in-002": "/job-posters/in-002.svg",
-  "in-cx-002": "/job-posters/in-cx-002.svg",
-  "in-003": "/job-posters/in-003.svg",
-  "in-cx-003": "/job-posters/in-cx-003.svg",
-  "in-004": "/job-posters/in-004.svg",
-  "in-cx-004": "/job-posters/in-cx-004.svg",
-  "in-gh-007": "/job-posters/in-gh-007.svg",
-  "in-005": "/job-posters/in-005.svg",
-  "in-cx-005": "/job-posters/in-cx-005.svg",
-  "in-gh-001": "/job-posters/in-gh-001.svg",
-  "in-gh-004": "/job-posters/in-gh-004.svg",
-  "in-gh-005": "/job-posters/in-gh-005.svg",
-  "in-008": "/job-posters/in-008.svg",
-  "in-013": "/job-posters/in-013.svg",
-  "in-009": "/job-posters/in-009.svg",
-  "in-011": "/job-posters/in-011.svg",
-  "in-gh-002": "/job-posters/in-gh-002.svg",
-  "in-gh-003": "/job-posters/in-gh-003.svg",
-  "in-gh-006": "/job-posters/in-gh-006.svg"
+  "in-001": {
+    "poster": "/job-posters/in-001.svg",
+    "photo": "/job-photos/cabin-2.jpg",
+    "category": "cabin"
+  },
+  "in-cx-001": {
+    "poster": "/job-posters/in-cx-001.svg",
+    "photo": "/job-photos/ground-1.jpg",
+    "category": "ground"
+  },
+  "in-002": {
+    "poster": "/job-posters/in-002.svg",
+    "photo": "/job-photos/cabin-1.jpg",
+    "category": "cabin"
+  },
+  "in-cx-002": {
+    "poster": "/job-posters/in-cx-002.svg",
+    "photo": "/job-photos/airport-1.jpg",
+    "category": "ground"
+  },
+  "in-003": {
+    "poster": "/job-posters/in-003.svg",
+    "photo": "/job-photos/cabin-2.jpg",
+    "category": "cabin"
+  },
+  "in-cx-003": {
+    "poster": "/job-posters/in-cx-003.svg",
+    "photo": "/job-photos/airport-2.jpg",
+    "category": "ground"
+  },
+  "in-004": {
+    "poster": "/job-posters/in-004.svg",
+    "photo": "/job-photos/cabin-1.jpg",
+    "category": "cabin"
+  },
+  "in-cx-004": {
+    "poster": "/job-posters/in-cx-004.svg",
+    "photo": "/job-photos/ground-1.jpg",
+    "category": "ground"
+  },
+  "in-gh-007": {
+    "poster": "/job-posters/in-gh-007.svg",
+    "photo": "/job-photos/ground-1.jpg",
+    "category": "ground"
+  },
+  "in-005": {
+    "poster": "/job-posters/in-005.svg",
+    "photo": "/job-photos/airport-1.jpg",
+    "category": "ground"
+  },
+  "in-cx-005": {
+    "poster": "/job-posters/in-cx-005.svg",
+    "photo": "/job-photos/airport-1.jpg",
+    "category": "ground"
+  },
+  "in-gh-001": {
+    "poster": "/job-posters/in-gh-001.svg",
+    "photo": "/job-photos/ground-1.jpg",
+    "category": "ground"
+  },
+  "in-gh-004": {
+    "poster": "/job-posters/in-gh-004.svg",
+    "photo": "/job-photos/ground-1.jpg",
+    "category": "ground"
+  },
+  "in-gh-005": {
+    "poster": "/job-posters/in-gh-005.svg",
+    "photo": "/job-photos/airport-1.jpg",
+    "category": "ground"
+  },
+  "in-008": {
+    "poster": "/job-posters/in-008.svg",
+    "photo": "/job-photos/plane-1.jpg",
+    "category": "default"
+  },
+  "in-013": {
+    "poster": "/job-posters/in-013.svg",
+    "photo": "/job-photos/hangar-1.jpg",
+    "category": "maintenance"
+  },
+  "in-009": {
+    "poster": "/job-posters/in-009.svg",
+    "photo": "/job-photos/ground-1.jpg",
+    "category": "ground"
+  },
+  "in-011": {
+    "poster": "/job-posters/in-011.svg",
+    "photo": "/job-photos/plane-1.jpg",
+    "category": "default"
+  },
+  "in-gh-002": {
+    "poster": "/job-posters/in-gh-002.svg",
+    "photo": "/job-photos/airport-1.jpg",
+    "category": "ground"
+  },
+  "in-gh-003": {
+    "poster": "/job-posters/in-gh-003.svg",
+    "photo": "/job-photos/airport-2.jpg",
+    "category": "ground"
+  },
+  "in-gh-006": {
+    "poster": "/job-posters/in-gh-006.svg",
+    "photo": "/job-photos/airport-2.jpg",
+    "category": "ground"
+  }
 }
