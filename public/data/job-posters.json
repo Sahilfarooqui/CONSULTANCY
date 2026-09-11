@@ -1,107 +1,149 @@
 {
   "in-001": {
-    "poster": "/job-posters/in-001.svg",
-    "photo": "/job-photos/cabin-2.jpg",
-    "category": "cabin"
-  },
-  "in-cx-001": {
-    "poster": "/job-posters/in-cx-001.svg",
-    "photo": "/job-photos/ground-1.jpg",
-    "category": "ground"
+    "poster": "/job-posters/in-001.jpg",
+    "photo": "/job-photos/crew/crew-2.jpg",
+    "category": "cabin",
+    "format": "jpg",
+    "size": "1080x1350"
   },
   "in-002": {
-    "poster": "/job-posters/in-002.svg",
-    "photo": "/job-photos/cabin-1.jpg",
-    "category": "cabin"
-  },
-  "in-cx-002": {
-    "poster": "/job-posters/in-cx-002.svg",
-    "photo": "/job-photos/airport-1.jpg",
-    "category": "ground"
+    "poster": "/job-posters/in-002.jpg",
+    "photo": "/job-photos/crew/crew-1.jpg",
+    "category": "cabin",
+    "format": "jpg",
+    "size": "1080x1350"
   },
   "in-003": {
-    "poster": "/job-posters/in-003.svg",
+    "poster": "/job-posters/in-003.jpg",
     "photo": "/job-photos/cabin-2.jpg",
-    "category": "cabin"
-  },
-  "in-cx-003": {
-    "poster": "/job-posters/in-cx-003.svg",
-    "photo": "/job-photos/airport-2.jpg",
-    "category": "ground"
+    "category": "cabin",
+    "format": "jpg",
+    "size": "1080x1350"
   },
   "in-004": {
-    "poster": "/job-posters/in-004.svg",
-    "photo": "/job-photos/cabin-1.jpg",
-    "category": "cabin"
-  },
-  "in-cx-004": {
-    "poster": "/job-posters/in-cx-004.svg",
-    "photo": "/job-photos/ground-1.jpg",
-    "category": "ground"
-  },
-  "in-gh-007": {
-    "poster": "/job-posters/in-gh-007.svg",
-    "photo": "/job-photos/ground-1.jpg",
-    "category": "ground"
+    "poster": "/job-posters/in-004.jpg",
+    "photo": "/job-photos/crew/crew-2.jpg",
+    "category": "cabin",
+    "format": "jpg",
+    "size": "1080x1350"
   },
   "in-005": {
-    "poster": "/job-posters/in-005.svg",
-    "photo": "/job-photos/airport-1.jpg",
-    "category": "ground"
-  },
-  "in-cx-005": {
-    "poster": "/job-posters/in-cx-005.svg",
-    "photo": "/job-photos/airport-1.jpg",
-    "category": "ground"
-  },
-  "in-gh-001": {
-    "poster": "/job-posters/in-gh-001.svg",
+    "poster": "/job-posters/in-005.jpg",
     "photo": "/job-photos/ground-1.jpg",
-    "category": "ground"
-  },
-  "in-gh-004": {
-    "poster": "/job-posters/in-gh-004.svg",
-    "photo": "/job-photos/ground-1.jpg",
-    "category": "ground"
-  },
-  "in-gh-005": {
-    "poster": "/job-posters/in-gh-005.svg",
-    "photo": "/job-photos/airport-1.jpg",
-    "category": "ground"
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
   },
   "in-008": {
-    "poster": "/job-posters/in-008.svg",
-    "photo": "/job-photos/plane-1.jpg",
-    "category": "default"
-  },
-  "in-013": {
-    "poster": "/job-posters/in-013.svg",
-    "photo": "/job-photos/hangar-1.jpg",
-    "category": "maintenance"
+    "poster": "/job-posters/in-008.jpg",
+    "photo": "/job-photos/airport-1.jpg",
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
   },
   "in-009": {
-    "poster": "/job-posters/in-009.svg",
+    "poster": "/job-posters/in-009.jpg",
     "photo": "/job-photos/ground-1.jpg",
-    "category": "ground"
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
   },
   "in-011": {
-    "poster": "/job-posters/in-011.svg",
-    "photo": "/job-photos/plane-1.jpg",
-    "category": "default"
+    "poster": "/job-posters/in-011.jpg",
+    "photo": "/job-photos/runway-1.jpg",
+    "category": "default",
+    "format": "jpg",
+    "size": "1080x1350"
+  },
+  "in-013": {
+    "poster": "/job-posters/in-013.jpg",
+    "photo": "/job-photos/hangar-1.jpg",
+    "category": "maintenance",
+    "format": "jpg",
+    "size": "1080x1350"
+  },
+  "in-cx-001": {
+    "poster": "/job-posters/in-cx-001.jpg",
+    "photo": "/job-photos/ground-1.jpg",
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
+  },
+  "in-cx-002": {
+    "poster": "/job-posters/in-cx-002.jpg",
+    "photo": "/job-photos/airport-2.jpg",
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
+  },
+  "in-cx-003": {
+    "poster": "/job-posters/in-cx-003.jpg",
+    "photo": "/job-photos/airport-2.jpg",
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
+  },
+  "in-cx-004": {
+    "poster": "/job-posters/in-cx-004.jpg",
+    "photo": "/job-photos/airport-2.jpg",
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
+  },
+  "in-cx-005": {
+    "poster": "/job-posters/in-cx-005.jpg",
+    "photo": "/job-photos/airport-2.jpg",
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
+  },
+  "in-gh-001": {
+    "poster": "/job-posters/in-gh-001.jpg",
+    "photo": "/job-photos/ground-1.jpg",
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
   },
   "in-gh-002": {
-    "poster": "/job-posters/in-gh-002.svg",
-    "photo": "/job-photos/airport-1.jpg",
-    "category": "ground"
+    "poster": "/job-posters/in-gh-002.jpg",
+    "photo": "/job-photos/airport-2.jpg",
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
   },
   "in-gh-003": {
-    "poster": "/job-posters/in-gh-003.svg",
+    "poster": "/job-posters/in-gh-003.jpg",
     "photo": "/job-photos/airport-2.jpg",
-    "category": "ground"
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
+  },
+  "in-gh-004": {
+    "poster": "/job-posters/in-gh-004.jpg",
+    "photo": "/job-photos/airport-2.jpg",
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
+  },
+  "in-gh-005": {
+    "poster": "/job-posters/in-gh-005.jpg",
+    "photo": "/job-photos/ground-1.jpg",
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
   },
   "in-gh-006": {
-    "poster": "/job-posters/in-gh-006.svg",
+    "poster": "/job-posters/in-gh-006.jpg",
+    "photo": "/job-photos/ground-1.jpg",
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
+  },
+  "in-gh-007": {
+    "poster": "/job-posters/in-gh-007.jpg",
     "photo": "/job-photos/airport-2.jpg",
-    "category": "ground"
+    "category": "ground",
+    "format": "jpg",
+    "size": "1080x1350"
   }
 }

@@ -13,6 +13,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const { spawn } = require('child_process');
 const { aggregateJobs, writeJobsFile } = require('./jobAggregator');
 
 const PORT = process.env.PORT || 4000;
@@ -148,6 +149,48 @@ let cache = {
   refreshing: false,
 };
 
+
+/** Async: generate LinkedIn-style hiring posters for any new/missing job ids. */
+let postersRunning = false;
+function enqueuePosterGeneration(reason = 'refresh') {
+  if (postersRunning) {
+    console.log(`[server] poster gen already running — skip (${reason})`);
+    return;
+  }
+  const runner = path.join(__dirname, '..', 'scripts', 'run-posters.js');
+  if (!fs.existsSync(runner)) {
+    console.warn('[server] posters runner missing:', runner);
+    return;
+  }
+  postersRunning = true;
+  console.log(`[server] Generating hiring posters for missing jobs (${reason})…`);
+  const child = spawn(process.execPath, [runner, '--only-missing'], {
+    cwd: path.join(__dirname, '..'),
+    env: { ...process.env, POSTERS_ONLY_MISSING: '1' },
+    stdio: ['ignore', 'pipe', 'pipe'],
+  });
+  let errBuf = '';
+  child.stdout.on('data', (d) => {
+    const s = String(d).trim();
+    if (s) console.log('[posters]', s);
+  });
+  child.stderr.on('data', (d) => {
+    errBuf += String(d);
+  });
+  child.on('close', (code) => {
+    postersRunning = false;
+    if (code !== 0) {
+      console.warn('[server] poster generation exited', code, errBuf.slice(0, 400));
+    } else {
+      console.log('[server] hiring posters up to date');
+    }
+  });
+  child.on('error', (e) => {
+    postersRunning = false;
+    console.warn('[server] poster spawn failed:', e.message);
+  });
+}
+
 function readDiskJobs() {
   try {
     if (fs.existsSync(PUBLIC_JOBS)) {
@@ -172,6 +215,8 @@ async function refreshJobs(force = false) {
     cache.fetchedAt = Date.now();
     writeJobsFile(payload, PUBLIC_JOBS);
     console.log(`[server] Jobs refreshed: ${payload.count} roles (${payload.liveCount} live)`);
+    // Non-blocking: new jobs automatically get LinkedIn-style hiring posters
+    enqueuePosterGeneration('jobs-refresh');
     return payload;
   } catch (e) {
     console.error('[server] Refresh failed:', e.message);
@@ -213,6 +258,34 @@ app.get('/api/jobs', jobsReadLimiter, async (req, res) => {
   }
 });
 
+
+// Ensure a hiring poster exists for a job id (creates if missing; returns public path)
+app.get('/api/posters/:id', jobsReadLimiter, (req, res) => {
+  const raw = String(req.params.id || '');
+  const sid = raw.replace(/[^a-zA-Z0-9_-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 80);
+  if (!sid) return res.status(400).json({ error: 'Invalid id' });
+  const postersDir = path.join(__dirname, '..', 'public', 'job-posters');
+  const jpg = path.join(postersDir, `${sid}.jpg`);
+  if (fs.existsSync(jpg) && fs.statSync(jpg).size > 5000) {
+    return res.json({ ok: true, poster: `/job-posters/${sid}.jpg`, cached: true });
+  }
+  // Kick off generation for this id (async); client can retry
+  const runner = path.join(__dirname, '..', 'scripts', 'run-posters.js');
+  if (fs.existsSync(runner)) {
+    spawn(process.execPath, [runner, '--only-missing', '--job-id', sid], {
+      cwd: path.join(__dirname, '..'),
+      stdio: 'ignore',
+      detached: true,
+    }).unref();
+  }
+  return res.status(202).json({
+    ok: false,
+    generating: true,
+    poster: `/job-posters/${sid}.jpg`,
+    message: 'Poster generating — retry shortly',
+  });
+});
+
 app.post('/api/jobs/refresh', jobsWriteLimiter, async (req, res) => {
   if (!isAuthorizedRefresh(req)) {
     return res.status(401).json({ error: 'Unauthorized' });
@@ -240,6 +313,28 @@ if (fs.existsSync(BUILD_DIR)) {
     res.sendFile(path.join(BUILD_DIR, 'index.html'));
   });
 }
+
+
+// Hiring posters + photos (runtime-generated JPGs land in public/job-posters)
+const PUBLIC_ROOT = path.join(__dirname, '..', 'public');
+app.use(
+  '/job-posters',
+  express.static(path.join(PUBLIC_ROOT, 'job-posters'), {
+    dotfiles: 'deny',
+    index: false,
+    fallthrough: true,
+    maxAge: '1h',
+  })
+);
+app.use(
+  '/job-photos',
+  express.static(path.join(PUBLIC_ROOT, 'job-photos'), {
+    dotfiles: 'deny',
+    index: false,
+    fallthrough: true,
+    maxAge: '7d',
+  })
+);
 
 // Public data JSON (fixed directory; express.static rejects ..)
 app.use(

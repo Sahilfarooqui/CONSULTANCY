@@ -4,12 +4,24 @@
  * Usage: node scripts/fetch-jobs.js
  * Schedule via GitHub Actions, cron, or npm run fetch-jobs
  *
- * After writing live-jobs, regenerates LinkedIn-style job posters
- * (public/job-posters/*.svg + public/data/job-posters.json).
+ * After writing live-jobs, regenerates LinkedIn-style hiring posters
+ * for any NEW / missing job ids (public/job-posters/*.jpg + job-posters.json).
  */
 const path = require('path');
 const { spawnSync } = require('child_process');
 const { aggregateJobs, writeJobsFile } = require('../server/jobAggregator');
+
+function runPosters(extraArgs = []) {
+  console.log('\nGenerating hiring posters (missing ids)…');
+  const posters = spawnSync(process.execPath, [path.join(__dirname, 'run-posters.js'), ...extraArgs], {
+    stdio: 'inherit',
+    cwd: path.join(__dirname, '..'),
+    env: { ...process.env, POSTERS_ONLY_MISSING: '1' },
+  });
+  if (posters.status !== 0) {
+    console.warn('Poster generation failed (non-fatal). Run: npm run posters');
+  }
+}
 
 async function main() {
   console.log('Runway2Sky — fetching latest aviation jobs…');
@@ -27,15 +39,8 @@ async function main() {
     console.log('  3. Optional: RAPIDAPI_KEY for JSearch (Google Jobs / LinkedIn-indexed)');
   }
 
-  // Regenerate LinkedIn-style eligibility posters for job cards
-  console.log('\nGenerating job posters…');
-  const posters = spawnSync(process.execPath, [path.join(__dirname, 'generate-job-posters.js')], {
-    stdio: 'inherit',
-    cwd: path.join(__dirname, '..'),
-  });
-  if (posters.status !== 0) {
-    console.warn('Poster generation failed (non-fatal). Run: npm run posters');
-  }
+  // Auto: every new job gets a LinkedIn-style hiring poster
+  runPosters(['--only-missing']);
 }
 
 main().catch((e) => {
