@@ -9,6 +9,7 @@ import courses, {
 } from '../data/courses';
 import CompanyLogo from '../components/jobs/CompanyLogo';
 import { getCompanyBrand, getPosterLabel } from '../utils/companyBranding';
+import { safeHttpUrl, sanitizeSearchQuery } from '../utils/safeUrl';
 
 /**
  * Apply via Runway2Sky — requires QATI certificate enrollment commitment.
@@ -23,14 +24,16 @@ const Apply = () => {
   const [policyConfirm, setPolicyConfirm] = useState(false);
 
   const jobMeta = useMemo(() => {
-    const jobId = params.get('jobId') || '';
+    const jobId = sanitizeSearchQuery(params.get('jobId') || '', { maxLength: 80 });
     const fromList = featuredJobs.find((j) => j.id === jobId);
-    const title = params.get('title') || fromList?.title || '';
-    const company = params.get('company') || fromList?.company || '';
-    const location = params.get('location') || fromList?.location || '';
-    const level = params.get('level') || fromList?.level || 'Fresher';
-    const category = params.get('category') || fromList?.category || '';
-    const externalUrl = params.get('external') || fromList?.applyUrl || '';
+    const title = sanitizeSearchQuery(params.get('title') || fromList?.title || '', { maxLength: 200 });
+    const company = sanitizeSearchQuery(params.get('company') || fromList?.company || '', { maxLength: 120 });
+    const location = sanitizeSearchQuery(params.get('location') || fromList?.location || '', { maxLength: 120 });
+    const level = sanitizeSearchQuery(params.get('level') || fromList?.level || 'Fresher', { maxLength: 60 });
+    const category = sanitizeSearchQuery(params.get('category') || fromList?.category || '', { maxLength: 80 });
+    // Never trust query-string redirects — http(s) only
+    const externalUrl =
+      safeHttpUrl(params.get('external')) || safeHttpUrl(fromList?.applyUrl) || '';
     const job = { id: jobId, title, company, location, level, category, applyUrl: externalUrl };
     return job;
   }, [params]);

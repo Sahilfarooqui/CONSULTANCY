@@ -4,6 +4,7 @@ import CompanyLogo from './CompanyLogo';
 import JobPoster from './JobPoster';
 import { getCompanyBrand, getPosterLabel, formatPostedLabel } from '../../utils/companyBranding';
 import { COURSES_PLATFORM, getCertificatesForJob } from '../../data/courses';
+import { safeHttpUrl } from '../../utils/safeUrl';
 
 const JobCard = ({ job, applyViaUs, officialHref }) => {
   const brand = getCompanyBrand(job.company);
@@ -14,7 +15,7 @@ const JobCard = ({ job, applyViaUs, officialHref }) => {
   const [showEligibility, setShowEligibility] = useState(false);
   const eligibility = Array.isArray(job.eligibility) ? job.eligibility : [];
   const posted = formatPostedLabel(job.postedAt);
-  const logoUrl = job.logo || job.companyLogo || job.company_logo || job.logoUrl;
+  const logoUrl = safeHttpUrl(job.logo || job.companyLogo || job.company_logo || job.logoUrl) || undefined;
 
   const metaParts = [job.location, job.region, posted].filter(Boolean);
 
