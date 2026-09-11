@@ -8,20 +8,32 @@ import courses, {
   getPrimaryCertificate,
 } from '../data/courses';
 import CompanyLogo from '../components/jobs/CompanyLogo';
-import { getCompanyBrand, getPosterLabel } from '../utils/companyBranding';
+import { getCompanyBrand } from '../utils/companyBranding';
 import { safeHttpUrl, sanitizeSearchQuery } from '../utils/safeUrl';
 
+const STEPS = [
+  { id: 1, label: 'Your details' },
+  { id: 2, label: 'Pick a course' },
+  { id: 3, label: 'Send' },
+];
+
 /**
- * Apply via Runway2Sky — requires QATI certificate enrollment commitment.
+ * Apply via Runway2Sky — simple 3-step flow with QATI course commitment.
  */
 const Apply = () => {
   const [params] = useSearchParams();
   const navigate = useNavigate();
+  const [step, setStep] = useState(1);
   const [status, setStatus] = useState('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const [selectedCertId, setSelectedCertId] = useState('');
   const [enrolledConfirm, setEnrolledConfirm] = useState(false);
-  const [policyConfirm, setPolicyConfirm] = useState(false);
+  const [formValues, setFormValues] = useState({
+    fullName: '',
+    phone: '',
+    email: '',
+    city: '',
+  });
 
   const jobMeta = useMemo(() => {
     const jobId = sanitizeSearchQuery(params.get('jobId') || '', { maxLength: 80 });
@@ -34,50 +46,93 @@ const Apply = () => {
     // Never trust query-string redirects — http(s) only
     const externalUrl =
       safeHttpUrl(params.get('external')) || safeHttpUrl(fromList?.applyUrl) || '';
-    const job = { id: jobId, title, company, location, level, category, applyUrl: externalUrl };
-    return job;
+    return { id: jobId, title, company, location, level, category, applyUrl: externalUrl };
   }, [params]);
 
   const certs = useMemo(() => getCertificatesForJob(jobMeta), [jobMeta]);
   const primary = useMemo(() => getPrimaryCertificate(jobMeta), [jobMeta]);
 
-  // Default select primary cert when certs load
   const activeCertId = selectedCertId || primary?.id || '';
   const activeCert = courses.find((c) => c.id === activeCertId) || primary;
 
   const formspreeUrl = `https://formspree.io/f/${appConfig.formspreeId}`;
   const waNumber = String(appConfig.contact.whatsapp || '').replace(/\D/g, '');
 
+  const updateField = (e) => {
+    const { name, value } = e.target;
+    setFormValues((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const validateStep1 = () => {
+    if (!formValues.fullName.trim()) return 'Please enter your full name.';
+    if (!formValues.phone.trim()) return 'Please enter your phone number.';
+    if (!formValues.email.trim()) return 'Please enter your email.';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formValues.email.trim())) {
+      return 'That email looks off — please check it.';
+    }
+    if (!formValues.city.trim()) return 'Please enter your city.';
+    return '';
+  };
+
+  const goNext = () => {
+    setErrorMsg('');
+    if (step === 1) {
+      const err = validateStep1();
+      if (err) {
+        setErrorMsg(err);
+        return;
+      }
+      setStep(2);
+      return;
+    }
+    if (step === 2) {
+      if (!activeCertId) {
+        setErrorMsg('Please pick a short training course.');
+        return;
+      }
+      setStep(3);
+    }
+  };
+
+  const goBack = () => {
+    setErrorMsg('');
+    setStep((s) => Math.max(1, s - 1));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMsg('');
 
+    const step1Err = validateStep1();
+    if (step1Err) {
+      setStep(1);
+      setErrorMsg(step1Err);
+      return;
+    }
     if (!activeCertId) {
-      setErrorMsg('Please select a required QATI certificate for this job.');
+      setStep(2);
+      setErrorMsg('Please pick a short training course.');
       return;
     }
     if (!enrolledConfirm) {
-      setErrorMsg(
-        'You must confirm that you will enrol / complete the selected QATI certificate on qataradvancedtraininginstitute.store.'
-      );
-      return;
-    }
-    if (!policyConfirm) {
-      setErrorMsg(
-        'You must accept that job applications through Runway2Sky require partner certification.'
-      );
+      setErrorMsg('Please confirm you’ll start or complete the course.');
       return;
     }
 
     setStatus('sending');
     const form = e.target;
     const data = new FormData(form);
+    data.set('fullName', formValues.fullName.trim());
+    data.set('phone', formValues.phone.trim());
+    data.set('email', formValues.email.trim());
+    data.set('city', formValues.city.trim());
     data.set('selectedCertificateId', activeCertId);
     data.set('selectedCertificateTitle', activeCert?.title || '');
     data.set('certificatePartner', 'Qatar Advanced Training Institute');
     data.set('certificatePlatform', COURSES_PLATFORM);
     data.set('certificationRequired', 'yes');
     data.set('certificationConfirmed', enrolledConfirm ? 'yes' : 'no');
+    data.set('qatiEnrollmentStatus', 'will_enrol_now');
 
     try {
       const res = await fetch(formspreeUrl, {
@@ -94,126 +149,92 @@ const Apply = () => {
       }
 
       const body = await res.json().catch(() => ({}));
-      throw new Error(body.error || `Could not send application (${res.status})`);
+      throw new Error(body.error || 'Something went wrong. Please try again.');
     } catch (err) {
       setStatus('error');
-      setErrorMsg(
-        err.message ||
-          'Could not send. Check Formspree setup, or WhatsApp us after enrolling on QATI.'
-      );
+      setErrorMsg(err.message || 'Couldn’t send. Try again or message us on WhatsApp.');
     }
   };
 
   const waText = encodeURIComponent(
-    `Hi Runway2Sky, I want to apply for: ${jobMeta.title || 'Aviation job'} at ${jobMeta.company || 'airline'}. I will complete QATI certificate: ${activeCert?.title || ''}. Name: `
+    `Hi Runway2Sky, I want to apply for: ${jobMeta.title || 'Aviation job'} at ${jobMeta.company || 'airline'}. Course: ${activeCert?.title || ''}. Name: `
   );
 
+  const inputClass =
+    'mt-1 block w-full border border-slate-300 rounded-lg py-2.5 px-3 text-sm focus:ring-sky-500 focus:border-sky-500';
+
   return (
-    <div className="py-12 bg-slate-50 min-h-screen">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8">
-          <p className="text-sm font-semibold tracking-wide uppercase text-sky-600">Apply via Runway2Sky</p>
-          <h1 className="mt-2 text-3xl font-extrabold text-slate-900">Application + QATI certificate</h1>
-          <p className="mt-3 text-slate-600 max-w-xl mx-auto">
-            Every job application requires a relevant certificate from our partner{' '}
-            <strong>Qatar Advanced Training Institute</strong>. Courses are available on their Qatar platform
-            (online access).
-          </p>
+    <div className="py-8 sm:py-10 bg-slate-50 min-h-screen">
+      <div className="max-w-xl mx-auto px-4 sm:px-6">
+        <div className="text-center mb-6">
+          <h1 className="text-2xl font-bold text-slate-900">Apply for this job</h1>
+          <p className="mt-1.5 text-sm text-slate-600">Takes about 2 minutes. We’ll guide you.</p>
         </div>
 
         {(jobMeta.title || jobMeta.company) && (
-          <div className="mb-6 rounded-2xl border border-sky-100 bg-white p-5 text-left shadow-sm">
-            <div className="flex gap-4 items-start">
-              <CompanyLogo company={jobMeta.company} size={56} />
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wide text-sky-700">Applying for</p>
-                <p className="mt-1 text-lg font-bold text-slate-900">{jobMeta.title || 'Aviation role'}</p>
-                <p className="font-semibold" style={{ color: getCompanyBrand(jobMeta.company).color }}>
+          <div className="mb-5 rounded-xl border border-sky-100 bg-white p-4 text-left shadow-sm">
+            <div className="flex gap-3 items-start">
+              <CompanyLogo company={jobMeta.company} size={48} />
+              <div className="min-w-0">
+                <p className="text-base font-bold text-slate-900 leading-snug">
+                  {jobMeta.title || 'Aviation role'}
+                </p>
+                <p className="text-sm font-semibold mt-0.5" style={{ color: getCompanyBrand(jobMeta.company).color }}>
                   {getCompanyBrand(jobMeta.company).name}
                 </p>
-                <p className="text-sm text-slate-600 mt-0.5">
-                  {jobMeta.location}
-                  {jobMeta.level ? ` · ${jobMeta.level}` : ''}
-                </p>
-                <p className="text-xs text-slate-500 mt-2">{getPosterLabel(jobMeta).line}</p>
+                <p className="text-sm text-slate-600 mt-0.5">{jobMeta.location}</p>
               </div>
             </div>
           </div>
         )}
 
-        {/* Required certificates */}
-        <div className="mb-6 rounded-2xl border border-amber-200 bg-amber-50 p-5 text-left">
-          <h2 className="text-lg font-bold text-amber-950">
-            Partner certificates (Qatar Advanced Training Institute)
-          </h2>
-          <p className="mt-1 text-sm text-amber-900/90">
-            Select a certificate for this role, then enrol on{' '}
-            <a
-              href={COURSES_PLATFORM}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold underline underline-offset-2"
-            >
-              qataradvancedtraininginstitute.store
-            </a>
-            .
-          </p>
-          <div className="mt-4 space-y-3">
-            {certs.map((c) => {
-              const isPrimary = c.id === primary?.id;
-              return (
-                <label
-                  key={c.id}
-                  className={`flex gap-3 p-4 rounded-xl border cursor-pointer transition-colors ${
-                    activeCertId === c.id
-                      ? 'border-sky-500 bg-white ring-2 ring-sky-200'
-                      : 'border-amber-100 bg-white/70 hover:border-sky-300'
+        {/* Progress steps */}
+        <div className="mb-5 flex items-center gap-1" role="tablist" aria-label="Application steps">
+          {STEPS.map((s, i) => {
+            const done = step > s.id;
+            const current = step === s.id;
+            return (
+              <React.Fragment key={s.id}>
+                {i > 0 && <div className={`h-0.5 flex-1 ${done || current ? 'bg-sky-400' : 'bg-slate-200'}`} />}
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={current}
+                  onClick={() => {
+                    if (s.id < step) {
+                      setErrorMsg('');
+                      setStep(s.id);
+                    }
+                  }}
+                  className={`flex items-center gap-1.5 shrink-0 rounded-full px-2.5 py-1.5 text-xs font-semibold transition ${
+                    current
+                      ? 'bg-sky-600 text-white'
+                      : done
+                        ? 'bg-sky-100 text-sky-800'
+                        : 'bg-slate-100 text-slate-500'
                   }`}
                 >
-                  <input
-                    type="radio"
-                    name="certificateChoice"
-                    value={c.id}
-                    checked={activeCertId === c.id}
-                    onChange={() => setSelectedCertId(c.id)}
-                    className="mt-1"
-                    required
-                  />
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="font-semibold text-slate-900">{c.title}</span>
-                      {isPrimary && (
-                        <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-sky-100 text-sky-800">
-                          Recommended for this job
-                        </span>
-                      )}
-                      <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
-                        Certificate · Qatar partner
-                      </span>
-                    </div>
-                    <p className="text-sm text-slate-600 mt-1">{c.description}</p>
-                    <p className="text-xs text-slate-500 mt-1">
-                      {c.duration} · {c.mode} · {c.location}
-                    </p>
-                    <a
-                      href={c.url || COURSES_PLATFORM}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex mt-2 text-sm font-semibold text-sky-700 hover:text-sky-900"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      Open course on QATI platform →
-                    </a>
-                  </div>
-                </label>
-              );
-            })}
-          </div>
+                  <span
+                    className={`inline-flex h-5 w-5 items-center justify-center rounded-full text-[10px] ${
+                      current ? 'bg-white/20' : done ? 'bg-sky-200' : 'bg-slate-200'
+                    }`}
+                  >
+                    {done ? '✓' : s.id}
+                  </span>
+                  <span className="hidden sm:inline">{s.label}</span>
+                </button>
+              </React.Fragment>
+            );
+          })}
         </div>
 
-        <div className="bg-white shadow-soft rounded-2xl border border-slate-100 p-6 sm:p-8 text-left">
+        <div className="bg-white shadow-soft rounded-2xl border border-slate-100 p-5 sm:p-6 text-left">
           <form onSubmit={handleSubmit}>
-            <input type="hidden" name="_subject" value={`Job application + QATI cert: ${jobMeta.title || 'Runway2Sky'}`} />
+            <input
+              type="hidden"
+              name="_subject"
+              value={`Job application: ${jobMeta.title || 'Runway2Sky'}`}
+            />
             <input type="hidden" name="formType" value="job_application" />
             <input type="hidden" name="jobId" value={jobMeta.id || ''} />
             <input type="hidden" name="jobTitle" value={jobMeta.title} />
@@ -222,248 +243,223 @@ const Apply = () => {
             <input type="hidden" name="jobCategory" value={jobMeta.category || ''} />
             <input type="text" name="_gotcha" className="hidden" tabIndex={-1} autoComplete="off" />
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div>
-                <label htmlFor="fullName" className="block text-sm font-medium text-slate-700">
-                  Full name *
-                </label>
-                <input
-                  id="fullName"
-                  name="fullName"
-                  type="text"
-                  required
-                  className="mt-1 block w-full border border-slate-300 rounded-lg py-2.5 px-3 focus:ring-sky-500 focus:border-sky-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="phone" className="block text-sm font-medium text-slate-700">
-                  Phone / WhatsApp *
-                </label>
-                <input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  required
-                  placeholder="+91 ..."
-                  className="mt-1 block w-full border border-slate-300 rounded-lg py-2.5 px-3 focus:ring-sky-500 focus:border-sky-500"
-                />
-              </div>
-              <div className="sm:col-span-2">
-                <label htmlFor="email" className="block text-sm font-medium text-slate-700">
-                  Email *
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  required
-                  className="mt-1 block w-full border border-slate-300 rounded-lg py-2.5 px-3 focus:ring-sky-500 focus:border-sky-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="city" className="block text-sm font-medium text-slate-700">
-                  Current city *
-                </label>
-                <input
-                  id="city"
-                  name="city"
-                  type="text"
-                  required
-                  placeholder="Delhi, Mumbai, ..."
-                  className="mt-1 block w-full border border-slate-300 rounded-lg py-2.5 px-3 focus:ring-sky-500 focus:border-sky-500"
-                />
-              </div>
-              <div>
-                <label htmlFor="experience" className="block text-sm font-medium text-slate-700">
-                  Experience *
-                </label>
-                <select
-                  id="experience"
-                  name="experience"
-                  required
-                  defaultValue="Fresher (0 years)"
-                  className="mt-1 block w-full border border-slate-300 rounded-lg py-2.5 px-3 focus:ring-sky-500 focus:border-sky-500"
-                >
-                  <option>Fresher (0 years)</option>
-                  <option>Less than 1 year</option>
-                  <option>1–2 years</option>
-                  <option>3+ years</option>
-                </select>
-              </div>
-              <div className="sm:col-span-2">
-                <label htmlFor="education" className="block text-sm font-medium text-slate-700">
-                  Education *
-                </label>
-                <select
-                  id="education"
-                  name="education"
-                  required
-                  className="mt-1 block w-full border border-slate-300 rounded-lg py-2.5 px-3 focus:ring-sky-500 focus:border-sky-500"
-                >
-                  <option value="">Select</option>
-                  <option>10+2 / Intermediate</option>
-                  <option>Diploma</option>
-                  <option>Graduate</option>
-                  <option>Postgraduate</option>
-                  <option>AME / Aviation diploma</option>
-                </select>
-              </div>
-              <div className="sm:col-span-2">
-                <label htmlFor="preferredRole" className="block text-sm font-medium text-slate-700">
-                  Preferred role
-                </label>
-                <input
-                  id="preferredRole"
-                  name="preferredRole"
-                  type="text"
-                  defaultValue={jobMeta.title || ''}
-                  className="mt-1 block w-full border border-slate-300 rounded-lg py-2.5 px-3 focus:ring-sky-500 focus:border-sky-500"
-                />
-              </div>
-              <div className="sm:col-span-2">
-                <label htmlFor="qatiEnrollmentStatus" className="block text-sm font-medium text-slate-700">
-                  QATI course status *
-                </label>
-                <select
-                  id="qatiEnrollmentStatus"
-                  name="qatiEnrollmentStatus"
-                  required
-                  className="mt-1 block w-full border border-slate-300 rounded-lg py-2.5 px-3 focus:ring-sky-500 focus:border-sky-500"
-                >
-                  <option value="">Select</option>
-                  <option value="will_enrol_now">I will enrol on QATI now (before / with this application)</option>
-                  <option value="already_enrolled">I already enrolled on QATI</option>
-                  <option value="completed_certificate">I already completed this certificate</option>
-                </select>
-              </div>
-              <div className="sm:col-span-2">
-                <label htmlFor="qatiProof" className="block text-sm font-medium text-slate-700">
-                  Enrolment / certificate proof link (optional)
-                </label>
-                <input
-                  id="qatiProof"
-                  name="qatiProof"
-                  type="url"
-                  placeholder="Receipt, dashboard screenshot link, or certificate URL"
-                  className="mt-1 block w-full border border-slate-300 rounded-lg py-2.5 px-3 focus:ring-sky-500 focus:border-sky-500"
-                />
-              </div>
-              <div className="sm:col-span-2">
-                <label htmlFor="cvLink" className="block text-sm font-medium text-slate-700">
-                  CV / Resume link (Google Drive)
-                </label>
-                <input
-                  id="cvLink"
-                  name="cvLink"
-                  type="url"
-                  placeholder="https://drive.google.com/..."
-                  className="mt-1 block w-full border border-slate-300 rounded-lg py-2.5 px-3 focus:ring-sky-500 focus:border-sky-500"
-                />
-              </div>
-              <div className="sm:col-span-2">
-                <label htmlFor="message" className="block text-sm font-medium text-slate-700">
-                  Message *
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  rows={3}
-                  required
-                  placeholder="Languages, height (cabin crew), passport, why this role..."
-                  className="mt-1 block w-full border border-slate-300 rounded-lg py-2.5 px-3 focus:ring-sky-500 focus:border-sky-500"
-                />
-              </div>
-            </div>
-
-            <div className="mt-6 space-y-3 rounded-xl bg-slate-50 border border-slate-200 p-4">
-              <label className="flex gap-3 items-start cursor-pointer text-sm text-slate-800">
-                <input
-                  type="checkbox"
-                  checked={enrolledConfirm}
-                  onChange={(e) => setEnrolledConfirm(e.target.checked)}
-                  className="mt-1"
-                  required
-                />
-                <span>
-                  I understand I must complete / enrol in{' '}
-                  <strong>{activeCert?.title || 'the selected QATI certificate'}</strong> on{' '}
-                  <a
-                    href={COURSES_PLATFORM}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sky-700 font-semibold underline"
-                  >
-                    Qatar Advanced Training Institute
-                  </a>{' '}
-                  (Qatar partner platform). *
-                </span>
-              </label>
-              <label className="flex gap-3 items-start cursor-pointer text-sm text-slate-800">
-                <input
-                  type="checkbox"
-                  checked={policyConfirm}
-                  onChange={(e) => setPolicyConfirm(e.target.checked)}
-                  className="mt-1"
-                  required
-                />
-                <span>
-                  I accept that Runway2Sky job applications require partner certification, and my details may be used
-                  for placement guidance. *
-                </span>
-              </label>
-            </div>
-
-            {status === 'error' && (
-              <div className="mt-4 rounded-lg bg-rose-50 border border-rose-100 text-rose-800 text-sm p-3">
-                {errorMsg}
+            {/* Step 1 — Your details */}
+            {step === 1 && (
+              <div className="space-y-4">
+                <p className="text-sm font-semibold text-slate-800">1. Your details</p>
+                <div>
+                  <label htmlFor="fullName" className="block text-sm font-medium text-slate-700">
+                    Full name
+                  </label>
+                  <input
+                    id="fullName"
+                    name="fullName"
+                    type="text"
+                    required
+                    value={formValues.fullName}
+                    onChange={updateField}
+                    placeholder="Your full name"
+                    className={inputClass}
+                    autoComplete="name"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-medium text-slate-700">
+                    Phone / WhatsApp
+                  </label>
+                  <input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    required
+                    value={formValues.phone}
+                    onChange={updateField}
+                    placeholder="+91 98765 43210"
+                    className={inputClass}
+                    autoComplete="tel"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium text-slate-700">
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    value={formValues.email}
+                    onChange={updateField}
+                    placeholder="you@example.com"
+                    className={inputClass}
+                    autoComplete="email"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="city" className="block text-sm font-medium text-slate-700">
+                    City
+                  </label>
+                  <input
+                    id="city"
+                    name="city"
+                    type="text"
+                    required
+                    value={formValues.city}
+                    onChange={updateField}
+                    placeholder="Delhi, Mumbai, Bangalore…"
+                    className={inputClass}
+                    autoComplete="address-level2"
+                  />
+                </div>
               </div>
             )}
-            {errorMsg && status !== 'error' && (
+
+            {/* Step 2 — Pick a course */}
+            {step === 2 && (
+              <div>
+                <p className="text-sm font-semibold text-slate-800">2. Pick a course</p>
+                <p className="mt-1.5 text-sm text-slate-600 leading-relaxed">
+                  To apply through us, choose one short training course (helps your profile).
+                </p>
+                <div className="mt-4 space-y-2.5">
+                  {certs.map((c) => {
+                    const isPrimary = c.id === primary?.id;
+                    const selected = activeCertId === c.id;
+                    return (
+                      <label
+                        key={c.id}
+                        className={`flex gap-3 p-3.5 rounded-xl border cursor-pointer transition-colors ${
+                          selected
+                            ? 'border-sky-500 bg-sky-50/60 ring-2 ring-sky-200'
+                            : 'border-slate-200 bg-white hover:border-sky-300'
+                        }`}
+                      >
+                        <input
+                          type="radio"
+                          name="certificateChoice"
+                          value={c.id}
+                          checked={selected}
+                          onChange={() => setSelectedCertId(c.id)}
+                          className="mt-1"
+                        />
+                        <div className="flex-1 min-w-0">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className="text-sm font-semibold text-slate-900">{c.title}</span>
+                            {isPrimary && (
+                              <span className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full bg-sky-100 text-sky-800">
+                                Suggested
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-xs text-slate-500 mt-0.5">
+                            {c.duration} · Online
+                          </p>
+                          <a
+                            href={safeHttpUrl(c.url) || COURSES_PLATFORM}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex mt-1.5 text-xs font-semibold text-sky-700 hover:text-sky-900"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            Open course →
+                          </a>
+                        </div>
+                      </label>
+                    );
+                  })}
+                </div>
+                <p className="mt-3 text-xs text-slate-500 leading-relaxed">
+                  Courses are from our training partner (QATI). Short and beginner-friendly — nothing scary.
+                </p>
+              </div>
+            )}
+
+            {/* Step 3 — Send */}
+            {step === 3 && (
+              <div>
+                <p className="text-sm font-semibold text-slate-800">3. Send application</p>
+                <div className="mt-3 rounded-xl bg-slate-50 border border-slate-200 p-3.5 text-sm text-slate-700 space-y-1">
+                  <p>
+                    <span className="text-slate-500">Name:</span> {formValues.fullName}
+                  </p>
+                  <p>
+                    <span className="text-slate-500">Phone:</span> {formValues.phone}
+                  </p>
+                  <p>
+                    <span className="text-slate-500">Email:</span> {formValues.email}
+                  </p>
+                  <p>
+                    <span className="text-slate-500">City:</span> {formValues.city}
+                  </p>
+                  <p>
+                    <span className="text-slate-500">Course:</span> {activeCert?.title || '—'}
+                  </p>
+                </div>
+
+                <label className="mt-4 flex gap-3 items-start cursor-pointer text-sm text-slate-800">
+                  <input
+                    type="checkbox"
+                    checked={enrolledConfirm}
+                    onChange={(e) => setEnrolledConfirm(e.target.checked)}
+                    className="mt-0.5"
+                    required
+                  />
+                  <span>I will start/complete this course on the QATI website.</span>
+                </label>
+              </div>
+            )}
+
+            {errorMsg && (
               <div className="mt-4 rounded-lg bg-rose-50 border border-rose-100 text-rose-800 text-sm p-3">
                 {errorMsg}
               </div>
             )}
 
-            <div className="mt-6 flex flex-col sm:flex-row gap-3">
-              <a
-                href={activeCert?.url || COURSES_PLATFORM}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex justify-center items-center px-5 py-3 rounded-lg text-sm font-semibold border-2 border-sky-600 text-sky-800 hover:bg-sky-50"
-              >
-                1. Enrol on QATI first
-              </a>
-              <button
-                type="submit"
-                disabled={status === 'sending'}
-                className="flex-1 inline-flex justify-center items-center px-6 py-3 rounded-lg text-base font-semibold text-white bg-sky-600 hover:bg-sky-700 disabled:opacity-60"
-              >
-                {status === 'sending' ? 'Sending…' : '2. Submit application + certificate commitment'}
-              </button>
+            <div className="mt-6 flex flex-col-reverse sm:flex-row gap-2.5">
+              {step > 1 && (
+                <button
+                  type="button"
+                  onClick={goBack}
+                  className="inline-flex justify-center items-center px-4 py-2.5 rounded-lg text-sm font-semibold border border-slate-200 text-slate-700 hover:bg-slate-50"
+                >
+                  Back
+                </button>
+              )}
+              {step < 3 ? (
+                <button
+                  type="button"
+                  onClick={goNext}
+                  className="flex-1 inline-flex justify-center items-center px-5 py-3 rounded-lg text-sm font-semibold text-white bg-sky-600 hover:bg-sky-700"
+                >
+                  Continue
+                </button>
+              ) : (
+                <button
+                  type="submit"
+                  disabled={status === 'sending'}
+                  className="flex-1 inline-flex justify-center items-center px-5 py-3.5 rounded-lg text-base font-bold text-white bg-sky-600 hover:bg-sky-700 disabled:opacity-60 shadow-sm"
+                >
+                  {status === 'sending' ? 'Sending…' : 'Submit application'}
+                </button>
+              )}
             </div>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between text-sm">
-            <p className="text-slate-500">Questions about courses?</p>
-            <div className="flex flex-wrap gap-2">
-              {waNumber && (
-                <a
-                  href={`https://wa.me/${waNumber}?text=${waText}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex px-4 py-2 rounded-lg font-semibold bg-emerald-600 text-white hover:bg-emerald-700"
-                >
-                  WhatsApp us
-                </a>
-              )}
-              <Link to="/courses" className="inline-flex px-4 py-2 rounded-lg font-semibold border border-slate-200 text-slate-700 hover:bg-slate-50">
-                All QATI certificates
-              </Link>
+          {waNumber && (
+            <div className="mt-5 pt-4 border-t border-slate-100 text-center">
+              <a
+                href={`https://wa.me/${waNumber}?text=${waText}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium text-emerald-700 hover:text-emerald-800 hover:underline"
+              >
+                Prefer WhatsApp? Message us
+              </a>
             </div>
-          </div>
+          )}
         </div>
 
-        <p className="mt-4 text-center">
+        <p className="mt-4 text-center text-sm">
           <Link to="/jobs" className="text-sky-700 font-medium hover:underline">
             ← Back to jobs
           </Link>

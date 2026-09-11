@@ -9,7 +9,7 @@ const MobileQuickBar = () => {
   const tab = (to, label, icon, active) => (
     <Link
       to={to}
-      className={`flex flex-col items-center justify-center py-2.5 gap-0.5 text-[10px] tracking-wide ${
+      className={`flex flex-col items-center justify-center py-2.5 gap-0.5 text-[10px] sm:text-[11px] tracking-wide ${
         active ? 'text-sky-700 font-semibold' : 'text-slate-500 font-medium'
       }`}
     >
@@ -48,7 +48,7 @@ const MobileQuickBar = () => {
         )}
         {tab(
           '/courses',
-          'Courses',
+          'Train',
           <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
             <path
               strokeLinecap="round"
@@ -60,7 +60,7 @@ const MobileQuickBar = () => {
         )}
         {tab(
           '/app',
-          'App',
+          'Get app',
           <svg className={iconClass} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}>
             <path
               strokeLinecap="round"

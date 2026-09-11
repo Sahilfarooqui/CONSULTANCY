@@ -103,7 +103,7 @@ const Navbar = () => {
               onClick={() => setIsMenuOpen(false)}
               className="flex w-full items-center justify-center rounded-xl bg-sky-600 px-4 py-4 text-base font-bold text-white hover:bg-sky-700"
             >
-              Find Jobs
+              Browse jobs
             </Link>
             <Link
               to="/app"
@@ -140,7 +140,7 @@ const Navbar = () => {
           to="/jobs"
           className="ml-2 px-4 py-2 rounded-lg text-sm font-semibold bg-sky-600 text-white hover:bg-sky-700 shadow-sm whitespace-nowrap"
         >
-          Find Jobs
+          Browse jobs
         </Link>
       </div>
 
