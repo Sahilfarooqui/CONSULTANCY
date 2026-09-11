@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="628" viewBox="0 0 1200 628" role="img" aria-label="Cabin Crew / In-Flight Services — Freshers — Air India">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#DA0E29"/>
+      <stop offset="55%" stop-color="#8B0000"/>
+      <stop offset="100%" stop-color="#DA0E29"/>
+    </linearGradient>
+    <linearGradient id="shade" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#000000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000000" stop-opacity="0.35"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="628" fill="url(#bg)"/>
+  <rect width="1200" height="628" fill="url(#shade)"/>
+  <rect x="0" y="0" width="1200" height="72" fill="#000000" fill-opacity="0.28"/>
+  <text x="56" y="46" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="22" font-weight="700" letter-spacing="3" fill="#ffffff">NOW OPEN</text>
+  <rect x="980" y="22" width="164" height="28" rx="14" fill="#ffffff" fill-opacity="0.18"/>
+  <text x="1062" y="42" text-anchor="middle" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="13" font-weight="600" fill="#ffffff">AVIATION CAREERS</text>
+  <text font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="42" font-weight="800" fill="#ffffff"><tspan x="56" y="150">Cabin Crew / In-Flight Services —</tspan><tspan x="56" y="198">Freshers</tspan></text>
+  <text x="56" y="254" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="26" font-weight="600" fill="#ffffff" fill-opacity="0.95">Air India</text>
+  <text x="56" y="290" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="18" fill="#e2e8f0">Mumbai / Delhi / India bases · Fresher</text>
+  <text x="56" y="334" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="2" fill="#ffffff" fill-opacity="0.85">ELIGIBILITY / CRITERIA</text>
+  
+      <circle cx="68" cy="366" r="4" fill="#ffffff" fill-opacity="0.95"/>
+      <text x="84" y="370" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="18" fill="#f8fafc">Indian national</text>
+      <circle cx="68" cy="394" r="4" fill="#ffffff" fill-opacity="0.95"/>
+      <text x="84" y="398" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="18" fill="#f8fafc">Minimum intermediate (10+2) qualification</text>
+      <circle cx="68" cy="422" r="4" fill="#ffffff" fill-opacity="0.95"/>
+      <text x="84" y="426" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="18" fill="#f8fafc">Age as per current Air India notification</text>
+      <circle cx="68" cy="450" r="4" fill="#ffffff" fill-opacity="0.95"/>
+      <text x="84" y="454" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="18" fill="#f8fafc">English fluency; additional languages preferred</text>
+      <circle cx="68" cy="478" r="4" fill="#ffffff" fill-opacity="0.95"/>
+      <text x="84" y="482" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="18" fill="#f8fafc">Meets height, BMI and grooming standards of the airline</text>
+      <circle cx="68" cy="506" r="4" fill="#ffffff" fill-opacity="0.95"/>
+      <text x="84" y="510" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="18" fill="#f8fafc">Valid passport preferred (or ready to apply)</text>
+  <rect x="0" y="584" width="1200" height="44" fill="#000000" fill-opacity="0.4"/>
+  <text x="56" y="610" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="15" font-weight="600" fill="#ffffff">Runway2Sky</text>
+  <text x="1144" y="610" text-anchor="end" font-family="Inter,Segoe UI,Helvetica,Arial,sans-serif" font-size="15" fill="#cbd5e1">runway2sky.online</text>
+</svg>

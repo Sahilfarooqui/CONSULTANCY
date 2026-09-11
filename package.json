@@ -32,7 +32,8 @@
     "build:docker": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
     "start:prod": "node -r dotenv/config server/index.js",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "posters": "node scripts/generate-job-posters.js"
   },
   "eslintConfig": {
     "extends": [
