@@ -134,12 +134,43 @@ const Apply = () => {
     data.set('certificationConfirmed', enrolledConfirm ? 'yes' : 'no');
     data.set('qatiEnrollmentStatus', 'will_enrol_now');
 
+    const dashboardPayload = {
+      name: formValues.fullName.trim(),
+      email: formValues.email.trim(),
+      phone: formValues.phone.trim(),
+      jobId: jobMeta.id || '',
+      jobTitle: jobMeta.title || '',
+      company: jobMeta.company || '',
+      location: jobMeta.location || formValues.city.trim(),
+      selectedCertificate: activeCert?.title || '',
+      notes: `City: ${formValues.city.trim()}`,
+      source: 'runway2sky',
+      createdAt: new Date().toISOString(),
+      _gotcha: '',
+    };
+
     try {
+      // Fire QATI Admin dashboard ingest in parallel (best-effort; never blocks Formspree success)
+      const dashboardUrl = appConfig.applicationsApi;
+      const dashboardPromise = dashboardUrl
+        ? fetch(dashboardUrl, {
+            method: 'POST',
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify(dashboardPayload),
+          }).catch((err) => {
+            console.warn('QATI applications ingest failed:', err);
+            return null;
+          })
+        : Promise.resolve(null);
+
       const res = await fetch(formspreeUrl, {
         method: 'POST',
         body: data,
         headers: { Accept: 'application/json' },
       });
+
+      // Await dashboard result but ignore failures so Apply UX stays intact
+      await dashboardPromise;
 
       if (res.ok) {
         navigate(
