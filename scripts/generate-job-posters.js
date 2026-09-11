@@ -232,10 +232,16 @@ function main() {
   const map = {};
   let count = 0;
 
+  const outRoot = path.resolve(OUT_DIR);
   for (const job of sorted) {
     const sid = sanitizeId(job.id);
     const file = `${sid}.svg`;
-    const abs = path.join(OUT_DIR, file);
+    const abs = path.resolve(OUT_DIR, file);
+    // Reject any path that escapes the posters directory
+    if (abs !== path.join(outRoot, file) && !abs.startsWith(outRoot + path.sep)) {
+      console.warn('[posters] skipped unsafe id:', job.id);
+      continue;
+    }
     const svg = buildSvg(job);
     fs.writeFileSync(abs, svg, 'utf8');
     map[job.id] = `/job-posters/${file}`;

@@ -39,10 +39,9 @@ export async function loadJobs({ forceRefresh = false } = {}) {
 
   for (const url of uniqueUrls) {
     try {
-      const endpoint =
-        forceRefresh && url.includes('/api/jobs')
-          ? `${url}${url.includes('?') ? '&' : '?'}refresh=1`
-          : url;
+      // Force refresh of the server cache requires REFRESH_SECRET (ops only).
+      // Client "forceRefresh" only bypasses browser HTTP cache — public GET stays public.
+      const endpoint = url;
 
       const res = await fetch(endpoint, {
         headers: { Accept: 'application/json' },

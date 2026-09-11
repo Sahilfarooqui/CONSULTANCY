@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { loadJobs, extractFilterOptions } from '../services/jobsApi';
 import JobCard from '../components/jobs/JobCard';
+import { sanitizeSearchQuery, safeHttpUrl } from '../utils/safeUrl';
 
 const Jobs = () => {
   const location = useLocation();
@@ -15,7 +16,7 @@ const Jobs = () => {
     source: 'All',
     region: 'All',
   });
-  const [searchTerm, setSearchTerm] = useState(location.state?.q || '');
+  const [searchTerm, setSearchTerm] = useState(sanitizeSearchQuery(location.state?.q || ''));
 
   const fetchJobs = useCallback(async () => {
     setLoading(true);
@@ -35,7 +36,7 @@ const Jobs = () => {
   }, [fetchJobs]);
 
   useEffect(() => {
-    if (location.state?.q) setSearchTerm(location.state.q);
+    if (location.state?.q) setSearchTerm(sanitizeSearchQuery(location.state.q));
   }, [location.state]);
 
   const options = useMemo(() => extractFilterOptions(allJobs), [allJobs]);
@@ -73,19 +74,19 @@ const Jobs = () => {
 
   const applyViaUs = (job) => {
     const q = new URLSearchParams({
-      jobId: job.id || '',
-      title: job.title || '',
-      company: job.company || '',
-      location: job.location || '',
-      level: job.level || '',
-      category: job.category || '',
+      jobId: sanitizeSearchQuery(job.id || '', { maxLength: 80 }),
+      title: sanitizeSearchQuery(job.title || '', { maxLength: 200 }),
+      company: sanitizeSearchQuery(job.company || '', { maxLength: 120 }),
+      location: sanitizeSearchQuery(job.location || '', { maxLength: 120 }),
+      level: sanitizeSearchQuery(job.level || '', { maxLength: 60 }),
+      category: sanitizeSearchQuery(job.category || '', { maxLength: 80 }),
     });
-    if (job.applyUrl && !job.applyUrl.startsWith('/')) q.set('external', job.applyUrl);
+    const ext = safeHttpUrl(job.applyUrl);
+    if (ext) q.set('external', ext);
     return `/apply?${q.toString()}`;
   };
 
-  const officialHref = (job) =>
-    job.applyUrl && !job.applyUrl.startsWith('/') ? job.applyUrl : null;
+  const officialHref = (job) => safeHttpUrl(job.applyUrl);
 
   return (
     <div className="py-8 sm:py-10 bg-slate-50 min-h-screen">
