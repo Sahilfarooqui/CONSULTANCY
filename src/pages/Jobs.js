@@ -9,6 +9,7 @@ const Jobs = () => {
   const [allJobs, setAllJobs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [showMoreFilters, setShowMoreFilters] = useState(false);
   const [filter, setFilter] = useState({
     category: 'All',
     type: 'All',
@@ -67,9 +68,13 @@ const Jobs = () => {
     });
   }, [allJobs, filter, searchTerm]);
 
+  const moreFiltersActive =
+    filter.type !== 'All' || filter.source !== 'All' || filter.region !== 'All';
+
   const resetFilters = () => {
     setFilter({ category: 'All', type: 'All', level: 'All', source: 'All', region: 'All' });
     setSearchTerm('');
+    setShowMoreFilters(false);
   };
 
   const applyViaUs = (job) => {
@@ -88,13 +93,16 @@ const Jobs = () => {
 
   const officialHref = (job) => safeHttpUrl(job.applyUrl);
 
+  const resultsLabel =
+    filteredJobs.length === 1 ? '1 job found' : `${filteredJobs.length} jobs found`;
+
   return (
     <div className="py-8 sm:py-10 bg-slate-50 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-5 text-left sm:text-center">
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Global aviation vacancies</h1>
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Find aviation jobs</h1>
           <p className="mt-1 text-sm sm:text-base text-slate-600">
-            Emirates · Qatar · Etihad · US · UK · Australia · India + 100 airlines. Eligibility on every job.
+            Cabin crew, airport & airline roles — see who can apply on each card.
           </p>
           {error && <p className="mt-2 text-sm text-rose-600">{error}</p>}
         </div>
@@ -108,21 +116,9 @@ const Jobs = () => {
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <div className="mt-2 flex gap-2 overflow-x-auto pb-0.5">
+            <div className="mt-2 flex gap-2 overflow-x-auto pb-0.5 items-center">
               <select
-                aria-label="Region"
-                className="shrink-0 border border-slate-300 rounded-lg py-2 px-2 text-sm bg-white"
-                value={filter.region}
-                onChange={(e) => setFilter({ ...filter, region: e.target.value })}
-              >
-                {(options.regions || ['All']).map((r) => (
-                  <option key={r} value={r}>
-                    {r === 'All' ? 'All regions' : r}
-                  </option>
-                ))}
-              </select>
-              <select
-                aria-label="Category"
+                aria-label="Role"
                 className="shrink-0 border border-slate-300 rounded-lg py-2 px-2 text-sm bg-white"
                 value={filter.category}
                 onChange={(e) => setFilter({ ...filter, category: e.target.value })}
@@ -141,10 +137,21 @@ const Jobs = () => {
               >
                 {options.levels.map((l) => (
                   <option key={l} value={l}>
-                    {l === 'All' ? 'Any level' : l}
+                    {l === 'All' ? 'Any level' : l === 'Fresher' ? 'Fresher welcome' : l}
                   </option>
                 ))}
               </select>
+              <button
+                type="button"
+                onClick={() => setShowMoreFilters((v) => !v)}
+                className={`shrink-0 text-sm font-semibold px-2 py-2 rounded-lg border ${
+                  showMoreFilters || moreFiltersActive
+                    ? 'border-sky-300 bg-sky-50 text-sky-800'
+                    : 'border-slate-200 text-slate-600'
+                }`}
+              >
+                More filters{moreFiltersActive ? ' •' : ''}
+              </button>
               <button
                 type="button"
                 onClick={resetFilters}
@@ -153,38 +160,72 @@ const Jobs = () => {
                 Clear
               </button>
             </div>
+
+            {showMoreFilters && (
+              <div className="mt-2 flex gap-2 overflow-x-auto pb-0.5">
+                <select
+                  aria-label="Region"
+                  className="shrink-0 border border-slate-300 rounded-lg py-2 px-2 text-sm bg-white"
+                  value={filter.region}
+                  onChange={(e) => setFilter({ ...filter, region: e.target.value })}
+                >
+                  {(options.regions || ['All']).map((r) => (
+                    <option key={r} value={r}>
+                      {r === 'All' ? 'All regions' : r}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  aria-label="Job type"
+                  className="shrink-0 border border-slate-300 rounded-lg py-2 px-2 text-sm bg-white"
+                  value={filter.type}
+                  onChange={(e) => setFilter({ ...filter, type: e.target.value })}
+                >
+                  {(options.types || ['All']).map((t) => (
+                    <option key={t} value={t}>
+                      {t === 'All' ? 'Any type' : t}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  aria-label="Source"
+                  className="shrink-0 border border-slate-300 rounded-lg py-2 px-2 text-sm bg-white"
+                  value={filter.source}
+                  onChange={(e) => setFilter({ ...filter, source: e.target.value })}
+                >
+                  {(options.sources || ['All']).map((s) => (
+                    <option key={s} value={s}>
+                      {s === 'All' ? 'Any source' : s}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
             <div className="mt-2 flex gap-1.5 overflow-x-auto">
               {[
                 { label: 'Emirates', type: 'search' },
                 { label: 'Qatar Airways', type: 'search' },
                 { label: 'Etihad', type: 'search' },
-                { label: 'Middle East', type: 'region' },
-                { label: 'USA', type: 'region' },
-                { label: 'UK', type: 'region' },
-                { label: 'Australia', type: 'region' },
-                { label: 'India', type: 'region' },
+                { label: 'IndiGo', type: 'search' },
                 { label: 'Cabin Crew', type: 'category' },
                 { label: 'Customer Experience', type: 'category' },
                 { label: 'Ground Handling', type: 'category' },
               ].map(({ label, type }) => {
                 const active =
                   (type === 'search' && searchTerm === label) ||
-                  (type === 'region' && filter.region === label) ||
                   (type === 'category' && filter.category === label);
                 return (
                   <button
                     key={label}
                     type="button"
                     onClick={() => {
-                      if (type === 'region') {
-                        setFilter((f) => ({ ...f, region: label, category: 'All' }));
-                        setSearchTerm('');
-                      } else if (type === 'category') {
+                      if (type === 'category') {
                         setFilter((f) => ({ ...f, category: label }));
                         setSearchTerm('');
                       } else {
                         setSearchTerm(label);
-                        setFilter((f) => ({ ...f, region: 'All', category: 'All' }));
+                        setFilter((f) => ({ ...f, category: 'All' }));
                       }
                     }}
                     className={`shrink-0 px-2.5 py-1 rounded-full text-xs font-semibold border ${
@@ -199,9 +240,7 @@ const Jobs = () => {
               })}
             </div>
           </div>
-          <p className="mt-2 text-xs text-slate-500 px-0.5">
-            Showing <strong className="text-slate-800">{filteredJobs.length}</strong> jobs
-          </p>
+          <p className="mt-2 text-sm text-slate-600 px-0.5">{resultsLabel}</p>
         </div>
 
         {loading ? (
@@ -213,12 +252,16 @@ const Jobs = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-14 bg-white rounded-2xl border border-slate-200">
-            <p className="text-slate-700 font-medium">No jobs match your search.</p>
+          <div className="text-center py-14 bg-white rounded-2xl border border-slate-200 px-4">
+            <p className="text-slate-800 font-semibold text-lg">No jobs match right now</p>
+            <p className="mt-2 text-sm text-slate-600 max-w-md mx-auto">
+              Try a different airline name, clear filters, or check back soon — new roles are added
+              often.
+            </p>
             <button
               type="button"
               onClick={resetFilters}
-              className="mt-3 text-sky-700 font-semibold"
+              className="mt-4 inline-flex justify-center px-4 py-2 rounded-xl bg-sky-600 text-white text-sm font-semibold"
             >
               Clear filters
             </button>
