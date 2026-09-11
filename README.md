@@ -79,7 +79,8 @@ The Node server serves the React build **and** refreshes jobs every hour.
 
 | Command | Purpose |
 |---------|---------|
-| `npm run fetch-jobs` | Pull latest jobs → `public/data/live-jobs.json` |
+| `npm run fetch-jobs` | Pull latest jobs → `public/data/live-jobs.json` (also regenerates posters) |
+| `npm run posters` | Generate LinkedIn-style job posters → `public/job-posters/` + `job-posters.json` |
 | `npm run server` | API + static server |
 | `npm run dev` | React + API together |
 | `npm run build` | Production build (fetches jobs first) |
@@ -88,6 +89,18 @@ The Node server serves the React build **and** refreshes jobs every hour.
 ## Adding featured / direct jobs
 
 Edit `src/data/jobs.js` (and optionally `public/data/featured-jobs.json`).
+
+
+## Job posters (LinkedIn-style graphics)
+
+Job cards show a **landscape hiring poster** with eligibility/criteria on the graphic (airline brand colours).
+
+```bash
+npm run posters
+```
+
+Writes SVG files to `public/job-posters/{jobId}.svg` and a lookup map at `public/data/job-posters.json`.
+`npm run fetch-jobs` calls this automatically after updating live jobs. If a poster file is missing, JobCard still renders an inline CSS eligibility poster so cards never look empty.
 
 ## Contact
 

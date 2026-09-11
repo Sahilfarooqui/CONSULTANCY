@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import CompanyLogo from './CompanyLogo';
+import JobPoster from './JobPoster';
 import { getCompanyBrand, getPosterLabel, formatPostedLabel } from '../../utils/companyBranding';
 import { COURSES_PLATFORM, getCertificatesForJob } from '../../data/courses';
 
@@ -19,32 +20,14 @@ const JobCard = ({ job, applyViaUs, officialHref }) => {
 
   return (
     <article className="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:border-sky-300 hover:shadow-lg transition-all shadow-sm">
-      {/* Soft brand banner */}
-      <div
-        className="relative h-14 sm:h-[4.25rem] w-full overflow-hidden"
-        style={{
-          background: `linear-gradient(125deg, ${brand.color} 0%, ${brand.color2 || brand.color} 55%, ${brand.color}cc 100%)`,
-        }}
-      >
-        <div
-          className="absolute inset-0 opacity-40 pointer-events-none"
-          style={{
-            background:
-              'radial-gradient(ellipse at 18% 40%, rgba(255,255,255,0.4) 0%, transparent 55%), linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.14) 100%)',
-          }}
-        />
-        <div
-          className="absolute inset-0 opacity-[0.1] pointer-events-none"
-          style={{
-            backgroundImage:
-              'repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(255,255,255,0.4) 8px, rgba(255,255,255,0.4) 9px)',
-          }}
-        />
+      {/* LinkedIn-style eligibility poster (SVG or CSS fallback) */}
+      <div className="rounded-t-2xl overflow-hidden">
+        <JobPoster job={job} />
       </div>
 
       <div className="px-4 sm:px-5 pb-4 sm:pb-5 text-left">
-        <div className="-mt-8 mb-3 inline-block">
-          <CompanyLogo company={job.company} logoUrl={logoUrl} size={60} className="ring-2 ring-white" />
+        <div className="-mt-8 mb-3 inline-block relative z-10">
+          <CompanyLogo company={job.company} logoUrl={logoUrl} size={60} className="ring-2 ring-white shadow-md" />
         </div>
 
         <div className="flex flex-wrap items-center gap-2">

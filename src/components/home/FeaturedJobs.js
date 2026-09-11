@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { loadJobs } from '../../services/jobsApi';
 import fallbackJobs from '../../data/jobs';
 import CompanyLogo from '../jobs/CompanyLogo';
+import JobPoster from '../jobs/JobPoster';
 import { getCompanyBrand, formatPostedLabel } from '../../utils/companyBranding';
 import { sortJobsFamousFirst } from '../../utils/jobSort';
 
@@ -50,19 +51,14 @@ const FeaturedJobs = () => {
                 to="/jobs"
                 className="group overflow-hidden rounded-2xl border border-slate-200 bg-white text-left hover:border-sky-300 hover:shadow-lg transition-all shadow-sm"
               >
-                <div
-                  className="h-11 w-full"
-                  style={{
-                    background: `linear-gradient(125deg, ${brand.color} 0%, ${brand.color2 || brand.color} 100%)`,
-                  }}
-                />
+                <JobPoster job={job} compact />
                 <div className="px-4 pb-4">
-                  <div className="-mt-7 mb-2 inline-block">
+                  <div className="-mt-7 mb-2 inline-block relative z-10">
                     <CompanyLogo
                       company={job.company}
                       logoUrl={logoUrl}
                       size={52}
-                      className="ring-2 ring-white"
+                      className="ring-2 ring-white shadow-md"
                     />
                   </div>
                   <p className="font-semibold text-slate-900 text-sm sm:text-base leading-snug line-clamp-2 group-hover:text-sky-800">
