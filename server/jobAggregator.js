@@ -412,6 +412,14 @@ function normalizeJob(partial) {
   const id = `live-${Buffer.from(idSeed).toString('base64url').slice(0, 24)}`;
   const rawTags = Array.isArray(partial.tags) ? partial.tags.map(String) : [];
 
+  const logo =
+    partial.logo ||
+    partial.companyLogo ||
+    partial.company_logo ||
+    partial.logoUrl ||
+    partial.employer_logo ||
+    null;
+
   const job = {
     id,
     title,
@@ -429,6 +437,7 @@ function normalizeJob(partial) {
     tags: rawTags.length ? rawTags.slice(0, 8) : ['Live'],
     live: true,
   };
+  if (logo) job.logo = logo;
   return job;
 }
 
@@ -472,6 +481,7 @@ async function fetchRemotive() {
         postedAt: (j.publication_date || '').slice(0, 10),
         tags: j.tags || ['Remote'],
         salary: j.salary || 'See listing',
+        logo: j.company_logo || null,
       };
       if (passesAviationGate(partial)) jobs.push(normalizeJob(partial));
     }
@@ -498,6 +508,7 @@ async function fetchRemoteOK() {
         postedAt: j.date ? new Date(j.date).toISOString().slice(0, 10) : undefined,
         tags: j.tags || ['Remote'],
         salary: j.salary_min && j.salary_max ? `$${j.salary_min} – $${j.salary_max}` : 'See listing',
+        logo: j.company_logo || j.logo || null,
       };
       if (passesAviationGate(partial)) jobs.push(normalizeJob(partial));
     }
@@ -553,6 +564,7 @@ async function fetchJobicy() {
           salary: j.annualSalaryMin
             ? `${j.salaryCurrency || ''} ${j.annualSalaryMin}${j.annualSalaryMax ? ` – ${j.annualSalaryMax}` : ''}`.trim()
             : 'See listing',
+          logo: j.companyLogo || j.company_logo || null,
         };
         if (passesAviationGate(partial)) jobs.push(normalizeJob(partial));
       }
@@ -707,6 +719,7 @@ async function fetchJSearch() {
             ? `${j.job_min_salary}${j.job_max_salary ? ` – ${j.job_max_salary}` : ''} ${j.job_salary_currency || ''}`.trim()
             : 'See listing',
           tags: (j.job_required_skills || []).slice(0, 5),
+          logo: j.employer_logo || null,
         };
         if (passesAviationGate(partial)) jobs.push(normalizeJob(partial));
       }
